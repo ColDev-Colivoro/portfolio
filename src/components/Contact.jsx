@@ -20,25 +20,50 @@ const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const response = await fetch("https://formspree.io/f/xyzwqrrg", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Mensaje enviado",
+          description: "Gracias por contactarme. Te responderé lo antes posible.",
+          duration: 5000,
+        });
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        toast({
+          title: "Error al enviar",
+          description: "Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.",
+          variant: "destructive",
+          duration: 5000,
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
       toast({
-        title: "Mensaje enviado",
-        description: "Gracias por contactarme. Te responderé lo antes posible.",
+        title: "Error de red",
+        description: "No se pudo conectar con el servidor. Verifica tu conexión.",
+        variant: "destructive",
         duration: 5000,
       });
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-    }, 1500);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const containerVariants = {
