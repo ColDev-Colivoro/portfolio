@@ -171,6 +171,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+                    autocomplete="name"
                   />
                 </div>
                 
@@ -186,6 +187,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+                    autocomplete="email"
                   />
                 </div>
                 
@@ -201,6 +203,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
+                    autocomplete="off"
                   />
                 </div>
                 
@@ -216,6 +219,7 @@ const Contact = () => {
                     required
                     rows={5}
                     className="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent resize-none"
+                    autocomplete="off"
                   ></textarea>
                 </div>
                 

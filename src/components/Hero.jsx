@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, Github, Linkedin, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import logoGato from '../img/logo_gato.png';
 
 const Hero = () => {
   const scrollToAbout = () => {
@@ -70,9 +71,9 @@ const Hero = () => {
             variants={itemVariants}
           >
             <img  
-              className="w-32 h-32 rounded-full border-4 border-accent object-cover"
+              className="w-40 h-40 rounded-full border-4 border-accent object-cover"
               alt="Foto de perfil"
-             src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" />
+             src={logoGato} />
           </motion.div>
 
           <motion.h2 
