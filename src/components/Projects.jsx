@@ -3,41 +3,56 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import portafolioImage from '../img/portafolio.png';
+import metalcolwImage from '../img/Metalcolw.png';
+import mar2Image from '../img/Mar2.png';
 
 const Projects = () => {
   const [currentProject, setCurrentProject] = useState(0);
   
-  const projects = [
-    {
-      id: 1,
-      title: "Crypto Dashboard",
-      description: "Plataforma de análisis de criptomonedas con visualizaciones de datos en tiempo real y seguimiento de portafolio.",
-      tags: ["React", "TailwindCSS", "API", "Chart.js"],
-      imageAlt: "Dashboard de criptomonedas con gráficos y visualizaciones de datos",
-      imageDesc: "Interfaz oscura de dashboard de criptomonedas con gráficos de líneas y barras, visualizaciones de datos en colores neón sobre fondo negro",
-      liveLink: "https://example.com/project1",
-      githubLink: "https://github.com/username/project1"
-    },
-    {
-      id: 2,
-      title: "E-commerce Minimalista",
-      description: "Tienda online con diseño minimalista y audaz, enfocada en la experiencia de usuario y conversión.",
-      tags: ["Next.js", "Framer Motion", "Stripe", "Supabase"],
-      imageAlt: "Tienda online con diseño minimalista",
-      imageDesc: "Tienda online con diseño minimalista en tonos oscuros, productos destacados con iluminación dramática sobre fondo negro",
-      liveLink: "https://example.com/project2",
-      githubLink: "https://github.com/username/project2"
-    },
-    {
-      id: 3,
-      title: "App de Productividad",
-      description: "Aplicación para gestión de tareas y proyectos con enfoque en la simplicidad y la estética visual.",
-      tags: ["Vue", "Firebase", "PWA", "GSAP"],
-      imageAlt: "Aplicación de productividad con interfaz moderna",
-      imageDesc: "Aplicación de productividad con interfaz moderna y oscura, elementos de UI con bordes neón, listas de tareas sobre fondo negro",
-      liveLink: "https://example.com/project3",
-      githubLink: "https://github.com/username/project3"
+  const projects = [ {
+      
+  id: 1,
+  title: "Colivoro Developer",
+  description: "Portafolio personal de desarrollo web creado para centralizar proyectos, experiencias y enlaces profesionales, con diseño moderno y despliegue continuo en Netlify.",
+  tags: ["React", "TailwindCSS", "Netlify", "Portfolio"],
+  imageAlt: "Portafolio Colivoro Developer",
+  imageDesc: "Interfaz limpia y moderna con tarjetas de proyectos, menú de navegación dinámico y diseño responsivo en tonos oscuros y azules.",
+  liveLink: "https://colivoro-developer.netlify.app",
+  githubLink: "https://github.com/username/colivoro-developer",
+  imageSrc: portafolioImage
+
+
     }
+   ,
+    {
+      
+  id: 2,
+  title: "Metalcolw",
+  description: "Sitio web corporativo para Metalcolw, empresa dedicada al montaje industrial y servicios de fabricación metálica, con enfoque en soluciones técnicas y proyectos a medida.",
+  tags: ["React", "TailwindCSS", "Netlify", "Empresa"],
+  imageAlt: "Sitio web corporativo de Metalcolw",
+  imageDesc: "Diseño profesional con secciones sobre servicios de montaje, galería de proyectos y formulario de contacto, en una interfaz moderna y adaptable.",
+  liveLink: "https://colivoro.netlify.app",
+  githubLink: "https://github.com/username/metalcolw",
+  imageSrc: metalcolwImage
+
+
+    }, {
+      
+  id: 3,
+  title: "Mar2 Asesorías",
+  description: "Sitio web corporativo para Mar2 Asesorías, enfocado en servicios de consultoría empresarial y gestión estratégica, con diseño moderno y adaptable.",
+  tags: ["React", "TailwindCSS", "Netlify","Node.js"],
+  imageAlt: "Sitio web corporativo de Mar2 Asesorías",
+  imageDesc: "Interfaz limpia y profesional con tonos azul marino y blanco, secciones informativas y diseño responsivo.",
+  liveLink: "https://mar2asesorias.netlify.app",
+  githubLink: "https://github.com/username/mar2-asesorias",
+  imageSrc: mar2Image
+
+
+    }
+   
   ];
 
   const nextProject = () => {
@@ -79,7 +94,7 @@ const Projects = () => {
       >
         <motion.div className="text-center mb-16" variants={itemVariants}>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient">Mis Proyectos</span>
+            <span className="text-gradient">Mis Proyectos en Progreso</span>
           </h2>
           <div className="w-24 h-1 bg-accent mx-auto mb-6"></div>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -102,7 +117,7 @@ const Projects = () => {
                 <img  
                   className="relative z-10 w-full h-auto rounded-lg shadow-xl"
                   alt={projects[currentProject].imageAlt}
-                 src="https://images.unsplash.com/photo-1675023112817-52b789fd2ef0" />
+                 src={projects[currentProject].imageSrc} />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent rounded-lg z-20"></div>
               </div>
 
@@ -188,7 +203,7 @@ const Projects = () => {
           className="mt-24 text-center"
           variants={itemVariants}
         >
-          <h3 className="text-xl font-bold mb-6">Más Proyectos</h3>
+          <h3 className="text-xl font-bold mb-6">Más Proyectos en progreso</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[1, 2, 3].map((item) => (
               <motion.div
