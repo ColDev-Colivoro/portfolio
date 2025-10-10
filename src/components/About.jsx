@@ -25,7 +25,7 @@ const About = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div className="container mx-auto px-4 pt-16 pb-8">
       <motion.div
         className="max-w-5xl mx-auto"
         initial="hidden"

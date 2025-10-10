@@ -27,12 +27,12 @@ const Mar2ControlModalContent = () => {
   }, [openCred]);
 
   const panels = [
-    { id: 1, role: "All", type: "Login", title: "Login / Demo roles", caption: "Acceso demo con usuarios preconfigurados.", src: "/images/mar2control/login.jpg" },
-    { id: 2, role: "Admin", type: "Dashboard", title: "Admin — Panel resumen", caption: "Gestión de empresas, usuarios y exportaciones.", src: "/images/mar2control/admin-dashboard.jpg" },
-    { id: 3, role: "Gerente", type: "Dashboard", title: "Gerente — KPIs", caption: "Tendencias y alertas por planta.", src: "/images/mar2control/gerente-kpis.jpg" },
-    { id: 4, role: "Jefe", type: "Form", title: "Jefe — No conformidades", caption: "Detalle y cierre de NC.", src: "/images/mar2control/jefe-nc.jpg" },
-    { id: 5, role: "Monitor", type: "Form", title: "Monitor — Recolección", caption: "Formularios móviles con fotos y firmas.", src: "/images/mar2control/monitor-form.jpg" },
-    { id: 6, role: "All", type: "Report", title: "Reportes & Export", caption: "Generación de PDF/CSV filtrados.", src: "/images/mar2control/report-export.jpg" },
+    { id: 1, role: "All", type: "Login", title: "Login / Demo roles", caption: "Acceso demo con usuarios preconfigurados.", src: "/images/mar2control/Login.png" },
+    { id: 2, role: "Admin", type: "Dashboard", title: "Admin — Panel resumen", caption: "Gestión de empresas, usuarios y exportaciones.", src: "/images/mar2control/admin-dashboard.png" },
+    { id: 3, role: "Gerente", type: "Dashboard", title: "Gerente — KPIs", caption: "Tendencias y alertas por planta.", src: "/images/mar2control/gerente-kpis.png" },
+    { id: 4, role: "Jefe", type: "Form", title: "Jefe — No conformidades", caption: "Detalle y cierre de NC.", src: "/images/mar2control/jefe-calidad.png" },
+    { id: 5, role: "Monitor", type: "Form", title: "Monitor — Recolección", caption: "Formularios móviles con fotos y firmas.", src: "/images/mar2control/monitor.png" },
+    // { id: 6, role: "All", type: "Report", title: "Reportes & Export", caption: "Generación de PDF/CSV filtrados.", src: "/images/mar2control/report-export.png" }, // Removed as per user request
   ];
 
   const filtered = panels.filter(p => (filterRole === "All" || p.role === filterRole) && (filterType === "All" || p.type === filterType));
@@ -48,7 +48,10 @@ const Mar2ControlModalContent = () => {
             <div className="mt-4 flex flex-wrap gap-3">
               <a href="https://controldecalidad.netlify.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 bg-accent text-primary-foreground rounded-md text-sm">Abrir demo</a>
               <Button className="inline-flex items-center px-4 py-2 border border-border rounded-md text-sm" onClick={() => setOpenCred(true)}>Ver credenciales demo</Button>
-              <a href="/assets/mar2control-ficha.pdf" className="inline-flex items-center px-4 py-2 text-sm text-accent">Descargar ficha técnica</a>
+              <span className="inline-flex items-center px-4 py-2 text-sm text-accent relative group">
+                Descargar ficha técnica
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Próximamente</span>
+              </span>
             </div>
           </div>
 
@@ -102,8 +105,8 @@ const Mar2ControlModalContent = () => {
               {filtered.map(p => (
                 <article key={p.id} className="bg-secondary/50 rounded-lg border border-border overflow-hidden">
                   <button onClick={() => setOpenImage(p)} className="w-full text-left">
-                    <div className="h-40 bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center">
-                      <span className="text-sm text-gray-400">Imagen: {p.title} (Placeholder)</span>
+                    <div className="h-40 flex items-center justify-center overflow-hidden">
+                      <img src={p.src} alt={p.title} className="w-full h-full object-cover" />
                     </div>
                     <div className="p-3">
                       <h3 className="font-medium text-sm text-foreground">{p.title}</h3>
@@ -130,15 +133,18 @@ const Mar2ControlModalContent = () => {
         <aside>
           <div className="bg-secondary rounded-xl shadow p-6 sticky top-6">
             <h3 className="text-lg font-semibold text-gradient">Resumen & CTA</h3>
-            <p className="text-sm text-muted-foreground mt-2">Caso de estudio destacado: ideal para mostrar en home como banner y en la grilla como tarjeta con badge <span className="font-medium text-foreground">Caso · Destacado</span>.</p>
+            <p className="text-sm text-muted-foreground mt-2"> <span className="font-medium text-foreground">Caso · Destacado</span>.</p>
             <ul className="mt-3 text-sm space-y-2 text-muted-foreground">
               <li>• 4 roles: admin, gerente, jefe, monitor</li>
               <li>• Demo público con credenciales</li>
               <li>• Galería de paneles y export de reportes</li>
             </ul>
             <div className="mt-4">
-              <a href="/casos/mar2control" className="block text-center px-4 py-2 bg-accent text-primary-foreground rounded">Ver caso de estudio</a>
-              <a href="https://colivoro.netlify.app/contacto?from=mar2control" className="block text-center mt-3 px-4 py-2 border border-border rounded text-sm text-foreground">Solicitar demo privado</a>
+              <a href="https://controldecalidad.netlify.app" target="_blank" rel="noopener noreferrer" className="block text-center px-4 py-2 bg-accent text-primary-foreground rounded">Ver caso de estudio</a>
+              <span className="block text-center mt-3 px-4 py-2 border border-border rounded text-sm text-foreground relative group">
+                Solicitar demo privado
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">Próximamente</span>
+              </span>
             </div>
           </div>
         </aside>
@@ -156,8 +162,8 @@ const Mar2ControlModalContent = () => {
               </div>
               <Button onClick={() => setOpenImage(null)} className="ml-4 text-sm px-3 py-1 border border-border rounded">Cerrar</Button>
             </div>
-            <div className="h-72 bg-slate-700 flex items-center justify-center">
-              <span className="text-gray-400">Preview grande — {openImage.title} (Placeholder)</span>
+            <div className="h-72 flex items-center justify-center overflow-hidden">
+              <img src={openImage.src} alt={openImage.title} className="w-full h-full object-cover" />
             </div>
             <div className="p-4 flex justify-end gap-3">
               <a href="https://controldecalidad.netlify.app" target="_blank" rel="noopener noreferrer" className="px-3 py-2 border border-border rounded text-sm text-foreground">Abrir demo</a>
@@ -201,7 +207,7 @@ const FeaturedProject = () => {
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div className="container mx-auto px-4 pt-8 pb-16">
       <motion.div
         className="max-w-6xl mx-auto bg-secondary rounded-xl shadow-lg p-8 flex flex-col md:flex-row items-center gap-8"
         initial={{ opacity: 0, y: 50 }}
@@ -213,7 +219,7 @@ const FeaturedProject = () => {
         <div className="w-full md:w-1/2 relative group">
           <div className="absolute inset-0 bg-accent/20 rounded-lg transform rotate-3 group-hover:rotate-6 transition-transform duration-300"></div>
           <img
-            src="/images/mar2control/featured-placeholder.png" // Placeholder image
+            src="/images/mar2control/home.png" // Using home.png as the featured image as per user feedback
             alt="Mar2Control Project"
             className="relative z-10 w-full h-auto rounded-lg shadow-xl"
           />

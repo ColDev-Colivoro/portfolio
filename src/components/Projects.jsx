@@ -94,7 +94,7 @@ const Projects = () => {
       >
         <motion.div className="text-center mb-16" variants={itemVariants}>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient">Mis Proyectos en Progreso</span>
+            <span className="text-gradient">Mis Proyectos en Proceso</span>
           </h2>
           <div className="w-24 h-1 bg-accent mx-auto mb-6"></div>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
