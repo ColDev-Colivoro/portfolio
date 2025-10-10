@@ -11,6 +11,7 @@ import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Cursor from '@/components/Cursor';
+import FeaturedProject from '@/components/FeaturedProject'; // Importar el nuevo componente
 
 const App = () => {
   const { toast } = useToast();
@@ -97,6 +98,11 @@ const App = () => {
               
               <section id="about" className="min-h-screen py-20">
                 <About />
+              </section>
+
+              {/* Nueva sección de proyecto destacado */}
+              <section id="featured-project" className="min-h-screen py-20">
+                <FeaturedProject />
               </section>
               
               <section id="projects" className="min-h-screen py-20">

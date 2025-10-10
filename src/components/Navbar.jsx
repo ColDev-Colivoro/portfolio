@@ -1,5 +1,4 @@
-
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Code, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -25,6 +24,7 @@ const Navbar = ({ activeSection, onSectionChange }) => {
   const navItems = [
     { id: 'home', label: 'Inicio' },
     { id: 'about', label: 'Sobre Mí' },
+    { id: 'featured-project', label: 'Proyecto Destacado' }, // Nuevo item de navegación
     { id: 'projects', label: 'Proyectos' },
     { id: 'skills', label: 'Habilidades' },
     { id: 'contact', label: 'Contacto' }
