@@ -84,7 +84,7 @@ const Projects = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div className="container mx-auto px-4 pt-8 pb-16">
       <motion.div
         className="max-w-6xl mx-auto"
         initial="hidden"
@@ -199,36 +199,6 @@ const Projects = () => {
           </div>
         </div>
 
-        <motion.div 
-          className="mt-24 text-center"
-          variants={itemVariants}
-        >
-          <h3 className="text-xl font-bold mb-6">Más Proyectos en progreso</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((item) => (
-              <motion.div
-                key={item}
-                className="bg-secondary/50 p-6 rounded-lg border border-border card-hover"
-                whileHover={{ y: -5, scale: 1.02 }}
-              >
-                <h4 className="text-lg font-bold mb-2">Proyecto Adicional {item}</h4>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Breve descripción del proyecto adicional con enfoque en resultados.
-                </p>
-                <div className="flex justify-center">
-                  <Button 
-                    variant="link" 
-                    className="text-accent"
-                    onClick={() => window.open('https://example.com', '_blank')}
-                  >
-                    Ver detalles
-                    <ExternalLink className="ml-1 h-3 w-3" />
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </motion.div>
     </div>
   );

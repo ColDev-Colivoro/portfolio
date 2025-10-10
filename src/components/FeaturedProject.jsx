@@ -207,7 +207,7 @@ const FeaturedProject = () => {
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div className="container mx-auto px-4 pt-8 pb-16">
+    <div className="container mx-auto px-4 pt-8 pb-4">
       <motion.div
         className="max-w-6xl mx-auto bg-secondary rounded-xl shadow-lg p-8 flex flex-col md:flex-row items-center gap-8"
         initial={{ opacity: 0, y: 50 }}
