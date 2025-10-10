@@ -30,10 +30,10 @@ const Skills = () => {
       icon: <Code className="h-6 w-6 text-accent" />,
       skills: [
         { name: "HTML/CSS", level: 95 },
-        { name: "JavaScript", level: 90 },
-        { name: "React", level: 85 },
-        { name: "Vue.js", level: 75 },
-        { name: "TailwindCSS", level: 90 }
+        { name: "JavaScript", level: 70 },
+        { name: "React", level: 80 },
+        { name: "Vue.js", level: 90 },
+        { name: "TailwindCSS", level: 80 }
       ]
     },
     {
@@ -41,10 +41,10 @@ const Skills = () => {
       icon: <Palette className="h-6 w-6 text-accent" />,
       skills: [
         { name: "UI/UX", level: 85 },
-        { name: "Figma", level: 90 },
-        { name: "Adobe XD", level: 80 },
-        { name: "Photoshop", level: 75 },
-        { name: "Ilustración", level: 70 }
+        { name: "Figma", level: 10 },
+        { name: "Adobe XD", level: 20 },
+        { name: "Photoshop", level: 15 },
+        { name: "Ilustración", level: 20 }
       ]
     },
     {
@@ -53,9 +53,9 @@ const Skills = () => {
       skills: [
         { name: "Node.js", level: 80 },
         { name: "Express", level: 75 },
-        { name: "Python", level: 65 },
-        { name: "PHP", level: 60 },
-        { name: "GraphQL", level: 70 }
+        { name: "Python", level: 90 },
+        { name: "PHP", level: 10 },
+        { name: "GraphQL", level: 15 }
       ]
     },
     {
@@ -63,8 +63,8 @@ const Skills = () => {
       icon: <Database className="h-6 w-6 text-accent" />,
       skills: [
         { name: "MongoDB", level: 85 },
-        { name: "MySQL", level: 80 },
-        { name: "Firebase", level: 90 },
+        { name: "MySQL", level: 95 },
+        { name: "Firebase", level: 40 },
         { name: "PostgreSQL", level: 70 },
         { name: "Supabase", level: 75 }
       ]
