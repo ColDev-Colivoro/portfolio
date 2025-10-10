@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Heart, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Instagram, Heart, ArrowUp } from 'lucide-react';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -22,7 +22,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <motion.a 
-                href="https://github.com" 
+                href="https://github.com/ColDev-Colivoro" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-2 bg-background rounded-full text-muted-foreground hover:text-accent transition-colors"
@@ -32,7 +32,7 @@ const Footer = () => {
                 <Github size={18} />
               </motion.a>
               <motion.a 
-                href="https://linkedin.com" 
+                href="https://www.linkedin.com/in/camilo-colivoro-1a5206386" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-2 bg-background rounded-full text-muted-foreground hover:text-accent transition-colors"
@@ -42,14 +42,14 @@ const Footer = () => {
                 <Linkedin size={18} />
               </motion.a>
               <motion.a 
-                href="https://twitter.com" 
+                href="https://www.instagram.com/col__dev?utm_source=qr&igsh=MWsyY2dxdnI4aTByYQ==" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="p-2 bg-background rounded-full text-muted-foreground hover:text-accent transition-colors"
                 whileHover={{ y: -5, scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <Twitter size={18} />
+                <Instagram size={18} />
               </motion.a>
             </div>
           </div>
@@ -74,8 +74,8 @@ const Footer = () => {
             <h4 className="text-lg font-bold mb-4">Contacto</h4>
             <ul className="space-y-2 text-muted-foreground">
               <li>San pedro de la Paz, Concepcion</li>
-              <li>Palaxis89wakala@gmail.com</li>
-              <li>+56930972983</li>
+              <li>jose.coldev@gmail.com</li>
+              <li>+569 45867825</li>
             </ul>
           </div>
         </div>

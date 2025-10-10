@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Twitter } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Instagram } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import logoGato from '../img/logo_gato.png';
 
@@ -154,7 +154,7 @@ const Hero = () => {
             variants={itemVariants}
           >
             <motion.a 
-              href="https://github.com" 
+              href="https://github.com/ColDev-Colivoro" 
               target="_blank" 
               rel="noopener noreferrer"
               whileHover={{ y: -5, scale: 1.1 }}
@@ -164,7 +164,7 @@ const Hero = () => {
               <Github size={24} />
             </motion.a>
             <motion.a 
-              href="https://linkedin.com" 
+              href="https://www.linkedin.com/in/camilo-colivoro-1a5206386" 
               target="_blank" 
               rel="noopener noreferrer"
               whileHover={{ y: -5, scale: 1.1 }}
@@ -174,14 +174,14 @@ const Hero = () => {
               <Linkedin size={24} />
             </motion.a>
             <motion.a 
-              href="https://twitter.com" 
+              href="https://www.instagram.com/col__dev?utm_source=qr&igsh=MWsyY2dxdnI4aTByYQ==" 
               target="_blank" 
               rel="noopener noreferrer"
               whileHover={{ y: -5, scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="text-muted-foreground hover:text-accent transition-colors"
             >
-              <Twitter size={24} />
+              <Instagram size={24} />
             </motion.a>
           </motion.div>
         </motion.div>

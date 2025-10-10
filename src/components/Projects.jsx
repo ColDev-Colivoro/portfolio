@@ -1,5 +1,3 @@
-import { Button } from 'react-native';
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react';

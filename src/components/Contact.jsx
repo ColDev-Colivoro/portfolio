@@ -25,7 +25,7 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch("https://formspree.io/f/xyzwqrrg", {
+      const response = await fetch("https://formspree.io/f/myznnnde", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -134,7 +134,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="text-sm font-medium mb-1">Email</h4>
-                  <p className="text-muted-foreground">Palaxis89wakala@gmail.com</p>
+                  <p className="text-muted-foreground">jose.coldev@gmail.com</p>
                 </div>
               </motion.div>
               
@@ -147,7 +147,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="text-sm font-medium mb-1">Teléfono</h4>
-                  <p className="text-muted-foreground">+56 930972883</p>
+                  <p className="text-muted-foreground">+569 45867825</p>
                 </div>
               </motion.div>
               
