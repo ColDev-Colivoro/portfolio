@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// Componente Mar2ControlPreview adaptado para ser el contenido del modal
-const Mar2ControlModalContent = () => {
+// Componente ColDevPosModalContent adaptado para ser el contenido del modal
+const ColDevPosModalContent = () => {
   const [openImage, setOpenImage] = useState(null); // {src, title, caption}
   const [openCred, setOpenCred] = useState(false);
   const [filterRole, setFilterRole] = useState("All");
@@ -27,12 +27,10 @@ const Mar2ControlModalContent = () => {
   }, [openCred]);
 
   const panels = [
-    { id: 1, role: "All", type: "Login", title: "Login / Demo roles", caption: "Acceso demo con usuarios preconfigurados.", src: "/images/mar2control/Login.png" },
-    { id: 2, role: "Admin", type: "Dashboard", title: "Admin — Panel resumen", caption: "Gestión de empresas, usuarios y exportaciones.", src: "/images/mar2control/admin-dashboard.png" },
-    { id: 3, role: "Gerente", type: "Dashboard", title: "Gerente — KPIs", caption: "Tendencias y alertas por planta.", src: "/images/mar2control/gerente-kpis.png" },
-    { id: 4, role: "Jefe", type: "Form", title: "Jefe — No conformidades", caption: "Detalle y cierre de NC.", src: "/images/mar2control/jefe-calidad.png" },
-    { id: 5, role: "Monitor", type: "Form", title: "Monitor — Recolección", caption: "Formularios móviles con fotos y firmas.", src: "/images/mar2control/monitor.png" },
-    // { id: 6, role: "All", type: "Report", title: "Reportes & Export", caption: "Generación de PDF/CSV filtrados.", src: "/images/mar2control/report-export.png" }, // Removed as per user request
+    { id: 1, role: "Caja", type: "POS", title: "Caja - Ventas fluidas", caption: "Vendes, cobras y actualizas stock de inmediato.", src: "/images/coldevpos/pos.png" },
+    { id: 2, role: "Admin", type: "Administración", title: "Admin — Gestor Central", caption: "Dashboard y reportería de sucursales.", src: "/images/coldevpos/admin.png" },
+    { id: 3, role: "Caja", type: "Boleta", title: "Boleta SII Integrada", caption: "Emisión offline integrada y sincronización.", src: "/images/coldevpos/boleta.png" },
+    { id: 4, role: "Gestor", type: "Inventario", title: "Control de Inventario", caption: "Stock al día, ingresos y mermas.", src: "/images/coldevpos/inventario.png" }
   ];
 
   const filtered = panels.filter(p => (filterRole === "All" || p.role === filterRole) && (filterType === "All" || p.type === filterType));
@@ -43,8 +41,8 @@ const Mar2ControlModalContent = () => {
       <header className="max-w-6xl mx-auto">
         <div className="bg-secondary rounded-xl shadow-md p-6 md:p-10 flex flex-col md:flex-row items-start gap-6">
           <div className="flex-1">
-            <h1 className="text-2xl md:text-3xl font-bold text-gradient">Mar2Control — Gestión de Calidad Pesquera</h1>
-            <p className="mt-3 text-sm md:text-base text-muted-foreground">Plataforma para inspecciones, trazabilidad y reportes en plantas pesqueras. Demo público con roles preconfigurados.</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-gradient">ColDevPOS — Punto de Venta sin Internet</h1>
+            <p className="mt-3 text-sm md:text-base text-muted-foreground">Sistema integral de caja, inventario y boleta electrónica SII desarrollado para funcionar offline en entornos críticos de señal.</p>
             <div className="mt-4 flex flex-wrap gap-3">
               <a href="https://controldecalidad.netlify.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 bg-accent text-primary-foreground rounded-md text-sm">Abrir demo</a>
               <Button className="inline-flex items-center px-4 py-2 border border-border rounded-md text-sm" onClick={() => setOpenCred(true)}>Ver credenciales demo</Button>
@@ -59,9 +57,9 @@ const Mar2ControlModalContent = () => {
             <div className="bg-secondary/50 p-4 rounded-lg">
               <div className="font-medium text-foreground">Micro-stats</div>
               <div className="mt-2">
-                <span className="block">4 roles</span>
-                <span className="block">Demo público</span>
-                <span className="block">v1.0</span>
+                <span className="block">Boleta Electrónica</span>
+                <span className="block">Windows 10+</span>
+                <span className="block">Soporte Local Chile</span>
               </div>
             </div>
           </div>
@@ -81,20 +79,19 @@ const Mar2ControlModalContent = () => {
                 <label className="text-sm text-foreground">Rol:</label>
                 <select value={filterRole} onChange={e => setFilterRole(e.target.value)} className="border border-border rounded px-2 py-1 text-sm bg-background text-foreground">
                   <option>All</option>
+                  <option>Caja</option>
                   <option>Admin</option>
-                  <option>Gerente</option>
-                  <option>Jefe</option>
-                  <option>Monitor</option>
+                  <option>Gestor</option>
                 </select>
               </div>
               <div className="flex items-center gap-2">
                 <label className="text-sm text-foreground">Tipo:</label>
                 <select value={filterType} onChange={e => setFilterType(e.target.value)} className="border border-border rounded px-2 py-1 text-sm bg-background text-foreground">
                   <option>All</option>
-                  <option>Login</option>
-                  <option>Dashboard</option>
-                  <option>Form</option>
-                  <option>Report</option>
+                  <option>POS</option>
+                  <option>Administración</option>
+                  <option>Boleta</option>
+                  <option>Inventario</option>
                 </select>
               </div>
               <div className="ml-auto text-sm text-muted-foreground">{filtered.length} panel(es) mostrados</div>
@@ -135,9 +132,9 @@ const Mar2ControlModalContent = () => {
             <h3 className="text-lg font-semibold text-gradient">Resumen & CTA</h3>
             <p className="text-sm text-muted-foreground mt-2"> <span className="font-medium text-foreground">Caso · Destacado</span>.</p>
             <ul className="mt-3 text-sm space-y-2 text-muted-foreground">
-              <li>• 4 roles: admin, gerente, jefe, monitor</li>
-              <li>• Demo público con credenciales</li>
-              <li>• Galería de paneles y export de reportes</li>
+              <li>• Caja rápida offline</li>
+              <li>• Integración API SII Directa</li>
+              <li>• Sincronización transparente de inventario</li>
             </ul>
             <div className="mt-4">
               <a href="https://controldecalidad.netlify.app" target="_blank" rel="noopener noreferrer" className="block text-center px-4 py-2 bg-accent text-primary-foreground rounded">Ver caso de estudio</a>
@@ -181,12 +178,10 @@ const Mar2ControlModalContent = () => {
             <h4 id="cred-title" className="text-lg font-semibold text-foreground">Credenciales demo</h4>
             <p className="text-sm text-muted-foreground mt-2">Usa los siguientes usuarios y, como se indica en el demo, la contraseña puede ser cualquiera.</p>
             <ul className="mt-3 space-y-2 text-sm text-foreground">
-              <li><strong>admin</strong> — Administrador</li>
-              <li><strong>gerente</strong> — Gerente</li>
-              <li><strong>jefe</strong> — Jefe de calidad</li>
-              <li><strong>monitor</strong> — Monitor de campo</li>
+              <li><strong>Demo local</strong> — Se ejecuta en Windows localmente</li>
+              <li><strong>Offline mode</strong> — Persistencia con SQLite</li>
             </ul>
-            <p className="mt-3 text-xs text-gray-500">Nota: contraseña: cualquiera · Empresa: cualquiera</p>
+            <p className="mt-3 text-xs text-gray-500">Nota: Requiere instalación del cliente sobremesa MS Windows.</p>
             <div className="mt-4 flex justify-end">
               <Button ref={credCloseRef} onClick={() => setOpenCred(false)} className="px-3 py-2 border border-border rounded text-sm">Cerrar</Button>
             </div>
@@ -195,7 +190,7 @@ const Mar2ControlModalContent = () => {
       )}
 
       {/* Footer pequeño de mockup */}
-      <footer className="max-w-6xl mx-auto mt-10 text-center text-xs text-gray-500">Mockup visual — reemplaza placeholders por imágenes reales en /public/images/mar2control/</footer>
+      <footer className="max-w-6xl mx-auto mt-10 text-center text-xs text-gray-500">Imágenes del sistema ColDevPOS (agrega /public/images/coldevpos/)</footer>
     </div>
   );
 };
@@ -219,8 +214,8 @@ const FeaturedProject = () => {
         <div className="w-full md:w-1/2 relative group">
           <div className="absolute inset-0 bg-accent/20 rounded-lg transform rotate-3 group-hover:rotate-6 transition-transform duration-300"></div>
           <img
-            src="/images/mar2control/home.png" // Using home.png as the featured image as per user feedback
-            alt="Mar2Control Project"
+            src="/images/coldevpos/home.png"
+            alt="ColDevPOS Project"
             className="relative z-10 w-full h-auto rounded-lg shadow-xl"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent rounded-lg z-20"></div>
@@ -232,12 +227,12 @@ const FeaturedProject = () => {
             Proyecto Destacado
           </span>
           <h3 className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
-            Mar2Control — Gestión de Calidad Pesquera
+            ColDevPOS — Punto de Venta Dinámico
           </h3>
           <p className="text-muted-foreground mb-6">
-            Plataforma integral para la gestión de calidad en plantas pesqueras,
-            ofreciendo inspecciones, trazabilidad y reportes detallados.
-            Diseñado para optimizar procesos y asegurar el cumplimiento de estándares.
+            Punto de Venta sin Internet. Ni la lluvia, ni la señal nos detienen.
+            Caja, inventario y boleta electrónica SII operando con continuidad
+            en condiciones reales.
           </p>
           <button
             className="inline-flex items-center px-4 py-2 bg-accent text-primary-foreground rounded-md text-sm hover:bg-accent/80"
@@ -273,7 +268,7 @@ const FeaturedProject = () => {
                 </button>
               </div>
               <div className="overflow-y-auto h-full">
-                <Mar2ControlModalContent />
+                <ColDevPosModalContent />
               </div>
             </motion.div>
           </motion.div>

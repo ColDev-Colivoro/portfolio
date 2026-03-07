@@ -1,37 +1,37 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
+    --background: 240 10% 4%;
     --foreground: 0 0% 98%;
     
-    --card: 240 10% 3.9%;
+    --card: 240 10% 6%;
     --card-foreground: 0 0% 98%;
     
-    --popover: 240 10% 3.9%;
+    --popover: 240 10% 6%;
     --popover-foreground: 0 0% 98%;
     
     --primary: 240 5.9% 10%;
     --primary-foreground: 0 0% 98%;
     
-    --secondary: 240 3.7% 15.9%;
+    --secondary: 240 3.7% 12%;
     --secondary-foreground: 0 0% 98%;
     
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
     
-    --accent: 12 76% 61%;
-    --accent-foreground: 0 0% 98%;
+    /* Acento vibrante y tecnológico (Cyan) */
+    --accent: 190 90% 50%;
+    --accent-foreground: 240 10% 4%;
     
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --ring: 190 90% 50%;
     
     --radius: 0.5rem;
   }
@@ -42,7 +42,24 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased selection:bg-accent/30 selection:text-accent;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background-image: radial-gradient(circle at top center, rgba(30,40,50,0.4) 0%, transparent 60%);
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)];
+  }
+  .glass-button {
+    @apply bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600;
+  }
+  .neon-border {
+    @apply border border-accent/50 shadow-[0_0_15px_rgba(0,255,255,0.3)];
   }
 }

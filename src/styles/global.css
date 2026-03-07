@@ -1,6 +1,18 @@
 
+.brutal-smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 96px;
+}
+
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-accent to-purple-500;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-accent via-foreground to-accent;
 }
 
 .glow {
@@ -8,18 +20,28 @@
 }
 
 .card-hover {
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  transform: translate(-3px, -3px);
+  box-shadow: 12px 12px 0 hsl(var(--accent) / 0.22);
 }
 
 .noise-bg {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  background-blend-mode: overlay;
-  opacity: 0.05;
+  background-image:
+    radial-gradient(1000px circle at 20% 10%, hsl(var(--accent) / 0.10), transparent 45%),
+    radial-gradient(800px circle at 80% 30%, rgba(255, 255, 255, 0.05), transparent 55%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 8px
+    ),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-blend-mode: screen, screen, overlay, overlay;
+  opacity: 0.07;
 }
 
 .diagonal-box {
@@ -34,7 +56,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, var(--accent-color) 0%, transparent 100%);
+  background: linear-gradient(135deg, hsl(var(--accent) / 0.35) 0%, transparent 100%);
   opacity: 0.1;
   z-index: -1;
 }

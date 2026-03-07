@@ -1,17 +1,39 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/components/ui/use-toast';
 
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
-import Projects from '@/components/Projects';
 import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Cursor from '@/components/Cursor';
-import FeaturedProject from '@/components/FeaturedProject'; // Importar el nuevo componente
+import FeaturedProject from '@/components/FeaturedProject';
+import ProjectsPage from '@/pages/ProjectsPage';
+import Chatbot from '@/components/Chatbot';
+
+const Home = () => (
+  <main>
+    <section id="home" className="min-h-screen">
+      <Hero />
+    </section>
+    <section id="about" className="min-h-screen py-20">
+      <About />
+    </section>
+    <section id="featured-project" className="min-h-screen py-20">
+      <FeaturedProject />
+    </section>
+    <section id="skills" className="min-h-screen py-20">
+      <Skills />
+    </section>
+    <section id="contact" className="min-h-screen py-20">
+      <Contact />
+    </section>
+  </main>
+);
 
 const App = () => {
   const { toast } = useToast();
@@ -51,22 +73,22 @@ const App = () => {
   return (
     <div className="relative min-h-screen bg-background text-foreground overflow-hidden">
       <div className="fixed inset-0 noise-bg pointer-events-none"></div>
-      
+
       <AnimatePresence>
         {loading ? (
-          <motion.div 
+          <motion.div
             className="fixed inset-0 flex items-center justify-center bg-background z-50"
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ 
-                scale: [0.8, 1.2, 0.8], 
+              animate={{
+                scale: [0.8, 1.2, 0.8],
                 opacity: [0, 1, 0],
                 rotate: [0, 180, 360]
               }}
-              transition={{ 
+              transition={{
                 repeat: Infinity,
                 duration: 2
               }}
@@ -90,34 +112,13 @@ const App = () => {
           >
             <Cursor />
             <Navbar activeSection={activeSection} onSectionChange={handleSectionChange} />
-            
-            <main>
-              <section id="home" className="min-h-screen">
-                <Hero />
-              </section>
-              
-              <section id="about" className="min-h-screen py-20">
-                <About />
-              </section>
 
-              {/* Nueva sección de proyecto destacado */}
-              <section id="featured-project" className="min-h-screen py-20">
-                <FeaturedProject />
-              </section>
-              
-              <section id="projects" className="min-h-screen py-20">
-                <Projects />
-              </section>
-              
-              <section id="skills" className="min-h-screen py-20">
-                <Skills />
-              </section>
-              
-              <section id="contact" className="min-h-screen py-20">
-                <Contact />
-              </section>
-            </main>
-            
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/proyectos" element={<ProjectsPage />} />
+            </Routes>
+
+            <Chatbot />
             <Footer />
             <Toaster />
           </motion.div>

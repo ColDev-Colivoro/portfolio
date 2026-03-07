@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X, Code, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = ({ activeSection, onSectionChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +34,28 @@ const Navbar = ({ activeSection, onSectionChange }) => {
   ];
 
   const handleNavClick = (sectionId) => {
+    setIsOpen(false);
+
+    if (sectionId === 'projects') {
+      navigate('/proyectos');
+      return;
+    }
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          window.scrollTo({
+            top: element.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          onSectionChange(sectionId);
+        }
+      }, 100);
+      return;
+    }
+
     const element = document.getElementById(sectionId);
     if (element) {
       window.scrollTo({
@@ -38,7 +63,6 @@ const Navbar = ({ activeSection, onSectionChange }) => {
         behavior: 'smooth'
       });
       onSectionChange(sectionId);
-      setIsOpen(false);
     }
   };
 
@@ -47,13 +71,12 @@ const Navbar = ({ activeSection, onSectionChange }) => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-background/80 backdrop-blur-lg shadow-lg' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-lg shadow-lg' : 'bg-transparent'
+        }`}
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <motion.div 
+          <motion.div
             className="flex items-center space-x-2"
             whileHover={{ scale: 1.05 }}
           >
@@ -67,11 +90,10 @@ const Navbar = ({ activeSection, onSectionChange }) => {
               <motion.button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeSection === item.id
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${activeSection === item.id
                     ? 'text-accent'
                     : 'text-muted-foreground hover:text-foreground'
-                }`}
+                  }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -119,11 +141,10 @@ const AnimatedMobileMenu = ({ isOpen, navItems, onNavClick, activeSection }) => 
             <motion.button
               key={item.id}
               onClick={() => onNavClick(item.id)}
-              className={`px-4 py-3 rounded-md text-left text-sm font-medium transition-colors ${
-                activeSection === item.id
+              className={`px-4 py-3 rounded-md text-left text-sm font-medium transition-colors ${activeSection === item.id
                   ? 'bg-secondary text-accent'
                   : 'text-muted-foreground hover:bg-secondary/50 hover:text-foreground'
-              }`}
+                }`}
               whileTap={{ scale: 0.98 }}
             >
               <div className="flex items-center">
