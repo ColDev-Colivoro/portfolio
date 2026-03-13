@@ -81,6 +81,21 @@ const buildContactReply = (lang = 'es') =>
     ? 'You can contact José using the site contact form or via LinkedIn. If you share your context and goal, he can reply through the right channel.'
     : 'Puedes contactar a José usando el formulario del sitio o vía LinkedIn. Si compartes el contexto y objetivo, te responde por el canal adecuado.';
 
+const buildGeminiHistory = (sanitizedMessages) => {
+  const mappedHistory = sanitizedMessages
+    .slice(0, -1)
+    .map((message) => ({
+      role: message.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: message.content }],
+    }))
+    .filter((item) => item.parts?.[0]?.text);
+
+  const firstUserIndex = mappedHistory.findIndex((item) => item.role === 'user');
+  if (firstUserIndex === -1) return [];
+
+  return mappedHistory.slice(firstUserIndex);
+};
+
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -153,10 +168,7 @@ export const handler = async (event) => {
       systemInstruction: buildSystemInstruction(normalizedLang),
     });
 
-    const history = sanitizedMessages.slice(0, -1).map((message) => ({
-      role: message.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: message.content }],
-    }));
+    const history = buildGeminiHistory(sanitizedMessages);
 
     const chat = model.startChat({ history });
     const result = await chat.sendMessage(latestMessage);
