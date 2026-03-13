@@ -3,7 +3,6 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Chatbot from '@/components/Chatbot';
 import Cursor from '@/components/Cursor';
 import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
@@ -51,7 +50,6 @@ const App = () => {
 						<Route path="/contact" element={<ContactPage />} />
 					</Routes>
 				</div>
-				<Chatbot lang={lang} />
 				<Footer />
 				<Toaster />
 			</div>

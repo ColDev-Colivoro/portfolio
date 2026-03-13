@@ -26,6 +26,7 @@ describe('Projects', () => {
     await user.click(screen.getAllByRole('button', { name: /Abrir caso/i })[0]);
 
     expect(screen.getByText('Caso de estudio')).toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
     expect(document.body.style.overflow).toBe('hidden');
 
     await user.click(screen.getByRole('button', { name: /Cerrar/i }));

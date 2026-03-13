@@ -1,7 +1,7 @@
 # Portfolio - Colivoro Developer
 
 > **José Camilo Colivoro Uribe**  
-> *Analista Programador | Full Stack Developer | Applied AI Engineer*
+> *Analista Programador | Full Stack Developer | Software Engineer*
 
 Este repositorio contiene el código fuente de mi portafolio digital, diseñado y construido con un enfoque moderno, integrando una estética audaz ("Glassmorphism" y acentos vibrantes) y arquitectura modular basada en React.
 
@@ -12,7 +12,7 @@ Este repositorio contiene el código fuente de mi portafolio digital, diseñado 
 ## 🎯 Objetivo de este Proyecto
 Centralizar y exponer mis proyectos más recientes (incluyendo **ColDevPOS**), junto a mi experiencia profesional y stack formativo.
 
-Además, funciona como demostración técnica al integrar funcionalidades dinámicas como enrutamiento optimizado y un **Chatbot Asistente Virtual potenciado con Inteligencia Artificial**.
+Además, funciona como demostración técnica al integrar funcionalidades dinámicas como enrutamiento optimizado, animaciones y navegación por secciones.
 
 ## 💻 Tecnologías y Frameworks
 - **Frontend Core**: React 18, Vite.
@@ -20,7 +20,7 @@ Además, funciona como demostración técnica al integrar funcionalidades dinám
 - **Styling**: Tailwind CSS (Configuración con paleta de colores personalizada, clases utilitarias para *glassmorphism* y gradientes sutiles).
 - **Animaciones e Interacciones**: Framer Motion, Lucide React (Íconos UI).
 - **Componentes Base**: Radix UI (Estructuras accesibles).
-- **Backend / IA**: Netlify Functions (Node.js) + API de Google Generative AI (Gemini 2.5 Flash).
+- **Backend**: Netlify Functions (Node.js) para extensiones serverless del sitio.
 - **Despliegue y CI/CD**: Netlify.
 
 ---
@@ -35,12 +35,8 @@ El código está estructurado en `src/` con las siguientes divisiones lógicas:
   - `Hero.jsx`, `About.jsx`, `Contact.jsx`, `Skills.jsx`, `Footer.jsx`: Componentes seccionales de la vista central.
   - `Navbar.jsx`: Barra de navegación responsive con control de scroll activo y enrutador dinámico.
   - `FeaturedProject.jsx`: Exhibición destacada de **ColDevPOS**, sistema POS offline desarrollado en React, Node y SQLite.
-  - `Chatbot.jsx`: Componente UI flotante interactivo (Botón + Ventana estilo chat), que interroga al endpoint serverless de IA.
 - `App.jsx`: Orquestador principal de las rutas y manejos de estados transversales.
-- `/netlify/functions/`: 
-  - `chat.js`: Lógica Serverless para el chatbot, conteniendo mi currículum e instrucciones al LLM (Gemini) para proveer contexto en las respuestas.
- - `src/components/ChimubotAvatar.jsx`: Avatar visual de Chimubot (inspirado en Chimu) que actúa como trigger del chat.
- - `public/images/chimubot/`: Assets visuales del sprite/estados de Chimubot.
+- `/netlify/functions/`: espacio para funciones serverless cuando corresponda.
 
 ---
 
@@ -83,17 +79,14 @@ Si deseas revisar el código y ejecutar el proyecto localmente, sigue estos paso
    ```
    Luego completa:
    ```env
-   GEMINI_API_KEY=tu_clave_api_gemini
    VITE_FORMSPREE_ENDPOINT=https://formspree.io/f/tu_form_id
-   VITE_CHAT_ENDPOINT=/.netlify/functions/chat
    ```
 
 4. **Levanta el entorno local con funciones Netlify (recomendado):**
    ```bash
    netlify dev
    ```
-   Esto permite probar `/.netlify/functions/chat` localmente junto al frontend.
-   Si usas `npm run dev` sin Netlify, define `VITE_CHAT_ENDPOINT` apuntando a un endpoint accesible.
+   Esto permite probar funciones Netlify localmente junto al frontend.
 
 5. **Alternativa solo frontend (sin funciones serverless):**
    ```bash
@@ -105,7 +98,6 @@ Si deseas revisar el código y ejecutar el proyecto localmente, sigue estos paso
 
 ## 🔐 Variables de entorno
 
-- `GEMINI_API_KEY` (server-side): API key para `netlify/functions/chat.js`.
 - `VITE_FORMSPREE_ENDPOINT` (client-side): endpoint de Formspree para el formulario.
 
 > Nunca subas `.env` al repositorio. Este proyecto ignora `.env*` y conserva solo `.env.example`.
@@ -117,7 +109,6 @@ Si deseas revisar el código y ejecutar el proyecto localmente, sigue estos paso
 Configura las variables en el sitio de Netlify:
 
 ```bash
-netlify env:set GEMINI_API_KEY "tu_clave_api_gemini"
 netlify env:set VITE_FORMSPREE_ENDPOINT "https://formspree.io/f/tu_form_id"
 ```
 
@@ -140,7 +131,7 @@ netlify deploy --prod
 ---
 
 ## 📩 Contacto
-¿Hablamos sobre oportunidades o desarrollo de software? Consúltale al **Chatbot** de este sitio en la esquina inferior derecha o contáctame directamente:
+¿Hablamos sobre oportunidades o desarrollo de software? Contáctame directamente:
 
 - **Email**: jose.coldev@gmail.com
 - **WhatsApp**: +56 9 9493 1221 / +56 9 4586 7825

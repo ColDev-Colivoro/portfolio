@@ -32,6 +32,7 @@ const CaseStudyModalShell = ({ isOpen, onClose, closeLabel, zIndex = 120, childr
 					className="fixed inset-0 flex items-center justify-center bg-black/78 p-4 backdrop-blur-md"
 					style={{ zIndex }}
 					onClick={onClose}
+					data-testid="case-study-modal-overlay"
 				>
 					<motion.div
 						initial={{ y: 90, opacity: 0, scale: 0.96 }}
@@ -40,6 +41,9 @@ const CaseStudyModalShell = ({ isOpen, onClose, closeLabel, zIndex = 120, childr
 						transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
 						className="relative h-[88vh] w-full max-w-6xl overflow-hidden rounded-[2rem] border border-white/10 bg-background shadow-[0_50px_140px_rgba(0,0,0,0.45)]"
 						onClick={(event) => event.stopPropagation()}
+						role="dialog"
+						aria-modal="true"
+						data-testid="case-study-modal-panel"
 					>
 						<button
 							onClick={onClose}
@@ -50,7 +54,7 @@ const CaseStudyModalShell = ({ isOpen, onClose, closeLabel, zIndex = 120, childr
 						>
 							{closeLabel}
 						</button>
-						<div className="h-full overflow-y-auto">{children}</div>
+						<div className="h-full overflow-y-auto scrollbar-none overscroll-contain">{children}</div>
 					</motion.div>
 				</motion.div>
 			) : null}

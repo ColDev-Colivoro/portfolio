@@ -14,9 +14,11 @@ describe('FeaturedProject', () => {
 
     await user.click(screen.getByRole('button', { name: /Abrir caso/i }));
     expect(screen.getByText('ColDevPOS — ecosistema en curso para continuidad operativa')).toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByTestId('case-study-modal-overlay')).toHaveStyle({ zIndex: '120' });
     expect(document.body.style.overflow).toBe('hidden');
 
-    await user.click(screen.getByRole('button', { name: /Cerrar/i }));
+    await user.click(screen.getByTestId('case-study-modal-overlay'));
     await waitFor(() => {
       expect(screen.queryByText('ColDevPOS — ecosistema en curso para continuidad operativa')).not.toBeInTheDocument();
       expect(document.body.style.overflow).toBe('');
