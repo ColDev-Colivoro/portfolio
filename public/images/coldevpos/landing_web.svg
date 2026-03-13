@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" rx="48" fill="#0F0F10"/>
+  <rect x="44" y="44" width="1512" height="812" rx="36" fill="#171717" stroke="#2B2B2B"/>
+  <circle cx="1328" cy="170" r="220" fill="#FF6A00" fill-opacity="0.18"/>
+  <circle cx="280" cy="770" r="240" fill="#C1121F" fill-opacity="0.10"/>
+  <rect x="106" y="108" width="420" height="42" rx="21" fill="#FF6A00" fill-opacity="0.18"/>
+  <text x="106" y="255" fill="#F5F2ED" font-size="92" font-family="Segoe UI, Arial, sans-serif" font-weight="700">ColDevPOS</text>
+  <text x="106" y="330" fill="#CFC8C2" font-size="34" font-family="Segoe UI, Arial, sans-serif">Continuidad operativa para punto de venta</text>
+  <text x="106" y="386" fill="#A9A19A" font-size="28" font-family="Segoe UI, Arial, sans-serif">Caja · Inventario · Trazabilidad · Operación local</text>
+  <rect x="106" y="462" width="1388" height="292" rx="28" fill="#111214" stroke="#2E2E2E"/>
+  <rect x="154" y="510" width="328" height="196" rx="22" fill="#181A1D" stroke="#33363A"/>
+  <rect x="530" y="510" width="416" height="196" rx="22" fill="#181A1D" stroke="#33363A"/>
+  <rect x="994" y="510" width="452" height="196" rx="22" fill="#181A1D" stroke="#33363A"/>
+  <rect x="182" y="548" width="186" height="20" rx="10" fill="#FF6A00" fill-opacity="0.9"/>
+  <rect x="182" y="592" width="258" height="14" rx="7" fill="#5B5B5B"/>
+  <rect x="182" y="624" width="220" height="14" rx="7" fill="#424242"/>
+  <rect x="562" y="548" width="168" height="20" rx="10" fill="#FF6A00" fill-opacity="0.9"/>
+  <rect x="562" y="592" width="336" height="14" rx="7" fill="#5B5B5B"/>
+  <rect x="562" y="624" width="310" height="14" rx="7" fill="#424242"/>
+  <rect x="1026" y="548" width="208" height="20" rx="10" fill="#FF6A00" fill-opacity="0.9"/>
+  <rect x="1026" y="592" width="350" height="14" rx="7" fill="#5B5B5B"/>
+  <rect x="1026" y="624" width="298" height="14" rx="7" fill="#424242"/>
+</svg>

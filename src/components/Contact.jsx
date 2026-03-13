@@ -1,277 +1,223 @@
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Loader2 } from 'lucide-react';
+import { ArrowUpRight, Loader2, Linkedin, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
+import { useLocale } from '@/context/LocaleContext';
+import { siteContent } from '@/data/siteContent';
+import { resolveCopy } from '@/lib/i18n';
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+	const { toast } = useToast();
+	const { lang } = useLocale();
+	const content = siteContent.contact;
+	const labels = content.formLabels;
+	const [formData, setFormData] = useState({
+		name: '',
+		email: '',
+		subject: '',
+		message: '',
+	});
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+	const handleChange = (event) => {
+		const { name, value } = event.target;
+		setFormData((prev) => ({ ...prev, [name]: value }));
+	};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      const response = await fetch("https://formspree.io/f/myznnnde", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		setIsSubmitting(true);
 
-      if (response.ok) {
-        toast({
-          title: "Mensaje enviado",
-          description: "Gracias por contactarme. Te responderé lo antes posible.",
-          duration: 5000,
-        });
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        });
-      } else {
-        toast({
-          title: "Error al enviar",
-          description: "Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.",
-          variant: "destructive",
-          duration: 5000,
-        });
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      toast({
-        title: "Error de red",
-        description: "No se pudo conectar con el servidor. Verifica tu conexión.",
-        variant: "destructive",
-        duration: 5000,
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+		try {
+			const response = await fetch('https://formspree.io/f/myznnnde', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(formData),
+			});
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
-  };
+			if (!response.ok) throw new Error('submit_failed');
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring', stiffness: 100 }
-    }
-  };
+			toast({
+				title: lang === 'es' ? 'Solicitud enviada' : 'Request sent',
+				description:
+					lang === 'es'
+						? 'Gracias por escribir. Responderé por el canal adecuado.'
+						: 'Thanks for reaching out. I will respond through the right channel.',
+				duration: 4500,
+			});
 
-  return (
-    <div className="container mx-auto px-4 py-16">
-      <motion.div
-        className="max-w-6xl mx-auto"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={containerVariants}
-      >
-        <motion.div className="text-center mb-16" variants={itemVariants}>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient">Contáctame</span>
-          </h2>
-          <div className="w-24 h-1 bg-accent mx-auto mb-6"></div>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            ¿Tienes un proyecto en mente? Estoy disponible para trabajar en proyectos freelance y colaboraciones.
-          </p>
-        </motion.div>
+			setFormData({ name: '', email: '', subject: '', message: '' });
+		} catch (error) {
+			console.error(error);
+			toast({
+				title: lang === 'es' ? 'No se pudo enviar' : 'Could not send request',
+				description:
+					lang === 'es'
+						? 'Intenta nuevamente en unos minutos o usa LinkedIn.'
+						: 'Please try again in a few minutes or use LinkedIn.',
+				variant: 'destructive',
+				duration: 4500,
+			});
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <motion.div variants={containerVariants}>
-            <motion.h3 
-              className="text-2xl font-bold mb-6 text-gradient"
-              variants={itemVariants}
-            >
-              Hablemos
-            </motion.h3>
-            
-            <motion.p 
-              className="text-muted-foreground mb-8"
-              variants={itemVariants}
-            >
-              Estoy interesado en proyectos freelance, especialmente proyectos ambiciosos o grandes. Sin embargo, si tienes otra petición o pregunta, no dudes en contactarme.
-            </motion.p>
-            
-            <motion.div 
-              className="space-y-6 mb-8"
-              variants={containerVariants}
-            >
-              <motion.div 
-                className="flex items-start space-x-4"
-                variants={itemVariants}
-              >
-                <div className="p-3 bg-secondary rounded-lg">
-                  <Mail className="h-5 w-5 text-accent" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium mb-1">Email</h4>
-                  <p className="text-muted-foreground">jose.coldev@gmail.com</p>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="flex items-start space-x-4"
-                variants={itemVariants}
-              >
-                <div className="p-3 bg-secondary rounded-lg">
-                  <Phone className="h-5 w-5 text-accent" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium mb-1">Teléfono</h4>
-                  <p className="text-muted-foreground">+569 45867825</p>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="flex items-start space-x-4"
-                variants={itemVariants}
-              >
-                <div className="p-3 bg-secondary rounded-lg">
-                  <MapPin className="h-5 w-5 text-accent" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-medium mb-1">Ubicación</h4>
-                  <p className="text-muted-foreground">San Pedro de la Paz, Concepcion</p>
-                </div>
-              </motion.div>
-            </motion.div>
-            
-            <motion.div 
-              className="p-6 bg-secondary/30 rounded-lg border border-border"
-              variants={itemVariants}
-            >
-              <h4 className="text-lg font-bold mb-3">Horario de Trabajo</h4>
-              <p className="text-muted-foreground mb-2">Lunes - Viernes: 9:00 AM - 6:00 PM</p>
-              <p className="text-muted-foreground">Fines de semana: Disponible para emergencias</p>
-            </motion.div>
-          </motion.div>
+	return (
+		<div className="container mx-auto px-4 py-4">
+			<div className="mx-auto max-w-6xl">
+				<div className="mb-8 max-w-3xl">
+					<p className="text-xs uppercase tracking-[0.28em] text-accent">
+						{resolveCopy(content.eyebrow, lang)}
+					</p>
+					<h2 className="mt-3 text-3xl font-semibold text-foreground md:text-4xl">
+						{resolveCopy(content.title, lang)}
+					</h2>
+					<p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+						{resolveCopy(content.description, lang)}
+					</p>
+				</div>
 
-          <motion.div variants={containerVariants}>
-            <motion.form 
-              onSubmit={handleSubmit}
-              className="bg-secondary/30 p-6 rounded-lg border border-border"
-              variants={itemVariants}
-            >
-              <h3 className="text-xl font-bold mb-6">Envíame un mensaje</h3>
-              
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Nombre
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-                    autocomplete="name"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-                    autocomplete="email"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                    Asunto
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-                    autocomplete="off"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Mensaje
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className="w-full px-4 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent resize-none"
-                    autocomplete="off"
-                  ></textarea>
-                </div>
-                
-                <Button 
-                  type="submit" 
-                  className="w-full bg-accent hover:bg-accent/80"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Enviando...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="mr-2 h-4 w-4" />
-                      Enviar Mensaje
-                    </>
-                  )}
-                </Button>
-              </div>
-            </motion.form>
-          </motion.div>
-        </div>
-      </motion.div>
-    </div>
-  );
+				<div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+					<motion.div
+						initial={{ opacity: 0, y: 18 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, amount: 0.25 }}
+						className="rounded-[2rem] border border-white/10 bg-card/70 p-7"
+						data-pressable="true"
+					>
+						<p className="text-xs uppercase tracking-[0.28em] text-accent">
+							{resolveCopy(content.formTitle, lang)}
+						</p>
+						<h3 className="mt-4 text-2xl font-semibold text-foreground">
+							{resolveCopy(content.sideTitle, lang)}
+						</h3>
+						<p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+							{resolveCopy(content.sideDescription, lang)}
+						</p>
+
+						<div className="mt-6 rounded-[1.5rem] border border-white/10 bg-background/70 p-5">
+							<div className="flex items-center gap-3">
+								<div className="rounded-2xl border border-accent/30 bg-accent/10 p-3 text-accent">
+									<Linkedin className="h-5 w-5" />
+								</div>
+								<div>
+									<h4 className="font-semibold text-foreground">LinkedIn</h4>
+									<p className="text-sm text-muted-foreground">{resolveCopy(content.linkedinLabel, lang)}</p>
+								</div>
+							</div>
+							<a
+								href="https://www.linkedin.com/in/camilo-colivoro-1a5206386"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent/80"
+								data-cursor-target="magnetic"
+								data-cursor-size="md"
+								data-pressable="true"
+							>
+								{resolveCopy(content.linkedInCta, lang)}
+								<ArrowUpRight className="h-4 w-4" />
+							</a>
+						</div>
+					</motion.div>
+
+					<motion.form
+						onSubmit={handleSubmit}
+						initial={{ opacity: 0, y: 18 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, amount: 0.25 }}
+						className="rounded-[2rem] border border-white/10 bg-card/70 p-7"
+						data-pressable="true"
+					>
+						<div className="grid gap-4 md:grid-cols-2">
+							<div className="md:col-span-1">
+								<label htmlFor="name" className="mb-2 block text-sm font-medium text-foreground">
+									{resolveCopy(labels.name, lang)}
+								</label>
+								<input
+									id="name"
+									name="name"
+									type="text"
+									value={formData.name}
+									onChange={handleChange}
+									required
+									autoComplete="name"
+									className="w-full rounded-2xl border border-white/10 bg-background px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+								/>
+							</div>
+							<div className="md:col-span-1">
+								<label htmlFor="email" className="mb-2 block text-sm font-medium text-foreground">
+									{resolveCopy(labels.email, lang)}
+								</label>
+								<input
+									id="email"
+									name="email"
+									type="email"
+									value={formData.email}
+									onChange={handleChange}
+									required
+									autoComplete="email"
+									className="w-full rounded-2xl border border-white/10 bg-background px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+								/>
+							</div>
+							<div className="md:col-span-2">
+								<label htmlFor="subject" className="mb-2 block text-sm font-medium text-foreground">
+									{resolveCopy(labels.subject, lang)}
+								</label>
+								<input
+									id="subject"
+									name="subject"
+									type="text"
+									value={formData.subject}
+									onChange={handleChange}
+									required
+									autoComplete="off"
+									className="w-full rounded-2xl border border-white/10 bg-background px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+								/>
+							</div>
+							<div className="md:col-span-2">
+								<label htmlFor="message" className="mb-2 block text-sm font-medium text-foreground">
+									{resolveCopy(labels.message, lang)}
+								</label>
+								<textarea
+									id="message"
+									name="message"
+									rows={6}
+									value={formData.message}
+									onChange={handleChange}
+									required
+									autoComplete="off"
+									className="w-full resize-none rounded-[1.5rem] border border-white/10 bg-background px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+								/>
+							</div>
+						</div>
+
+						<Button
+							type="submit"
+							disabled={isSubmitting}
+							className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-accent-foreground hover:bg-accent/90"
+							data-cursor-target="magnetic"
+							data-cursor-size="lg"
+							data-pressable="true"
+						>
+							{isSubmitting ? (
+								<>
+									<Loader2 className="h-4 w-4 animate-spin" />
+									{resolveCopy(labels.sending, lang)}
+								</>
+							) : (
+								<>
+									<Send className="h-4 w-4" />
+									{resolveCopy(labels.submit, lang)}
+								</>
+							)}
+						</Button>
+					</motion.form>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Contact;

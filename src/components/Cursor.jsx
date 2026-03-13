@@ -1,111 +1,147 @@
-
-import React, { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { usePointerCapabilities } from '@/hooks/usePointerCapabilities';
+
+const SIZE_MAP = {
+	sm: 30,
+	md: 40,
+	lg: 52,
+};
+
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+const getInteractiveTarget = (target) => {
+	if (!(target instanceof Element)) return null;
+	return target.closest('[data-cursor-target]');
+};
+
+const getSize = (element) => {
+	const sizeKey = element?.dataset?.cursorSize ?? 'md';
+	return SIZE_MAP[sizeKey] ?? SIZE_MAP.md;
+};
+
+const getMagneticOffset = (element, pointerPosition) => {
+	if (!element || element.dataset.cursorTarget !== 'magnetic') {
+		return { x: 0, y: 0 };
+	}
+
+	const rect = element.getBoundingClientRect();
+	const centerX = rect.left + rect.width / 2;
+	const centerY = rect.top + rect.height / 2;
+	const maxOffset = 10;
+
+	return {
+		x: clamp((centerX - pointerPosition.x) * 0.12, -maxOffset, maxOffset),
+		y: clamp((centerY - pointerPosition.y) * 0.12, -maxOffset, maxOffset),
+	};
+};
 
 const Cursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [cursorVariant, setCursorVariant] = useState('default');
+	const { enableFollower } = usePointerCapabilities();
+	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+	const [cursorVariant, setCursorVariant] = useState('default');
+	const [activeTarget, setActiveTarget] = useState(null);
 
-  useEffect(() => {
-    const mouseMove = (e) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      });
-    };
+	useEffect(() => {
+		if (!enableFollower) return undefined;
 
-    const mouseDown = () => setCursorVariant('click');
-    const mouseUp = () => setCursorVariant('default');
-    
-    const handleLinkHover = () => setCursorVariant('hover');
-    const handleLinkLeave = () => setCursorVariant('default');
+		const handlePointerMove = (event) => {
+			setMousePosition({ x: event.clientX, y: event.clientY });
+		};
 
-    window.addEventListener('mousemove', mouseMove);
-    window.addEventListener('mousedown', mouseDown);
-    window.addEventListener('mouseup', mouseUp);
-    
-    const links = document.querySelectorAll('a, button');
-    links.forEach(link => {
-      link.addEventListener('mouseenter', handleLinkHover);
-      link.addEventListener('mouseleave', handleLinkLeave);
-    });
+		const handlePointerDown = () => setCursorVariant('click');
+		const handlePointerUp = () => setCursorVariant(activeTarget ? 'hover' : 'default');
+		const handlePointerOver = (event) => {
+			const target = getInteractiveTarget(event.target);
+			if (!target) return;
+			setActiveTarget(target);
+			setCursorVariant('hover');
+		};
 
-    return () => {
-      window.removeEventListener('mousemove', mouseMove);
-      window.removeEventListener('mousedown', mouseDown);
-      window.removeEventListener('mouseup', mouseUp);
-      
-      links.forEach(link => {
-        link.removeEventListener('mouseenter', handleLinkHover);
-        link.removeEventListener('mouseleave', handleLinkLeave);
-      });
-    };
-  }, []);
+		const handlePointerOut = (event) => {
+			const target = getInteractiveTarget(event.target);
+			if (!target) return;
 
-  const variants = {
-    default: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      height: 32,
-      width: 32,
-      backgroundColor: 'rgba(255, 255, 255, 0.05)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      transition: {
-        type: 'spring',
-        mass: 0.6
-      }
-    },
-    hover: {
-      x: mousePosition.x - 24,
-      y: mousePosition.y - 24,
-      height: 48,
-      width: 48,
-      backgroundColor: 'rgba(255, 107, 69, 0.1)',
-      border: '1px solid rgba(255, 107, 69, 0.3)',
-      transition: {
-        type: 'spring',
-        mass: 0.6
-      }
-    },
-    click: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      height: 32,
-      width: 32,
-      backgroundColor: 'rgba(255, 107, 69, 0.2)',
-      border: '1px solid rgba(255, 107, 69, 0.5)',
-      transition: {
-        type: 'spring',
-        mass: 0.6
-      }
-    }
-  };
+			const relatedTarget = getInteractiveTarget(event.relatedTarget);
+			if (relatedTarget === target) return;
 
-  return (
-    <>
-      <motion.div
-        className="cursor-dot hidden md:block fixed top-0 left-0 rounded-full pointer-events-none z-50"
-        variants={variants}
-        animate={cursorVariant}
-      />
-      <motion.div
-        className="cursor-ring hidden md:block fixed top-0 left-0 rounded-full pointer-events-none z-50 mix-blend-difference"
-        animate={{
-          x: mousePosition.x - 4,
-          y: mousePosition.y - 4,
-        }}
-        transition={{
-          type: 'spring',
-          mass: 0.2
-        }}
-        style={{
-          height: 8,
-          width: 8,
-          backgroundColor: 'rgba(255, 107, 69, 0.8)',
-        }}
-      />
-    </>
-  );
+			setActiveTarget(null);
+			setCursorVariant('default');
+		};
+
+		const handlePointerLeave = () => {
+			setActiveTarget(null);
+			setCursorVariant('default');
+		};
+
+		window.addEventListener('pointermove', handlePointerMove, { passive: true });
+		window.addEventListener('pointerdown', handlePointerDown);
+		window.addEventListener('pointerup', handlePointerUp);
+		window.addEventListener('pointerleave', handlePointerLeave);
+		document.addEventListener('pointerover', handlePointerOver);
+		document.addEventListener('pointerout', handlePointerOut);
+
+		return () => {
+			window.removeEventListener('pointermove', handlePointerMove);
+			window.removeEventListener('pointerdown', handlePointerDown);
+			window.removeEventListener('pointerup', handlePointerUp);
+			window.removeEventListener('pointerleave', handlePointerLeave);
+			document.removeEventListener('pointerover', handlePointerOver);
+			document.removeEventListener('pointerout', handlePointerOut);
+		};
+	}, [activeTarget, enableFollower]);
+
+	const magneticOffset = useMemo(
+		() => getMagneticOffset(activeTarget, mousePosition),
+		[activeTarget, mousePosition],
+	);
+
+	const haloSize = activeTarget ? getSize(activeTarget) : SIZE_MAP.sm;
+	const haloX = mousePosition.x - haloSize / 2 - magneticOffset.x;
+	const haloY = mousePosition.y - haloSize / 2 - magneticOffset.y;
+	const coreX = mousePosition.x - 5 - magneticOffset.x * 0.4;
+	const coreY = mousePosition.y - 5 - magneticOffset.y * 0.4;
+
+	if (!enableFollower) return null;
+
+	return (
+		<>
+			<motion.div
+				aria-hidden="true"
+				className="cursor-follower-halo fixed left-0 top-0 z-[60] hidden rounded-full pointer-events-none md:block"
+				animate={{
+					x: haloX,
+					y: haloY,
+					width: cursorVariant === 'hover' ? haloSize : 30,
+					height: cursorVariant === 'hover' ? haloSize : 30,
+					opacity: cursorVariant === 'click' ? 0.95 : 1,
+					scale: cursorVariant === 'click' ? 0.86 : 1,
+				}}
+				transition={{
+					type: 'spring',
+					stiffness: 320,
+					damping: 26,
+					mass: 0.45,
+				}}
+			/>
+			<motion.div
+				aria-hidden="true"
+				className="cursor-follower-core fixed left-0 top-0 z-[61] hidden rounded-full pointer-events-none md:block"
+				animate={{
+					x: coreX,
+					y: coreY,
+					scale: cursorVariant === 'click' ? 0.8 : 1,
+					opacity: activeTarget ? 1 : 0.85,
+				}}
+				transition={{
+					type: 'spring',
+					stiffness: 420,
+					damping: 30,
+					mass: 0.2,
+				}}
+			/>
+		</>
+	);
 };
 
 export default Cursor;

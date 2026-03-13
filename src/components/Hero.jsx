@@ -1,218 +1,168 @@
-import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Instagram } from 'lucide-react';
+import { ArrowDownRight, Download, Languages, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import logoGato from '../img/logo_gato.png';
+import { useLocale } from '@/context/LocaleContext';
+import { siteContent, resumeLinks } from '@/data/siteContent';
+import { resolveCopy } from '@/lib/i18n';
 
 const Hero = () => {
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      window.scrollTo({
-        top: aboutSection.offsetTop - 80,
-        behavior: 'smooth'
-      });
-    }
-  };
+	const { lang } = useLocale();
+	const hero = siteContent.hero;
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  };
+	const scrollToSection = (sectionId) => {
+		const section = document.getElementById(sectionId);
+		if (!section) return;
+		window.scrollTo({
+			top: section.offsetTop - 88,
+			behavior: 'smooth',
+		});
+	};
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring', stiffness: 100 }
-    }
-  };
+	return (
+		<div className="container mx-auto px-4">
+			<motion.div
+				initial={{ opacity: 0, y: 28 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.55, ease: 'easeOut' }}
+				className="grid gap-10 lg:grid-cols-[1.3fr_0.7fr] lg:items-center"
+			>
+				<div className="space-y-7">
+					<div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-accent">
+						<Languages className="h-3.5 w-3.5" />
+						{resolveCopy(hero.eyebrow, lang)}
+					</div>
 
-  const [showDiscover, setShowDiscover] = useState(true);
+					<div className="space-y-5">
+						<h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-tight text-foreground md:text-6xl xl:text-7xl">
+							{resolveCopy(hero.title, lang)}
+						</h1>
+						<p className="max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+							{resolveCopy(hero.description, lang)}
+						</p>
+						<p className="max-w-3xl text-sm uppercase tracking-[0.28em] text-accent/90 md:text-base">
+							{resolveCopy(hero.supportingLine, lang)}
+						</p>
+					</div>
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.innerHeight + window.scrollY;
-      const threshold = 80;
-      if (scrollPosition >= document.body.offsetHeight - threshold) {
-        setShowDiscover(false);
-      } else {
-        setShowDiscover(true);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+					<div className="flex flex-wrap gap-3">
+						<Button
+							size="lg"
+							className="gap-2 rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90"
+							onClick={() => scrollToSection('projects')}
+							data-cursor-target="magnetic"
+							data-cursor-size="lg"
+							data-pressable="true"
+						>
+							{resolveCopy(hero.primaryCta, lang)}
+							<ArrowDownRight className="h-4 w-4" />
+						</Button>
 
-  return (
-    <div className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-accent/5 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full filter blur-3xl"></div>
-      </div>
+						<a href={resumeLinks[lang]} download data-cursor-target="magnetic" data-cursor-size="lg" data-pressable="true">
+							<Button
+								size="lg"
+								variant="outline"
+								className="gap-2 rounded-full border-accent/40 bg-transparent px-6 text-foreground hover:bg-accent/10"
+							>
+								<Download className="h-4 w-4" />
+								{resolveCopy(hero.secondaryCta, lang)}
+							</Button>
+						</a>
 
-      <div className="container mx-auto px-4 z-10">
-        <motion.div
-          className="flex flex-col items-center text-center"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div 
-            className="mb-6"
-            variants={itemVariants}
-          >
-            <img  
-              className="w-40 h-40 rounded-full border-4 border-accent object-cover"
-              alt="Foto de perfil"
-             src={logoGato} />
-          </motion.div>
+						<Button
+							size="lg"
+							variant="ghost"
+							className="gap-2 rounded-full border border-white/10 px-6 text-foreground hover:bg-white/5"
+							onClick={() => scrollToSection('contact')}
+							data-cursor-target="magnetic"
+							data-cursor-size="md"
+							data-pressable="true"
+						>
+							<Mail className="h-4 w-4" />
+							{resolveCopy(hero.tertiaryCta, lang)}
+						</Button>
+					</div>
 
-          <motion.h2 
-            className="text-xl text-accent mb-2 font-mono"
-            variants={itemVariants}
-          >
-            ¡Hola Mundo! Soy
-          </motion.h2>
+					<div className="flex flex-wrap gap-2.5">
+						{resolveCopy(hero.chips, lang).map((chip) => (
+							<span
+								key={chip}
+								className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-muted-foreground"
+							>
+								{chip}
+							</span>
+						))}
+					</div>
+				</div>
 
-          <motion.h1 
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 text-glitch"
-            data-text="Jose Colivoro"
-            variants={itemVariants}
-          >
-          Jose Colivoro
-          </motion.h1>
+				<div className="relative">
+					<div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-accent/25 via-transparent to-red-500/10 blur-3xl" />
+					<div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-card/80 p-6 shadow-[0_40px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+						<div className="mb-6 flex items-center justify-between">
+							<div>
+								<p className="text-xs uppercase tracking-[0.24em] text-accent">
+									{lang === 'es' ? 'Resumen del perfil' : 'Profile snapshot'}
+								</p>
+								<p className="mt-2 text-lg font-semibold text-foreground">
+									{lang === 'es'
+										? 'Analista Programador orientado a sistemas'
+										: 'Programmer Analyst focused on systems'}
+								</p>
+							</div>
+							<div className="rounded-2xl border border-accent/30 bg-accent/10 px-4 py-3 text-right">
+								<p className="text-[10px] uppercase tracking-[0.3em] text-accent">
+									{lang === 'es' ? 'Bilingüe' : 'Bilingual'}
+								</p>
+								<p className="mt-1 text-xl font-semibold text-foreground">ES / EN</p>
+							</div>
+						</div>
 
-          <motion.div 
-            className="w-24 h-1 bg-accent mb-6"
-            variants={itemVariants}
-          ></motion.div>
+						<div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+							{hero.stats.map((stat) => (
+								<div
+									key={stat.value}
+									className="rounded-2xl border border-white/10 bg-background/70 p-4"
+									data-pressable="true"
+								>
+									<p className="text-sm uppercase tracking-[0.28em] text-accent">{stat.value}</p>
+									<p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+										{resolveCopy(stat.label, lang)}
+									</p>
+								</div>
+							))}
+						</div>
 
-          <motion.h3 
-            className="text-xl md:text-2xl lg:text-3xl mb-8 text-gradient font-semibold"
-            variants={itemVariants}
-          >
-            Desarrollador & Diseñador Digital
-          </motion.h3>
-
-          <motion.p 
-            className="max-w-2xl text-muted-foreground mb-10 text-lg"
-            variants={itemVariants}
-          >
-            Creando experiencias digitales únicas y memorables. 
-            Mi enfoque combina diseño audaz con código limpio para 
-            construir productos que destacan en el mundo digital.
-          </motion.p>
-
-          <motion.div 
-            className="flex flex-wrap justify-center gap-4 mb-12"
-            variants={itemVariants}
-          >
-            <Button 
-              size="lg" 
-              className="bg-accent hover:bg-accent/80 text-white font-bold"
-              onClick={() => {
-                const contactSection = document.getElementById('contact');
-                if (contactSection) {
-                  window.scrollTo({
-                    top: contactSection.offsetTop - 80,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-            >
-              Contáctame
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-accent text-accent hover:bg-accent/10"
-              onClick={() => {
-                const projectsSection = document.getElementById('projects');
-                if (projectsSection) {
-                  window.scrollTo({
-                    top: projectsSection.offsetTop - 80,
-                    behavior: 'smooth'
-                  });
-                }
-              }}
-            >
-              Ver Proyectos
-            </Button>
-          </motion.div>
-
-          <motion.div 
-            className="flex space-x-6 mb-16"
-            variants={itemVariants}
-          >
-            <motion.a 
-              href="https://github.com/ColDev-Colivoro" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              whileHover={{ y: -5, scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="text-muted-foreground hover:text-accent transition-colors"
-            >
-              <Github size={24} />
-            </motion.a>
-            <motion.a 
-              href="https://www.linkedin.com/in/camilo-colivoro-1a5206386" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              whileHover={{ y: -5, scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="text-muted-foreground hover:text-accent transition-colors"
-            >
-              <Linkedin size={24} />
-            </motion.a>
-            <motion.a 
-              href="https://www.instagram.com/col__dev?utm_source=qr&igsh=MWsyY2dxdnI4aTByYQ==" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              whileHover={{ y: -5, scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="text-muted-foreground hover:text-accent transition-colors"
-            >
-              <Instagram size={24} />
-            </motion.a>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {showDiscover && (
-        <motion.div 
-          className="fixed bottom-10 left-1/2 transform -translate-x-1/2 z-50"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
-        >
-          <motion.button
-            onClick={scrollToAbout}
-            className="flex flex-col items-center text-muted-foreground hover:text-accent transition-colors"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-          >
-            <motion.span
-              className="text-sm mb-2"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            >
-              Descubre más
-            </motion.span>
-            <ArrowDown size={20} />
-          </motion.button>
-        </motion.div>
-      )}
-    </div>
-  );
+						<div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+							<p className="text-sm font-medium text-foreground">
+								{resolveCopy(hero.availability, lang)}
+							</p>
+							<div className="mt-4 flex flex-wrap gap-3">
+								<a
+									href={resumeLinks.es}
+									download
+									className="text-sm font-medium text-accent underline-offset-4 hover:underline"
+									data-cursor-target="magnetic"
+									data-cursor-size="sm"
+									data-pressable="true"
+								>
+									{resolveCopy(hero.cvEs, lang)}
+								</a>
+								<a
+									href={resumeLinks.en}
+									download
+									className="text-sm font-medium text-accent underline-offset-4 hover:underline"
+									data-cursor-target="magnetic"
+									data-cursor-size="sm"
+									data-pressable="true"
+								>
+									{resolveCopy(hero.cvEn, lang)}
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</motion.div>
+		</div>
+	);
 };
 
 export default Hero;

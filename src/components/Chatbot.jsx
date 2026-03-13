@@ -1,0 +1,161 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Bot, Loader2, MessageSquare, Send, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { siteContent } from '@/data/siteContent';
+import { resolveCopy } from '@/lib/i18n';
+
+const Chatbot = ({ lang = 'es' }) => {
+	const chatbotCopy = siteContent.chatbot;
+	const text = useMemo(
+		() => ({
+			welcome: resolveCopy(chatbotCopy.welcome, lang),
+			title: resolveCopy(chatbotCopy.title, lang),
+			online: resolveCopy(chatbotCopy.online, lang),
+			placeholder: resolveCopy(chatbotCopy.placeholder, lang),
+			thinking: resolveCopy(chatbotCopy.thinking, lang),
+			fallback: resolveCopy(chatbotCopy.fallback, lang),
+		}),
+		[chatbotCopy, lang],
+	);
+	const [isOpen, setIsOpen] = useState(false);
+	const [messages, setMessages] = useState([{ role: 'assistant', content: text.welcome }]);
+	const [inputValue, setInputValue] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
+	const messagesEndRef = useRef(null);
+
+	useEffect(() => {
+		setMessages((prev) => {
+			if (prev.length !== 1 || prev[0]?.role !== 'assistant') return prev;
+			return [{ role: 'assistant', content: text.welcome }];
+		});
+	}, [text.welcome]);
+
+	useEffect(() => {
+		if (typeof messagesEndRef.current?.scrollIntoView === 'function') {
+			messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+		}
+	}, [messages, isOpen]);
+
+	const handleSendMessage = async (event) => {
+		event.preventDefault();
+		if (!inputValue.trim() || isLoading) return;
+
+		const userMessage = { role: 'user', content: inputValue.trim() };
+		setMessages((prev) => [...prev, userMessage]);
+		setInputValue('');
+		setIsLoading(true);
+
+		try {
+			const response = await fetch('/.netlify/functions/chat', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ lang, messages: [...messages, userMessage] }),
+			});
+
+			if (!response.ok) throw new Error('chat_failed');
+
+			const data = await response.json();
+			setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
+		} catch (error) {
+			console.error(error);
+			setMessages((prev) => [...prev, { role: 'assistant', content: text.fallback }]);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	return (
+		<>
+			<motion.button
+				className="fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full bg-accent p-4 text-accent-foreground shadow-[0_0_24px_rgba(255,106,0,0.35)]"
+				onClick={() => setIsOpen((prev) => !prev)}
+				whileHover={{ scale: 1.08 }}
+				whileTap={{ scale: 0.94 }}
+				aria-label={isOpen ? 'Close assistant' : 'Open assistant'}
+				data-cursor-target="magnetic"
+				data-cursor-size="md"
+				data-pressable="true"
+			>
+				<MessageSquare className="h-6 w-6" />
+			</motion.button>
+
+			<AnimatePresence>
+				{isOpen ? (
+					<motion.div
+						initial={{ opacity: 0, y: 50, scale: 0.92 }}
+						animate={{ opacity: 1, y: 0, scale: 1 }}
+						exit={{ opacity: 0, y: 40, scale: 0.92 }}
+						transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+						className="fixed bottom-24 right-6 z-50 flex h-[520px] max-h-[70vh] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.8rem] border border-white/10 bg-card/90 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+					>
+						<div className="flex items-center justify-between border-b border-white/10 bg-background/70 p-4">
+							<div className="flex items-center gap-3">
+								<div className="rounded-full bg-accent/10 p-2 text-accent">
+									<Bot className="h-5 w-5" />
+								</div>
+								<div>
+									<h3 className="text-sm font-semibold text-foreground">{text.title}</h3>
+									<p className="text-xs text-accent">{text.online}</p>
+								</div>
+							</div>
+							<button
+								onClick={() => setIsOpen(false)}
+								className="rounded-full p-1 text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground"
+								aria-label={lang === 'es' ? 'Cerrar asistente' : 'Close assistant'}
+								data-cursor-target="magnetic"
+								data-cursor-size="sm"
+								data-pressable="true"
+							>
+								<X className="h-5 w-5" />
+							</button>
+						</div>
+
+						<div className="flex-1 space-y-4 overflow-y-auto p-4">
+							{messages.map((message, index) => (
+								<div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+									<div className={`max-w-[85%] rounded-2xl p-3 text-sm ${message.role === 'user' ? 'rounded-tr-none bg-accent text-accent-foreground' : 'rounded-tl-none border border-white/10 bg-background/80 text-foreground'}`}>
+										{message.content}
+									</div>
+								</div>
+							))}
+							{isLoading ? (
+								<div className="flex justify-start">
+									<div className="flex items-center gap-2 rounded-2xl rounded-tl-none border border-white/10 bg-background/80 p-3 text-sm text-muted-foreground">
+										<Loader2 className="h-4 w-4 animate-spin text-accent" />
+										{text.thinking}
+									</div>
+								</div>
+							) : null}
+							<div ref={messagesEndRef} />
+						</div>
+
+						<div className="border-t border-white/10 bg-background/70 p-3">
+							<form onSubmit={handleSendMessage} className="flex gap-2">
+								<input
+									type="text"
+									value={inputValue}
+									onChange={(event) => setInputValue(event.target.value)}
+									placeholder={text.placeholder}
+									className="flex-1 rounded-full border border-white/10 bg-background px-4 py-2 text-sm text-foreground outline-none transition-colors focus:border-accent"
+								/>
+								<Button
+									type="submit"
+									disabled={isLoading || !inputValue.trim()}
+									className="flex h-10 w-10 items-center justify-center rounded-full bg-accent p-0 text-accent-foreground hover:bg-accent/90"
+									data-cursor-target="magnetic"
+									data-cursor-size="sm"
+									data-pressable="true"
+								>
+									<Send className="h-4 w-4" />
+								</Button>
+							</form>
+						</div>
+					</motion.div>
+				) : null}
+			</AnimatePresence>
+		</>
+	);
+};
+
+export default Chatbot;
