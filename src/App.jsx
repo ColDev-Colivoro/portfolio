@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation, Link } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Chatbot from '@/components/Chatbot';
 import Cursor from '@/components/Cursor';
 import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
@@ -13,18 +14,9 @@ import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
 
 const RemodelingRibbon = () => (
-	<div className="pointer-events-none fixed right-[-58px] top-3 z-[140] rotate-45 border border-white/20 bg-accent px-14 py-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-accent-foreground shadow-[0_12px_40px_rgba(0,0,0,0.35)] md:right-[-54px] md:top-8 md:px-16 md:py-1.5 md:text-[10px]">
-		En remodelación
+	<div className="pointer-events-none fixed right-[-64px] top-8 z-[140] rotate-45 border border-white/20 bg-accent px-20 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-accent-foreground shadow-[0_12px_40px_rgba(0,0,0,0.35)] md:right-[-54px] md:top-10 md:text-[11px]">
+		Sitio en remodelación
 	</div>
-);
-
-const ChatMiniButton = () => (
-	<Link
-		to="/contact"
-		className="fixed bottom-6 right-6 z-[130] rounded-xl border border-white/10 bg-background/90 px-4 py-2 text-xs font-medium text-foreground shadow-[0_18px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-colors hover:border-accent/50 hover:text-accent"
-	>
-		Chat
-	</Link>
 );
 
 const App = () => {
@@ -48,7 +40,6 @@ const App = () => {
 		<div className="relative min-h-screen overflow-hidden bg-background text-foreground">
 			<div className="pointer-events-none fixed inset-0 noise-bg" />
 			<RemodelingRibbon />
-			<ChatMiniButton />
 			<Cursor />
 			<div className="relative z-10 flex min-h-screen flex-col">
 				<Navbar />
@@ -60,6 +51,7 @@ const App = () => {
 						<Route path="/contact" element={<ContactPage />} />
 					</Routes>
 				</div>
+				<Chatbot lang={lang} />
 				<Footer />
 				<Toaster />
 			</div>
