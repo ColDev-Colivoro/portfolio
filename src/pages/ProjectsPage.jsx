@@ -1,26 +1,29 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Projects from '@/components/Projects';
+import FeaturedProject from '@/components/FeaturedProject';
 
 const ProjectsPage = () => {
-    // Al entrar a la página, hacer scroll hacia arriba
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
-    return (
-        <motion.main
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-            className="min-h-screen pt-24 pb-20"
-        >
-            <div className="container mx-auto px-4">
-                <Projects />
-            </div>
-        </motion.main>
-    );
+	return (
+		<motion.main
+			initial={{ opacity: 0, y: 18 }}
+			animate={{ opacity: 1, y: 0 }}
+			exit={{ opacity: 0, y: -18 }}
+			transition={{ duration: 0.4, ease: 'easeOut' }}
+			className="w-full pt-24"
+		>
+			<section className="pb-14 pt-8">
+				<FeaturedProject />
+			</section>
+			<section className="pb-20">
+				<Projects />
+			</section>
+		</motion.main>
+	);
 };
 
 export default ProjectsPage;

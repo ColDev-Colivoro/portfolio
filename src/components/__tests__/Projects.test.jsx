@@ -1,43 +1,21 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { describe, expect, it } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { screen } from '@testing-library/react';
 import Projects from '@/components/Projects';
+import { renderWithProviders } from '@/test/renderWithProviders';
 
 describe('Projects', () => {
-    const renderProjects = () => {
-        return render(
-            <MemoryRouter>
-                <Projects />
-            </MemoryRouter>
-        );
-    };
+  it('muestra proyectos por dominio y filtra por IA / Automatización', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<Projects />);
 
-    it('muestra el título de la sección de proyectos', () => {
-        renderProjects();
-        expect(screen.getByText('Mis Proyectos en Proceso')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Casos y soluciones que muestran distintas capacidades')).toBeInTheDocument();
+    expect(screen.getByText('ColDevPOS')).toBeInTheDocument();
+    expect(screen.getByText('VoyScout')).toBeInTheDocument();
 
-    it('renderiza al menos un proyecto', () => {
-        renderProjects();
-        // El primer proyecto es "Colivoro Developer"
-        expect(screen.getByText('Colivoro Developer')).toBeInTheDocument();
-    });
+    await user.click(screen.getByRole('button', { name: 'IA / Automatización' }));
 
-    it('tiene botones de navegación (prev/next)', () => {
-        renderProjects();
-        // Los botones contienen ChevronLeft y ChevronRight
-        const buttons = document.querySelectorAll('button');
-        expect(buttons.length).toBeGreaterThan(0);
-    });
-
-    it('muestra los tags de tecnología del proyecto visible', () => {
-        renderProjects();
-        expect(screen.getByText('React')).toBeInTheDocument();
-    });
-
-    it('tiene botones de "Ver Proyecto" y "Ver Código"', () => {
-        renderProjects();
-        expect(screen.getByText('Ver Proyecto')).toBeInTheDocument();
-        expect(screen.getByText('Ver Código')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Nutriscoc Connect')).toBeInTheDocument();
+    expect(screen.queryByText('VoyScout')).not.toBeInTheDocument();
+  });
 });

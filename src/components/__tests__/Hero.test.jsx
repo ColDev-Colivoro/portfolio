@@ -1,41 +1,17 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { describe, expect, it } from 'vitest';
+import { screen } from '@testing-library/react';
 import Hero from '@/components/Hero';
+import { renderWithProviders } from '@/test/renderWithProviders';
 
 describe('Hero', () => {
-    const renderHero = () => {
-        return render(
-            <MemoryRouter>
-                <Hero />
-            </MemoryRouter>
-        );
-    };
+  it('muestra el posicionamiento principal y sus CTAs', () => {
+    renderWithProviders(<Hero />);
 
-    it('muestra el nombre del desarrollador', () => {
-        renderHero();
-        expect(screen.getByText('Jose Colivoro')).toBeInTheDocument();
-    });
-
-    it('muestra el saludo "¡Hola Mundo! Soy"', () => {
-        renderHero();
-        expect(screen.getByText('¡Hola Mundo! Soy')).toBeInTheDocument();
-    });
-
-    it('muestra el subtítulo del rol profesional', () => {
-        renderHero();
-        expect(screen.getByText('Desarrollador & Diseñador Digital')).toBeInTheDocument();
-    });
-
-    it('contiene los botones de CTA', () => {
-        renderHero();
-        expect(screen.getByText('Contáctame')).toBeInTheDocument();
-        expect(screen.getByText('Ver Proyectos')).toBeInTheDocument();
-    });
-
-    it('muestra los iconos de redes sociales (GitHub, LinkedIn, Instagram)', () => {
-        renderHero();
-        const socialLinks = document.querySelectorAll('a[target="_blank"]');
-        expect(socialLinks.length).toBeGreaterThanOrEqual(3);
-    });
+    expect(screen.getByText('Pensamiento sistémico aplicado al software')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Ver proyectos/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Descargar CV/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Solicitar contacto/i })).toBeInTheDocument();
+    expect(screen.getByText('CV ES')).toBeInTheDocument();
+    expect(screen.getByText('CV EN')).toBeInTheDocument();
+  });
 });

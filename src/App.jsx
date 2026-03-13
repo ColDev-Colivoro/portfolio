@@ -1,131 +1,55 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
-import { useToast } from '@/components/ui/use-toast';
-
 import Navbar from '@/components/Navbar';
-import Hero from '@/components/Hero';
-import About from '@/components/About';
-import Skills from '@/components/Skills';
-import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
-import Cursor from '@/components/Cursor';
-import FeaturedProject from '@/components/FeaturedProject';
-import ProjectsPage from '@/pages/ProjectsPage';
 import Chatbot from '@/components/Chatbot';
-
-const Home = () => (
-  <main>
-    <section id="home" className="min-h-screen">
-      <Hero />
-    </section>
-    <section id="about" className="min-h-screen py-20">
-      <About />
-    </section>
-    <section id="featured-project" className="min-h-screen py-20">
-      <FeaturedProject />
-    </section>
-    <section id="skills" className="min-h-screen py-20">
-      <Skills />
-    </section>
-    <section id="contact" className="min-h-screen py-20">
-      <Contact />
-    </section>
-  </main>
-);
+import Cursor from '@/components/Cursor';
+import HomePage from '@/pages/HomePage';
+import AboutPage from '@/pages/AboutPage';
+import ProjectsPage from '@/pages/ProjectsPage';
+import ContactPage from '@/pages/ContactPage';
+import { useLocale } from '@/context/LocaleContext';
+import { siteContent } from '@/data/siteContent';
+import { resolveCopy } from '@/lib/i18n';
 
 const App = () => {
-  const { toast } = useToast();
-  const [loading, setLoading] = useState(true);
-  const [activeSection, setActiveSection] = useState('home');
+	const location = useLocation();
+	const { lang } = useLocale();
 
-  // Efecto marquee para el título de la pestaña
-  useEffect(() => {
-    const marqueeTitle = "Jose Camilo Colivoro Uribe | Desarrollador & Diseñador Digital   ";
-    let i = 0;
-    const interval = setInterval(() => {
-      document.title = marqueeTitle.slice(i) + marqueeTitle.slice(0, i);
-      i = (i + 1) % marqueeTitle.length;
-    }, 200); // Puedes ajustar la velocidad aquí
+	useEffect(() => {
+		document.title = resolveCopy(siteContent.seoTitle, lang);
+	}, [lang]);
 
-    return () => clearInterval(interval);
-  }, []);
+	useEffect(() => {
+		if (!location.hash) return;
+		const id = location.hash.replace('#', '');
+		const timer = setTimeout(() => {
+			document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}, 120);
+		return () => clearTimeout(timer);
+	}, [location.hash, location.pathname]);
 
-  useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => {
-      setLoading(false);
-      toast({
-        title: "¡Bienvenido a mi portafolio!",
-        description: "Explora mi trabajo y descubre mi estilo único.",
-        duration: 5000,
-      });
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [toast]);
-
-  const handleSectionChange = (section) => {
-    setActiveSection(section);
-  };
-
-  return (
-    <div className="relative min-h-screen bg-background text-foreground overflow-hidden">
-      <div className="fixed inset-0 noise-bg pointer-events-none"></div>
-
-      <AnimatePresence>
-        {loading ? (
-          <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-background z-50"
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{
-                scale: [0.8, 1.2, 0.8],
-                opacity: [0, 1, 0],
-                rotate: [0, 180, 360]
-              }}
-              transition={{
-                repeat: Infinity,
-                duration: 2
-              }}
-              className="w-16 h-16 border-t-4 border-accent rounded-full"
-            />
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="absolute mt-24 text-2xl font-bold text-gradient"
-            >
-              Cargando experiencia...
-            </motion.h1>
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="relative z-10"
-          >
-            <Cursor />
-            <Navbar activeSection={activeSection} onSectionChange={handleSectionChange} />
-
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/proyectos" element={<ProjectsPage />} />
-            </Routes>
-
-            <Chatbot />
-            <Footer />
-            <Toaster />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
+	return (
+		<div className="relative min-h-screen overflow-hidden bg-background text-foreground">
+			<div className="pointer-events-none fixed inset-0 noise-bg" />
+			<Cursor />
+			<div className="relative z-10 flex min-h-screen flex-col">
+				<Navbar />
+				<div className="flex-1">
+					<Routes location={location} key={location.pathname}>
+						<Route path="/" element={<HomePage />} />
+						<Route path="/about" element={<AboutPage />} />
+						<Route path="/proyectos" element={<ProjectsPage />} />
+						<Route path="/contact" element={<ContactPage />} />
+					</Routes>
+				</div>
+				<Chatbot lang={lang} />
+				<Footer />
+				<Toaster />
+			</div>
+		</div>
+	);
 };
 
 export default App;

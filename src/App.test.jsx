@@ -1,29 +1,23 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { describe, expect, it, vi } from 'vitest';
+import { screen } from '@testing-library/react';
 import App from '@/App';
+import { renderWithProviders } from '@/test/renderWithProviders';
 
-// Mock de los componentes pesados para aislar los tests del App
 vi.mock('@/components/Cursor', () => ({ default: () => <div data-testid="cursor" /> }));
 
 describe('App', () => {
-    it('renderiza sin errores (smoke test)', () => {
-        // Usamos MemoryRouter porque App ya NO envuelve en BrowserRouter
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <App />
-            </MemoryRouter>
-        );
-        // Si no lanza un error, el test pasa
-        expect(document.body).toBeTruthy();
-    });
+  it('renderiza el shell principal sin el loader antiguo', () => {
+    renderWithProviders(<App />);
 
-    it('muestra el loader de carga inicialmente', () => {
-        render(
-            <MemoryRouter initialEntries={['/']}>
-                <App />
-            </MemoryRouter>
-        );
-        expect(screen.getByText('Cargando experiencia...')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Pensamiento sistémico aplicado al software')).toBeInTheDocument();
+    expect(screen.queryByText('Cargando experiencia...')).not.toBeInTheDocument();
+  });
+
+  it('incluye secciones clave y el cursor montado', () => {
+    renderWithProviders(<App />);
+
+    expect(screen.getByTestId('cursor')).toBeInTheDocument();
+    expect(screen.getByText('Proyecto destacado')).toBeInTheDocument();
+    expect(screen.getAllByText('Certificados').length).toBeGreaterThan(0);
+  });
 });

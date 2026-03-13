@@ -1,205 +1,168 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import portafolioImage from '../img/portafolio.png';
-import metalcolwImage from '../img/Metalcolw.png';
-import mar2Image from '../img/Mar2.png';
+import { useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, Filter } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { portfolioProjects } from '@/data/projectsData';
+import { siteContent } from '@/data/siteContent';
+import { useLocale } from '@/context/LocaleContext';
+import { resolveCopy } from '@/lib/i18n';
 
 const Projects = () => {
-  const [currentProject, setCurrentProject] = useState(0);
+	const { lang } = useLocale();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const [activeFilter, setActiveFilter] = useState('all');
+	const content = siteContent.projects;
 
-  const projects = [{
+	const projects = useMemo(() => {
+		if (activeFilter === 'all') return portfolioProjects;
+		return portfolioProjects.filter((project) => project.domains.includes(activeFilter));
+	}, [activeFilter]);
 
-    id: 1,
-    title: "Colivoro Developer",
-    description: "Portafolio personal de desarrollo web creado para centralizar proyectos, experiencias y enlaces profesionales, con diseño moderno y despliegue continuo en Netlify.",
-    tags: ["React", "TailwindCSS", "Netlify", "Portfolio"],
-    imageAlt: "Portafolio Colivoro Developer",
-    imageDesc: "Interfaz limpia y moderna con tarjetas de proyectos, menú de navegación dinámico y diseño responsivo en tonos oscuros y azules.",
-    liveLink: "https://colivoro-developer.netlify.app",
-    githubLink: "https://github.com/username/colivoro-developer",
-    imageSrc: portafolioImage
+	const openProject = (url) => {
+		if (!url) return;
+		if (url.startsWith('#')) {
+			if (location.pathname !== '/') {
+				navigate(`/${url}`);
+				setTimeout(() => {
+					const target = document.getElementById(url.replace('#', ''));
+					target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				}, 120);
+				return;
+			}
 
+			const target = document.getElementById(url.replace('#', ''));
+			target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			return;
+		}
 
-  }
-    ,
-  {
+		window.open(url, '_blank', 'noopener,noreferrer');
+	};
 
-    id: 2,
-    title: "Metalcolw",
-    description: "Sitio web corporativo para Metalcolw, empresa dedicada al montaje industrial y servicios de fabricación metálica, con enfoque en soluciones técnicas y proyectos a medida.",
-    tags: ["React", "TailwindCSS", "Netlify", "Empresa"],
-    imageAlt: "Sitio web corporativo de Metalcolw",
-    imageDesc: "Diseño profesional con secciones sobre servicios de montaje, galería de proyectos y formulario de contacto, en una interfaz moderna y adaptable.",
-    liveLink: "https://colivoro.netlify.app",
-    githubLink: "https://github.com/username/metalcolw",
-    imageSrc: metalcolwImage
+	const getDomainLabel = (domain) => resolveCopy(content.domainLabels[domain], lang) || domain;
 
+	return (
+		<div className="container mx-auto px-4 py-4">
+			<div className="mx-auto max-w-6xl">
+				<div className="mb-8 max-w-3xl">
+					<p className="text-xs uppercase tracking-[0.28em] text-accent">
+						{resolveCopy(content.eyebrow, lang)}
+					</p>
+					<h2 className="mt-3 text-3xl font-semibold text-foreground md:text-4xl">
+						{resolveCopy(content.title, lang)}
+					</h2>
+					<p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+						{resolveCopy(content.description, lang)}
+					</p>
+				</div>
 
-  }, {
+				<div className="mb-8 flex flex-wrap items-center gap-3">
+					<div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs uppercase tracking-[0.22em] text-muted-foreground">
+						<Filter className="h-3.5 w-3.5" />
+						{resolveCopy(content.filterLabel, lang)}
+					</div>
+					{content.filters.map((filter) => {
+						const isActive = filter.id === activeFilter;
+						return (
+							<button
+								key={filter.id}
+								onClick={() => setActiveFilter(filter.id)}
+								className={`rounded-full px-4 py-2 text-sm transition-colors ${
+									isActive
+										? 'bg-accent text-accent-foreground'
+										: 'border border-white/10 bg-white/[0.04] text-muted-foreground hover:bg-white/[0.08] hover:text-foreground'
+								}`}
+								data-cursor-target="magnetic"
+								data-cursor-size="sm"
+								data-pressable="true"
+							>
+								{resolveCopy(filter.label, lang)}
+							</button>
+						);
+					})}
+				</div>
 
-    id: 3,
-    title: "Mar2Control",
-    description: "Prototipo esquemático de programa de control de calidad para plantas pesqueras. Incluye gestión de calidad, trazabilidad y reportería bajo simulacro de distintos roles.",
-    tags: ["React", "TailwindCSS", "Prototipo", "UI/UX"],
-    imageAlt: "Prototipo esquemático Mar2Control",
-    imageDesc: "Dashboard interactivo con diseño para inspecciones y flujos de calidad en plantas.",
-    liveLink: "https://controldecalidad.netlify.app",
-    githubLink: "https://github.com/username/mar2control",
-    imageSrc: mar2Image
-
-
-  }
-
-  ];
-
-  const nextProject = () => {
-    setCurrentProject((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevProject = () => {
-    setCurrentProject((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring', stiffness: 100 }
-    }
-  };
-
-  return (
-    <div className="container mx-auto px-4 pt-8 pb-16">
-      <motion.div
-        className="max-w-6xl mx-auto"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={containerVariants}
-      >
-        <motion.div className="text-center mb-16" variants={itemVariants}>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient">Mis Proyectos en Proceso</span>
-          </h2>
-          <div className="w-24 h-1 bg-accent mx-auto mb-6"></div>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Una selección de mis trabajos más destacados que muestran mi enfoque creativo y habilidades técnicas.
-          </p>
-        </motion.div>
-
-        <div className="relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentProject}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
-            >
-              <div className="relative group">
-                <div className="absolute inset-0 bg-accent/20 rounded-lg transform rotate-3 group-hover:rotate-6 transition-transform duration-300"></div>
-                <img
-                  className="relative z-10 w-full h-auto rounded-lg shadow-xl"
-                  alt={projects[currentProject].imageAlt}
-                  src={projects[currentProject].imageSrc} />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent rounded-lg z-20"></div>
-              </div>
-
-              <div>
-                <span className="inline-block px-3 py-1 bg-accent/20 text-accent rounded-full text-sm mb-4">
-                  Proyecto {currentProject + 1}/{projects.length}
-                </span>
-                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-gradient">
-                  {projects[currentProject].title}
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {projects[currentProject].description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {projects[currentProject].tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1 bg-secondary text-xs rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex space-x-4">
-                  <Button
-                    className="bg-accent hover:bg-accent/80"
-                    onClick={() => window.open(projects[currentProject].liveLink, '_blank')}
-                  >
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    Ver Proyecto
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="border-accent text-accent hover:bg-accent/10"
-                    onClick={() => window.open(projects[currentProject].githubLink, '_blank')}
-                  >
-                    <Github className="mr-2 h-4 w-4" />
-                    Ver Código
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="flex justify-center mt-12 space-x-4">
-            <motion.button
-              onClick={prevProject}
-              className="p-2 rounded-full bg-secondary text-foreground hover:bg-accent/20 hover:text-accent transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </motion.button>
-
-            <div className="flex space-x-2">
-              {projects.map((_, index) => (
-                <motion.button
-                  key={index}
-                  onClick={() => setCurrentProject(index)}
-                  className={`w-3 h-3 rounded-full ${currentProject === index ? 'bg-accent' : 'bg-secondary'
-                    }`}
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                ></motion.button>
-              ))}
-            </div>
-
-            <motion.button
-              onClick={nextProject}
-              className="p-2 rounded-full bg-secondary text-foreground hover:bg-accent/20 hover:text-accent transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <ChevronRight className="h-6 w-6" />
-            </motion.button>
-          </div>
-        </div>
-
-      </motion.div>
-    </div>
-  );
+				<div className="grid gap-5 lg:grid-cols-2">
+					{projects.map((project, index) => (
+						<motion.article
+							key={project.id}
+							initial={{ opacity: 0, y: 20 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true, amount: 0.2 }}
+							transition={{ duration: 0.35, delay: index * 0.05 }}
+							className="overflow-hidden rounded-[1.9rem] border border-white/10 bg-card/70"
+							data-pressable="true"
+						>
+							<div className="relative h-56 overflow-hidden border-b border-white/10 bg-background">
+								<img
+									src={project.media.cover}
+									alt={resolveCopy(project.title, lang)}
+									className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+								/>
+								<div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+								<div className="absolute left-5 top-5 rounded-full border border-white/10 bg-background/70 px-3 py-1 text-xs uppercase tracking-[0.24em] text-accent">
+									{resolveCopy(project.status, lang)}
+								</div>
+							</div>
+							<div className="space-y-5 p-6">
+								<div>
+									<h3 className="text-2xl font-semibold text-foreground">
+										{resolveCopy(project.title, lang)}
+									</h3>
+									<p className="mt-1 text-sm uppercase tracking-[0.22em] text-accent/80">
+										{resolveCopy(project.subtitle, lang)}
+									</p>
+									<p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+										{resolveCopy(project.summary, lang)}
+									</p>
+								</div>
+								<div className="flex flex-wrap gap-2">
+									{project.stack.map((item) => (
+										<span
+											key={item}
+											className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-muted-foreground"
+										>
+											{item}
+										</span>
+									))}
+								</div>
+								<div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.2em] text-accent/90">
+									{project.domains.map((domain) => (
+										<span key={domain}>{getDomainLabel(domain)}</span>
+									))}
+								</div>
+								<div className="flex flex-wrap items-center gap-3">
+									{project.links.primary ? (
+										<button
+											onClick={() => openProject(project.links.primary)}
+											className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent/80"
+											data-cursor-target="magnetic"
+											data-cursor-size="md"
+											data-pressable="true"
+										>
+											{resolveCopy(content.openCase, lang)}
+											<ArrowUpRight className="h-4 w-4" />
+										</button>
+									) : null}
+									{project.links.repo ? (
+										<button
+											onClick={() => openProject(project.links.repo)}
+											className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent"
+											data-cursor-target="magnetic"
+											data-cursor-size="sm"
+											data-pressable="true"
+										>
+											{resolveCopy(content.openRepo, lang)}
+										</button>
+									) : null}
+								</div>
+							</div>
+						</motion.article>
+					))}
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Projects;

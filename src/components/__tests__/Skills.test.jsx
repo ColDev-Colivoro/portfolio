@@ -1,41 +1,15 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { describe, expect, it } from 'vitest';
+import { screen } from '@testing-library/react';
 import Skills from '@/components/Skills';
+import { renderWithProviders } from '@/test/renderWithProviders';
 
 describe('Skills', () => {
-    const renderSkills = () => {
-        return render(
-            <MemoryRouter>
-                <Skills />
-            </MemoryRouter>
-        );
-    };
+  it('muestra capacidades por dominio en vez de una lista genérica', () => {
+    renderWithProviders(<Skills />);
 
-    it('muestra el título "Mis Habilidades"', () => {
-        renderSkills();
-        expect(screen.getByText('Mis Habilidades')).toBeInTheDocument();
-    });
-
-    it('muestra las categorías principales de habilidades', () => {
-        renderSkills();
-        expect(screen.getByText('Frontend')).toBeInTheDocument();
-        expect(screen.getByText('Backend')).toBeInTheDocument();
-        expect(screen.getByText('Diseño')).toBeInTheDocument();
-        expect(screen.getByText('Bases de Datos')).toBeInTheDocument();
-    });
-
-    it('muestra habilidades específicas dentro de Frontend', () => {
-        renderSkills();
-        expect(screen.getByText('React')).toBeInTheDocument();
-        expect(screen.getByText('JavaScript')).toBeInTheDocument();
-        expect(screen.getByText('TailwindCSS')).toBeInTheDocument();
-    });
-
-    it('muestra la sección "Otras Habilidades"', () => {
-        renderSkills();
-        expect(screen.getByText('Otras Habilidades')).toBeInTheDocument();
-        expect(screen.getByText('Git/GitHub')).toBeInTheDocument();
-        expect(screen.getByText('Testing')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Dominios donde puedo aportar')).toBeInTheDocument();
+    expect(screen.getByText('Frontend y experiencia de uso')).toBeInTheDocument();
+    expect(screen.getByText('Backend y reglas de negocio')).toBeInTheDocument();
+    expect(screen.getByText('Análisis de sistemas')).toBeInTheDocument();
+  });
 });

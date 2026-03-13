@@ -1,34 +1,18 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { describe, expect, it } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { screen } from '@testing-library/react';
 import FeaturedProject from '@/components/FeaturedProject';
+import { renderWithProviders } from '@/test/renderWithProviders';
 
 describe('FeaturedProject', () => {
-    const renderFeatured = () => {
-        return render(
-            <MemoryRouter>
-                <FeaturedProject />
-            </MemoryRouter>
-        );
-    };
+  it('presenta a ColDevPOS como caso principal y abre el modal del caso', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<FeaturedProject />);
 
-    it('muestra el título de ColDevPOS como proyecto destacado', () => {
-        renderFeatured();
-        expect(screen.getByText(/ColDevPOS/)).toBeInTheDocument();
-    });
+    expect(screen.getByRole('heading', { name: 'Proyecto destacado' })).toBeInTheDocument();
+    expect(screen.getByText('Sistema POS para operación real')).toBeInTheDocument();
 
-    it('muestra el badge "Proyecto Destacado"', () => {
-        renderFeatured();
-        expect(screen.getByText('Proyecto Destacado')).toBeInTheDocument();
-    });
-
-    it('menciona la propuesta de valor offline', () => {
-        renderFeatured();
-        expect(screen.getByText(/Punto de Venta sin Internet/)).toBeInTheDocument();
-    });
-
-    it('tiene el botón de "Ver Caso de Estudio"', () => {
-        renderFeatured();
-        expect(screen.getByText('Ver Caso de Estudio')).toBeInTheDocument();
-    });
+    await user.click(screen.getByRole('button', { name: /Ver caso de estudio/i }));
+    expect(screen.getByText('ColDevPOS — continuidad operativa para punto de venta')).toBeInTheDocument();
+  });
 });

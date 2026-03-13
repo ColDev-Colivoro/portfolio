@@ -1,42 +1,15 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { describe, expect, it } from 'vitest';
+import { screen } from '@testing-library/react';
 import Footer from '@/components/Footer';
+import { renderWithProviders } from '@/test/renderWithProviders';
 
 describe('Footer', () => {
-    const renderFooter = () => {
-        return render(
-            <MemoryRouter>
-                <Footer />
-            </MemoryRouter>
-        );
-    };
+  it('muestra marca, enlaces públicos y volver arriba', () => {
+    renderWithProviders(<Footer />);
 
-    it('muestra el título PORTFOLIO', () => {
-        renderFooter();
-        expect(screen.getByText('PORTFOLIO')).toBeInTheDocument();
-    });
-
-    it('muestra la información de contacto', () => {
-        renderFooter();
-        expect(screen.getByText('jose.coldev@gmail.com')).toBeInTheDocument();
-        expect(screen.getByText('+569 45867825')).toBeInTheDocument();
-    });
-
-    it('muestra el copyright con el año actual', () => {
-        renderFooter();
-        const currentYear = new Date().getFullYear().toString();
-        expect(screen.getByText(new RegExp(currentYear))).toBeInTheDocument();
-    });
-
-    it('tiene enlaces de redes sociales', () => {
-        renderFooter();
-        const socialLinks = document.querySelectorAll('a[target="_blank"]');
-        expect(socialLinks.length).toBeGreaterThanOrEqual(3);
-    });
-
-    it('muestra la sección de enlaces rápidos', () => {
-        renderFooter();
-        expect(screen.getByText('Enlaces Rápidos')).toBeInTheDocument();
-    });
+    expect(screen.getByText('COLIVORO / SYSTEMS')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /github/i })).toHaveAttribute('href', 'https://github.com/ColDev-Colivoro');
+    expect(screen.getByRole('link', { name: /linkedin/i })).toHaveAttribute('href', 'https://www.linkedin.com/in/camilo-colivoro-1a5206386');
+    expect(screen.getByRole('button', { name: /Volver arriba/i })).toBeInTheDocument();
+  });
 });

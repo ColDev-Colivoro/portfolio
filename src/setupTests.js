@@ -12,3 +12,25 @@ class IntersectionObserver {
 }
 
 window.IntersectionObserver = IntersectionObserver;
+
+Object.defineProperty(window, 'scrollTo', {
+  writable: true,
+  value: () => {},
+});
+
+if (!window.HTMLElement.prototype.scrollIntoView) {
+  window.HTMLElement.prototype.scrollIntoView = () => {};
+}
+
+if (!window.matchMedia) {
+  window.matchMedia = (query) => ({
+    matches: query.includes('pointer: fine') || query.includes('hover: hover') ? true : false,
+    media: query,
+    onchange: null,
+    addListener: () => {},
+    removeListener: () => {},
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    dispatchEvent: () => false,
+  });
+}

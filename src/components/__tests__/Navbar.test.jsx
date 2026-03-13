@@ -1,40 +1,17 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { describe, expect, it } from 'vitest';
+import { screen } from '@testing-library/react';
 import Navbar from '@/components/Navbar';
+import { renderWithProviders } from '@/test/renderWithProviders';
 
 describe('Navbar', () => {
-    const mockOnSectionChange = vi.fn();
+  it('renderiza marca, navegación principal y toggle de idioma', () => {
+    renderWithProviders(<Navbar />);
 
-    const renderNavbar = (activeSection = 'home') => {
-        return render(
-            <MemoryRouter>
-                <Navbar activeSection={activeSection} onSectionChange={mockOnSectionChange} />
-            </MemoryRouter>
-        );
-    };
-
-    it('renderiza el logo del portfolio', () => {
-        renderNavbar();
-        expect(screen.getByText('PORTaFOLIO')).toBeInTheDocument();
-    });
-
-    it('muestra todos los items de navegación', () => {
-        renderNavbar();
-        const navLabels = ['Inicio', 'Sobre Mí', 'Proyecto Destacado', 'Proyectos', 'Habilidades', 'Contacto'];
-        navLabels.forEach(label => {
-            // Puede haber duplicados (desktop + mobile), así que usamos getAllByText
-            const elements = screen.getAllByText(label);
-            expect(elements.length).toBeGreaterThan(0);
-        });
-    });
-
-    it('resalta la sección activa', () => {
-        renderNavbar('about');
-        // El item de "Sobre Mí" debería tener la clase de color activo
-        const aboutButtons = screen.getAllByText('Sobre Mí');
-        // Al menos uno debería tener la clase de acento
-        const hasActiveClass = aboutButtons.some(btn => btn.className.includes('text-accent'));
-        expect(hasActiveClass).toBe(true);
-    });
+    expect(screen.getByText('COLIVORO / SYSTEMS')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Inicio' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Proyectos' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'ES' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'EN' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Descargar CV/i })).toBeInTheDocument();
+  });
 });

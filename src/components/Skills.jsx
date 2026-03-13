@@ -1,166 +1,78 @@
-
-import React from 'react';
 import { motion } from 'framer-motion';
-import { Code, Palette, Database, Server, Globe, Cpu } from 'lucide-react';
+import { CloudCog, Compass, Cpu, Database, LayoutPanelTop, Server } from 'lucide-react';
+import { useLocale } from '@/context/LocaleContext';
+import { siteContent } from '@/data/siteContent';
+import { resolveCopy } from '@/lib/i18n';
+
+const iconMap = {
+	layout: LayoutPanelTop,
+	server: Server,
+	database: Database,
+	cloud: CloudCog,
+	cpu: Cpu,
+	compass: Compass,
+};
 
 const Skills = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1
-      }
-    }
-  };
+	const { lang } = useLocale();
+	const content = siteContent.capabilities;
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring', stiffness: 100 }
-    }
-  };
+	return (
+		<div className="container mx-auto px-4 py-4">
+			<div className="mx-auto max-w-6xl">
+				<div className="mb-8 max-w-3xl">
+					<p className="text-xs uppercase tracking-[0.28em] text-accent">
+						{resolveCopy(content.eyebrow, lang)}
+					</p>
+					<h2 className="mt-3 text-3xl font-semibold text-foreground md:text-4xl">
+						{resolveCopy(content.title, lang)}
+					</h2>
+					<p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+						{resolveCopy(content.description, lang)}
+					</p>
+				</div>
 
-  const skillCategories = [
-    {
-      title: "Frontend",
-      icon: <Code className="h-6 w-6 text-accent" />,
-      skills: [
-        { name: "HTML/CSS", level: 95 },
-        { name: "JavaScript", level: 70 },
-        { name: "React", level: 80 },
-        { name: "Vue.js", level: 90 },
-        { name: "TailwindCSS", level: 80 }
-      ]
-    },
-    {
-      title: "Diseño",
-      icon: <Palette className="h-6 w-6 text-accent" />,
-      skills: [
-        { name: "UI/UX", level: 85 },
-        { name: "Figma", level: 10 },
-        { name: "Adobe XD", level: 20 },
-        { name: "Photoshop", level: 15 },
-        { name: "Ilustración", level: 20 }
-      ]
-    },
-    {
-      title: "Backend",
-      icon: <Server className="h-6 w-6 text-accent" />,
-      skills: [
-        { name: "Node.js", level: 80 },
-        { name: "Express", level: 75 },
-        { name: "Python", level: 90 },
-        { name: "PHP", level: 10 },
-        { name: "GraphQL", level: 15 }
-      ]
-    },
-    {
-      title: "Bases de Datos",
-      icon: <Database className="h-6 w-6 text-accent" />,
-      skills: [
-        { name: "MongoDB", level: 85 },
-        { name: "MySQL", level: 95 },
-        { name: "Firebase", level: 100 },
-        { name: "PostgreSQL", level: 70 },
-        { name: "Supabase", level: 75 }
-      ]
-    }
-  ];
-
-  return (
-    <div className="container mx-auto px-4 py-16">
-      <motion.div
-        className="max-w-6xl mx-auto"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={containerVariants}
-      >
-        <motion.div className="text-center mb-16" variants={itemVariants}>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient">Mis Habilidades</span>
-          </h2>
-          <div className="w-24 h-1 bg-accent mx-auto mb-6"></div>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Un vistazo a mi conjunto de habilidades técnicas y creativas que me permiten crear experiencias digitales excepcionales.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {skillCategories.map((category, index) => (
-            <motion.div
-              key={index}
-              className="bg-secondary/30 rounded-lg p-6 border border-border"
-              variants={itemVariants}
-            >
-              <div className="flex items-center mb-6">
-                <div className="p-3 bg-secondary rounded-lg mr-4">
-                  {category.icon}
-                </div>
-                <h3 className="text-xl font-bold">{category.title}</h3>
-              </div>
-
-              <div className="space-y-5">
-                {category.skills.map((skill, skillIndex) => (
-                  <div key={skillIndex}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm font-medium">{skill.name}</span>
-                      <span className="text-sm text-muted-foreground">{skill.level}%</span>
-                    </div>
-                    <div className="h-2 bg-secondary rounded-full overflow-hidden">
-                      <motion.div
-                        className="h-full bg-accent"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: 0.1 * skillIndex }}
-                      ></motion.div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <motion.div 
-          className="mt-20"
-          variants={containerVariants}
-        >
-          <h3 className="text-2xl font-bold text-center mb-10">Otras Habilidades</h3>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { name: "SEO", icon: <Globe className="h-5 w-5" /> },
-              { name: "Responsive Design", icon: <Cpu className="h-5 w-5" /> },
-              { name: "Animaciones", icon: <Palette className="h-5 w-5" /> },
-              { name: "Optimización", icon: <Server className="h-5 w-5" /> },
-              { name: "Accesibilidad", icon: <Globe className="h-5 w-5" /> },
-              { name: "Git/GitHub", icon: <Code className="h-5 w-5" /> },
-              { name: "Testing", icon: <Cpu className="h-5 w-5" /> },
-              { name: "CI/CD", icon: <Server className="h-5 w-5" /> }
-            ].map((skill, index) => (
-              <motion.div
-                key={index}
-                className="bg-secondary/20 rounded-lg p-4 text-center card-hover"
-                variants={itemVariants}
-                whileHover={{ y: -5, scale: 1.05 }}
-              >
-                <div className="bg-secondary/50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                  {skill.icon}
-                </div>
-                <h4 className="text-sm font-medium">{skill.name}</h4>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </motion.div>
-    </div>
-  );
+				<div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+					{content.items.map((item, index) => {
+						const Icon = iconMap[item.icon] || Compass;
+						return (
+							<motion.article
+								key={item.title.es}
+								initial={{ opacity: 0, y: 18 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true, amount: 0.2 }}
+								transition={{ duration: 0.4, delay: index * 0.05 }}
+								className="card-hover rounded-[1.75rem] border border-white/10 bg-card/65 p-6"
+								data-pressable="true"
+							>
+								<div className="flex items-center gap-3">
+									<div className="rounded-2xl border border-accent/30 bg-accent/10 p-3 text-accent">
+										<Icon className="h-5 w-5" />
+									</div>
+									<h3 className="text-xl font-semibold text-foreground">
+										{resolveCopy(item.title, lang)}
+									</h3>
+								</div>
+								<p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+									{resolveCopy(item.description, lang)}
+								</p>
+								<div className="mt-5 flex flex-wrap gap-2">
+									{item.skills.map((skill) => (
+										<span
+											key={skill}
+											className="rounded-full border border-white/10 bg-background/70 px-3 py-1 text-xs text-muted-foreground"
+										>
+											{skill}
+										</span>
+									))}
+								</div>
+							</motion.article>
+						);
+					})}
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Skills;

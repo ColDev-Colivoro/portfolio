@@ -1,108 +1,74 @@
-
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Instagram, Heart, ArrowUp } from 'lucide-react';
+import { ArrowUp, Github, Linkedin } from 'lucide-react';
+import { useLocale } from '@/context/LocaleContext';
+import { siteContent } from '@/data/siteContent';
+import { resolveCopy } from '@/lib/i18n';
 
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
+	const { lang } = useLocale();
+	const content = siteContent.footer;
 
-  return (
-    <footer className="bg-secondary/50 border-t border-border">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-2">
-            <h3 className="text-xl font-bold mb-4 text-gradient">PORTFOLIO</h3>
-            <p className="text-muted-foreground mb-6 max-w-md">
-              Creando experiencias digitales únicas y memorables. Disponible para proyectos freelance y colaboraciones.
-            </p>
-            <div className="flex space-x-4">
-              <motion.a 
-                href="https://github.com/ColDev-Colivoro" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-2 bg-background rounded-full text-muted-foreground hover:text-accent transition-colors"
-                whileHover={{ y: -5, scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Github size={18} />
-              </motion.a>
-              <motion.a 
-                href="https://www.linkedin.com/in/camilo-colivoro-1a5206386" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-2 bg-background rounded-full text-muted-foreground hover:text-accent transition-colors"
-                whileHover={{ y: -5, scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Linkedin size={18} />
-              </motion.a>
-              <motion.a 
-                href="https://www.instagram.com/col__dev?utm_source=qr&igsh=MWsyY2dxdnI4aTByYQ==" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-2 bg-background rounded-full text-muted-foreground hover:text-accent transition-colors"
-                whileHover={{ y: -5, scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Instagram size={18} />
-              </motion.a>
-            </div>
-          </div>
-          
-          <div>
-            <h4 className="text-lg font-bold mb-4">Enlaces Rápidos</h4>
-            <ul className="space-y-2">
-              {['Inicio', 'Sobre Mí', 'Proyectos', 'Habilidades', 'Contacto'].map((item, index) => (
-                <li key={index}>
-                  <a 
-                    href={`#${item.toLowerCase().replace(' ', '-')}`}
-                    className="text-muted-foreground hover:text-accent transition-colors"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="text-lg font-bold mb-4">Contacto</h4>
-            <ul className="space-y-2 text-muted-foreground">
-              <li>San pedro de la Paz, Concepcion</li>
-              <li>jose.coldev@gmail.com</li>
-              <li>+569 45867825</li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="mt-12 pt-6 border-t border-border flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-muted-foreground mb-4 md:mb-0">
-            © {new Date().getFullYear()} Mi Portfolio. Todos los derechos reservados.
-          </p>
-          
-          <div className="flex items-center">
-            <span className="text-sm text-muted-foreground mr-2">Hecho con</span>
-            <Heart className="h-4 w-4 text-accent mx-1" />
-            <span className="text-sm text-muted-foreground">y mucho café</span>
-          </div>
-          
-          <motion.button
-            onClick={scrollToTop}
-            className="mt-4 md:mt-0 p-2 bg-accent/10 rounded-full text-accent hover:bg-accent/20 transition-colors"
-            whileHover={{ y: -3, scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <ArrowUp size={18} />
-          </motion.button>
-        </div>
-      </div>
-    </footer>
-  );
+	const goTop = () => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	};
+
+	return (
+		<footer className="border-t border-white/10 bg-background/95">
+			<div className="container mx-auto px-4 py-10">
+				<div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+					<div className="max-w-2xl">
+						<p className="text-xs uppercase tracking-[0.28em] text-accent">Portfolio</p>
+						<h3 className="mt-3 text-2xl font-semibold text-foreground">
+							{resolveCopy(content.title, lang)}
+						</h3>
+						<p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+							{resolveCopy(content.tagline, lang)}
+						</p>
+					</div>
+
+					<div className="flex items-center gap-3">
+						<a
+							href="https://github.com/ColDev-Colivoro"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="rounded-full border border-white/10 p-3 text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-accent"
+							aria-label="GitHub"
+							data-cursor-target="magnetic"
+							data-cursor-size="sm"
+							data-pressable="true"
+						>
+							<Github className="h-5 w-5" />
+						</a>
+						<a
+							href="https://www.linkedin.com/in/camilo-colivoro-1a5206386"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="rounded-full border border-white/10 p-3 text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-accent"
+							aria-label="LinkedIn"
+							data-cursor-target="magnetic"
+							data-cursor-size="sm"
+							data-pressable="true"
+						>
+							<Linkedin className="h-5 w-5" />
+						</a>
+						<button
+							onClick={goTop}
+							className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-3 text-sm text-foreground transition-colors hover:bg-white/[0.05]"
+							data-cursor-target="magnetic"
+							data-cursor-size="sm"
+							data-pressable="true"
+						>
+							<ArrowUp className="h-4 w-4 text-accent" />
+							{resolveCopy(content.backToTop, lang)}
+						</button>
+					</div>
+				</div>
+
+				<div className="mt-8 border-t border-white/10 pt-5 text-sm text-muted-foreground">
+					{resolveCopy(content.rights, lang)}
+				</div>
+			</div>
+		</footer>
+	);
 };
 
 export default Footer;
