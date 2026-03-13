@@ -29,14 +29,14 @@ describe('Chatbot', () => {
     await renderChatbot();
     fireEvent.click(screen.getByRole('button', { name: /open assistant/i }));
 
-    expect(screen.getByText('Asistente del portfolio')).toBeInTheDocument();
+    expect(screen.getByText('Chimubot')).toBeInTheDocument();
   });
 
   it('muestra el mensaje de bienvenida al abrir', async () => {
     await renderChatbot();
     fireEvent.click(screen.getByRole('button', { name: /open assistant/i }));
 
-    expect(screen.getByText(/Soy el asistente del portfolio/i)).toBeInTheDocument();
+    expect(screen.getByText(/soy chimubot/i)).toBeInTheDocument();
   });
 
   it('tiene un campo de input para escribir mensajes', async () => {
@@ -49,12 +49,12 @@ describe('Chatbot', () => {
   it('cierra la ventana de chat al hacer clic en cerrar', async () => {
     await renderChatbot();
     fireEvent.click(screen.getByRole('button', { name: /open assistant/i }));
-    expect(screen.getByText('Asistente del portfolio')).toBeInTheDocument();
+    expect(screen.getByText('Chimubot')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: /cerrar asistente/i }));
 
     await waitFor(() => {
-      expect(screen.queryByText('Asistente del portfolio')).not.toBeInTheDocument();
+      expect(screen.queryByText('Chimubot')).not.toBeInTheDocument();
     });
   });
 });

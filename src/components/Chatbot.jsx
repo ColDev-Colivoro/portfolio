@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Bot, Loader2, MessageSquare, Send, X } from 'lucide-react';
+import { Loader2, MessageSquare, Send, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
@@ -115,9 +115,9 @@ const Chatbot = ({ lang = 'es' }) => {
 						className="fixed bottom-24 right-6 z-50 flex h-[520px] max-h-[70vh] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.8rem] border border-white/10 bg-card/92 shadow-[0_36px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl"
 					>
 						<div className="flex items-center justify-between border-b border-white/10 bg-background/72 p-4">
-							<div className="flex items-center gap-3">
-								<div className="rounded-full border border-accent/25 bg-accent/10 p-2 text-accent">
-									<Bot className="h-5 w-5" />
+						<div className="flex items-center gap-3">
+								<div className="rounded-full border border-accent/25 bg-accent/10 p-1">
+									<img src="/images/branding/logo-gato.png" alt="ColDev logo" className="h-7 w-7 rounded-full object-cover" />
 								</div>
 								<div>
 									<h3 className="text-sm font-semibold text-foreground">{text.title}</h3>

@@ -244,10 +244,10 @@ export const siteContent = {
 	},
 	chatbot: {
 		welcome: {
-			es: 'Hola. Soy el asistente del portfolio de José Colivoro. Puedes preguntarme por proyectos, enfoque, sistemas o experiencia.',
-			en: 'Hello. I am José Colivoro’s portfolio assistant. You can ask about projects, approach, systems, or experience.',
+			es: 'Hola, soy Chimubot. Asistente de José Colivoro en ColDev. Puedes preguntarme por proyectos, enfoque, sistemas o experiencia.',
+			en: 'Hi, I am Chimubot. José Colivoro’s assistant at ColDev. You can ask about projects, approach, systems, or experience.',
 		},
-		title: { es: 'Asistente del portfolio', en: 'Portfolio assistant' },
+		title: { es: 'Chimubot', en: 'Chimubot' },
 		online: { es: 'Disponible', en: 'Available' },
 		placeholder: { es: 'Escribe tu mensaje...', en: 'Type your message...' },
 		thinking: { es: 'Pensando...', en: 'Thinking...' },
