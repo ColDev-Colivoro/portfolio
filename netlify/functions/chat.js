@@ -1,6 +1,4 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { siteContent } from '../../src/data/siteContent.js';
-import { projectsCatalog } from '../../src/data/projectsData.js';
 
 const MAX_HISTORY_MESSAGES = 10;
 const MAX_MESSAGE_LENGTH = 700;
@@ -8,53 +6,45 @@ const MAX_MESSAGE_LENGTH = 700;
 const trimText = (value = '', maxLength = MAX_MESSAGE_LENGTH) =>
   String(value).replace(/\s+/g, ' ').trim().slice(0, maxLength);
 
-const getLocalized = (value, lang) => {
-  if (!value) return '';
-  if (typeof value === 'string') return value;
-  if (typeof value === 'object') return value[lang] ?? value.es ?? value.en ?? '';
-  return '';
-};
+const PORTFOLIO_CONTEXT = {
+  es: `
+Perfil actual del portfolio:
+- Nombre: José Camilo Colivoro Uribe
+- Rol: Analista Programador / Full Stack Developer
+- Enfoque: diseño e implementación de software aplicado a operación real
 
-const serializeProject = (project, lang) => {
-  const title = trimText(getLocalized(project.title, lang), 90);
-  const subtitle = trimText(getLocalized(project.subtitle, lang), 120);
-  const summary = trimText(getLocalized(project.summary, lang), 220);
-  const role = trimText(getLocalized(project.role, lang), 180);
-  const status = trimText(getLocalized(project.status, lang), 60);
-  const primaryLink = trimText(project?.links?.primary ?? '', 120);
-  const stack = Array.isArray(project.stack) ? project.stack.slice(0, 6).join(', ') : '';
+Capacidades destacadas:
+- Desarrollo frontend (React, Vite, Tailwind)
+- Backend y APIs (Node.js, Python, SQL)
+- Automatización y apoyo con IA aplicada
+- Integración de sistemas y continuidad operativa
 
-  return `- ${title} (${status || 'Proyecto'})\n  • ${subtitle}\n  • ${summary}\n  • Rol: ${role}\n  • Stack: ${stack}\n  • Link: ${primaryLink || 'No público'}`;
+Proyectos visibles:
+- ColDevPOS: ecosistema POS para operación local y trazabilidad
+- Sistemas de gestión y automatización para pymes
+- Soluciones web orientadas a procesos y evidencia técnica
+`,
+  en: `
+Current portfolio profile:
+- Name: José Camilo Colivoro Uribe
+- Role: Software Analyst / Full Stack Developer
+- Focus: designing and implementing software for real operations
+
+Highlighted capabilities:
+- Frontend development (React, Vite, Tailwind)
+- Backend and APIs (Node.js, Python, SQL)
+- Automation and applied AI support
+- Systems integration and operational continuity
+
+Visible projects:
+- ColDevPOS: POS ecosystem for local operations and traceability
+- Management and automation systems for SMEs
+- Web solutions focused on processes and technical evidence
+`,
 };
 
 const buildPortfolioContext = (lang = 'es') => {
-  const heroRole = trimText(getLocalized(siteContent?.hero?.role, lang), 80);
-  const heroDescription = trimText(getLocalized(siteContent?.hero?.description, lang), 220);
-  const aboutLead = trimText(getLocalized(siteContent?.about?.lead, lang), 260);
-  const capabilities = (siteContent?.capabilities?.items ?? [])
-    .map((item) => `- ${trimText(getLocalized(item.title, lang), 90)}: ${trimText(getLocalized(item.description, lang), 180)}`)
-    .slice(0, 6)
-    .join('\n');
-
-  const projects = (projectsCatalog ?? [])
-    .filter((project) => project.visible !== false)
-    .slice(0, 6)
-    .map((project) => serializeProject(project, lang))
-    .join('\n');
-
-  return `
-Perfil actual del portfolio:
-- Nombre: José Camilo Colivoro Uribe
-- Rol: ${heroRole}
-- Descripción: ${heroDescription}
-- Propuesta de valor: ${aboutLead}
-
-Capacidades destacadas:
-${capabilities}
-
-Proyectos visibles:
-${projects}
-`;
+  return trimText(PORTFOLIO_CONTEXT[lang] ?? PORTFOLIO_CONTEXT.es, 2400);
 };
 
 const buildSystemInstruction = (lang = 'es') => `
