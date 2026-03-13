@@ -57,17 +57,68 @@ Si deseas revisar el código y ejecutar el proyecto localmente, sigue estos paso
    npm install
    ```
 
-3. **Configura el entorno para el Chatbot (Opcional):**
-   Crea un archivo `.env` en la raíz del proyecto y añade tu clave de la API de Google Gemini:
+3. **Configura variables de entorno:**
+   Copia `.env.example` a `.env` en la raíz del proyecto:
+   ```bash
+   cp .env.example .env
+   ```
+   En Windows PowerShell:
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+   Luego completa:
    ```env
-   GEMINI_API_KEY=tu_clave_api_aqui
+   GEMINI_API_KEY=tu_clave_api_gemini
+   VITE_FORMSPREE_ENDPOINT=https://formspree.io/f/tu_form_id
    ```
 
-4. **Levanta el servidor local de desarrollo:**
+4. **Levanta el entorno local con funciones Netlify (recomendado):**
+   ```bash
+   netlify dev
+   ```
+   Esto permite probar `/.netlify/functions/chat` localmente junto al frontend.
+
+5. **Alternativa solo frontend (sin funciones serverless):**
    ```bash
    npm run dev
    ```
    *La aplicación estará disponible usualmente en http://localhost:5173*.
+
+---
+
+## 🔐 Variables de entorno
+
+- `GEMINI_API_KEY` (server-side): API key para `netlify/functions/chat.js`.
+- `VITE_FORMSPREE_ENDPOINT` (client-side): endpoint de Formspree para el formulario.
+
+> Nunca subas `.env` al repositorio. Este proyecto ignora `.env*` y conserva solo `.env.example`.
+
+---
+
+## ☁️ Configuración en Netlify (producción)
+
+Configura las variables en el sitio de Netlify:
+
+```bash
+netlify env:set GEMINI_API_KEY "tu_clave_api_gemini"
+netlify env:set VITE_FORMSPREE_ENDPOINT "https://formspree.io/f/tu_form_id"
+```
+
+Luego despliega:
+
+```bash
+netlify deploy --prod
+```
+
+---
+
+## 📄 Flujo de CV (Fuente de verdad)
+
+- La fuente de verdad del CV está en `../cv/*.tex` (LaTeX).
+- Cuando se actualice contenido o estilo del CV, primero se modifica LaTeX y luego se exporta a PDF.
+- Los PDFs públicos usados por el sitio deben mantenerse en `public/documents/cv/`:
+   - `jose-colivoro-cv-es.pdf`
+   - `jose-colivoro-cv-en.pdf`
 
 ---
 

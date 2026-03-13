@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import Projects from '@/components/Projects';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
@@ -17,5 +17,22 @@ describe('Projects', () => {
 
     expect(screen.getByText('Nutriscoc Connect')).toBeInTheDocument();
     expect(screen.queryByText('VoyScout')).not.toBeInTheDocument();
+  });
+
+  it('abre y cierra modal de caso de estudio usando portal', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<Projects />);
+
+    await user.click(screen.getAllByRole('button', { name: /Abrir caso/i })[0]);
+
+    expect(screen.getByText('Caso de estudio')).toBeInTheDocument();
+    expect(document.body.style.overflow).toBe('hidden');
+
+    await user.click(screen.getByRole('button', { name: /Cerrar/i }));
+
+    await waitFor(() => {
+      expect(screen.queryByText('Caso de estudio')).not.toBeInTheDocument();
+      expect(document.body.style.overflow).toBe('');
+    });
   });
 });

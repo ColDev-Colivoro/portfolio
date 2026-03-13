@@ -3,6 +3,11 @@ node_modules
 # Build output
 dist
 
+# Env files
+.env
+.env.*
+!.env.example
+
 # Local Netlify folder
 .netlify
 

@@ -14,7 +14,7 @@ describe('App', () => {
   it('incluye secciones clave del portfolio minimal', () => {
     renderWithProviders(<App />);
 
-    expect(screen.getAllByRole('heading', { name: 'Caso principal' }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('heading', { name: 'Caso destacado' }).length).toBeGreaterThan(0);
     expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
     expect(screen.getAllByText('Certificaciones').length).toBeGreaterThan(0);
   });

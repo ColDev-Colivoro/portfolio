@@ -9,29 +9,29 @@ export const projectsCatalog = [
 			en: 'ColDevPOS',
 		},
 		subtitle: {
-			es: 'Sistema POS para operación real',
-			en: 'POS system for real operations',
+			es: 'Ecosistema POS para operación real',
+			en: 'POS ecosystem for real operations',
 		},
 		summary: {
-			es: 'Sistema POS centrado en continuidad operativa, flujos de caja, inventario y trazabilidad para escenarios donde el software debe responder con rapidez y confiabilidad.',
-			en: 'POS system focused on operational continuity, cashier flows, inventory, and traceability for scenarios where software must respond with speed and reliability.',
+			es: 'Ecosistema ColDevPOS centrado en continuidad operativa: caja, inventario, boleta y control de roles en un flujo integrado.',
+			en: 'ColDevPOS ecosystem focused on operational continuity: cashier, inventory, receipt flow, and role control in one integrated flow.',
 		},
 		problem: {
 			es: 'La operación necesitaba un flujo integrado para venta, inventario y registro que no dependiera de conectividad perfecta ni de interfaces lentas.',
 			en: 'Operations needed an integrated flow for sales, inventory, and record keeping that did not depend on perfect connectivity or slow interfaces.',
 		},
 		impact: {
-			es: 'Unifica caja, inventario y continuidad operativa bajo una lógica pensada desde el uso real, con foco en velocidad, control y trazabilidad.',
-			en: 'It unifies cashier, inventory, and operational continuity under a logic designed from real use, focused on speed, control, and traceability.',
+			es: 'Consolida la operación comercial en una arquitectura única, priorizando velocidad de uso, control de datos y trazabilidad.',
+			en: 'It consolidates commercial operations into a single architecture, prioritizing speed, data control, and traceability.',
 		},
 		role: {
-			es: 'Análisis de sistema, frontend operativo, lógica de negocio y estructura de persistencia local.',
-			en: 'System analysis, operational frontend, business logic, and local persistence structure.',
+			es: 'Habilidades: análisis de sistemas, modelado de reglas POS, UX operativa, persistencia local y arquitectura desktop.',
+			en: 'Skills: systems analysis, POS rule modeling, operational UX, local persistence, and desktop architecture.',
 		},
-		stack: ['React', 'Node.js', 'SQLite', 'Operational UX'],
+		stack: ['React', 'TypeScript', 'Tauri', 'SQLite', 'Operational UX'],
 		status: {
-			es: 'Caso principal',
-			en: 'Main case',
+			es: 'En curso',
+			en: 'In progress',
 		},
 		links: {
 			primary: '#featured-project',
@@ -89,37 +89,37 @@ export const projectsCatalog = [
 		},
 		caseStudy: {
 			headline: {
-				es: 'ColDevPOS — continuidad operativa para punto de venta',
-				en: 'ColDevPOS — operational continuity for point of sale',
+				es: 'ColDevPOS — ecosistema en curso para continuidad operativa',
+				en: 'ColDevPOS — ecosystem in progress for operational continuity',
 			},
 			description: {
-				es: 'Sistema de caja, inventario y boleta electrónica orientado a operación local. La solución pone el foco en velocidad, trazabilidad y confiabilidad para escenarios críticos.',
-				en: 'Cashier, inventory, and electronic receipt system built for local operations. The solution focuses on speed, traceability, and reliability in critical scenarios.',
+				es: 'Ecosistema de operación local para caja, inventario y boleta electrónica. El caso demuestra diseño orientado a rapidez, control y continuidad.',
+				en: 'Local-operations ecosystem for cashier, inventory, and electronic receipts. The case shows design focused on speed, control, and continuity.',
 			},
 			microStats: {
-				es: ['Caja e inventario', 'Continuidad local', 'Enfoque operativo'],
-				en: ['Cashier and inventory', 'Local continuity', 'Operations-first'],
+				es: ['Ecosistema POS', 'Estado: en curso', 'Continuidad local'],
+				en: ['POS ecosystem', 'Status: in progress', 'Local continuity'],
 			},
 			features: {
 				es: [
-					'Flujos críticos de venta y caja',
-					'Persistencia y control de inventario',
-					'Interfaz orientada a rapidez de operación',
+					'Habilidad: análisis de flujo de caja, venta y boleta',
+					'Habilidad: modelado de inventario y reglas operativas',
+					'Habilidad: diseño de interfaz para operación rápida',
 				],
 				en: [
-					'Critical cashier and sales flows',
-					'Persistence and inventory control',
-					'Interface optimized for fast operations',
+					'Skill: flow analysis for cashier, sales, and receipts',
+					'Skill: inventory modeling and operational rules',
+					'Skill: interface design for fast operation',
 				],
 			},
 			credentials: {
 				es: [
-					{ label: 'Modalidad', text: 'Operación local en Windows' },
-					{ label: 'Persistencia', text: 'SQLite / almacenamiento local' },
+					{ label: 'Stack principal', text: 'React + TypeScript + Tauri + SQLite' },
+					{ label: 'Modalidad', text: 'Ecosistema desktop en operación local Windows' },
 				],
 				en: [
-					{ label: 'Mode', text: 'Local Windows operation' },
-					{ label: 'Persistence', text: 'SQLite / local storage' },
+					{ label: 'Main stack', text: 'React + TypeScript + Tauri + SQLite' },
+					{ label: 'Mode', text: 'Desktop ecosystem in local Windows operation' },
 				],
 			},
 			credentialsNote: {
@@ -138,29 +138,29 @@ export const projectsCatalog = [
 			en: 'Nutriscoc Connect',
 		},
 		subtitle: {
-			es: 'IA aplicada a nutrición y seguimiento',
-			en: 'Applied AI for nutrition and follow-up',
+			es: 'Plataforma full stack para seguimiento y operación',
+			en: 'Full stack platform for follow-up and operations',
 		},
 		summary: {
-			es: 'Producto full stack con IA aplicada para seguimiento, análisis y acompañamiento nutricional.',
-			en: 'Full stack product with applied AI for nutrition follow-up, analysis, and assistance.',
+			es: 'Proyecto full stack desarrollado para NUTRISCO/ORIZON, enfocado en seguimiento operacional, visualización de KPIs y módulos de compromisos sobre una arquitectura web moderna.',
+			en: 'Full stack project developed for NUTRISCO/ORIZON, focused on operational follow-up, KPI visualization, and commitments modules on a modern web architecture.',
 		},
 		problem: {
-			es: 'Profesionales y pacientes necesitaban una experiencia de seguimiento y asistencia más útil, continua y apoyada por IA.',
-			en: 'Professionals and patients needed a more useful, continuous, AI-assisted follow-up experience.',
+			es: 'La operación necesitaba digitalizar seguimiento, acuerdos y desempeño en una sola plataforma, evitando fragmentación entre datos, interfaz y reglas de negocio.',
+			en: 'Operations needed to digitize follow-up, commitments, and performance in a single platform, avoiding fragmentation across data, UI, and business rules.',
 		},
 		impact: {
-			es: 'Integra producto digital, visualización de información e IA aplicada en una sola experiencia de acompañamiento.',
-			en: 'It combines digital product, information visualization, and applied AI in a single assistance experience.',
+			es: 'Consolidó backend, frontend e infraestructura para dar trazabilidad al flujo operacional y facilitar decisiones con dashboards y seguimiento estructurado.',
+			en: 'It consolidated backend, frontend, and infrastructure to provide traceability in operational flow and support decisions with dashboards and structured follow-up.',
 		},
 		role: {
-			es: 'Full stack, integración de IA, arquitectura cloud y experiencia de usuario.',
-			en: 'Full stack, AI integration, cloud architecture, and user experience.',
+			es: 'Habilidades: liderazgo full stack end-to-end, modelado de entidades y APIs, frontend operativo en TypeScript, despliegue con contenedores y seguridad con RBAC/JWT.',
+			en: 'Skills: end-to-end full stack leadership, entity and API modeling, operational frontend in TypeScript, containerized deployment, and RBAC/JWT security.',
 		},
-		stack: ['React', 'Node.js', 'LLMs', 'Cloud'],
+		stack: ['Django 5', 'Django REST Framework', 'Next.js 15', 'React', 'TypeScript', 'PostgreSQL', 'Docker', 'Nginx', 'JWT', 'Firebase Auth'],
 		status: {
-			es: 'Sitio en línea',
-			en: 'Live site',
+			es: 'Proyecto corporativo',
+			en: 'Corporate project',
 		},
 		links: {
 			primary: 'https://nutriscoc.com',
@@ -196,42 +196,48 @@ export const projectsCatalog = [
 		},
 		caseStudy: {
 			headline: {
-				es: 'Nutriscoc Connect — seguimiento y automatización',
-				en: 'Nutriscoc Connect — follow-up and automation',
+				es: 'Nutriscoc Connect — plataforma full stack de seguimiento',
+				en: 'Nutriscoc Connect — full stack follow-up platform',
 			},
 			description: {
-				es: 'Plataforma orientada a generar valor práctico mediante IA, análisis y una experiencia digital más útil para profesionales y pacientes.',
-				en: 'Platform focused on practical value through AI, analytics, and a more useful digital experience for professionals and patients.',
+				es: 'Caso orientado a operación real en entorno corporativo: backend robusto en Django 5/DRF, frontend con Next.js + React + TypeScript, y despliegue en stack PostgreSQL + Docker + Nginx con control de acceso por roles.',
+				en: 'Case focused on real operations in a corporate environment: robust backend with Django 5/DRF, frontend with Next.js + React + TypeScript, and deployment on PostgreSQL + Docker + Nginx with role-based access control.',
 			},
 			microStats: {
-				es: ['LLMs', 'Arquitectura cloud', 'Producto full stack'],
-				en: ['LLMs', 'Cloud architecture', 'Full stack product'],
+				es: ['Proyecto full stack', 'RBAC + JWT', 'Stack productivo'],
+				en: ['Full stack project', 'RBAC + JWT', 'Production-grade stack'],
 			},
 			features: {
 				es: [
-					'Asistencia y generación apoyada por IA',
-					'Seguimiento y visualización de información',
-					'Integración entre producto, datos y experiencia',
+					'Backend de KPIs, acuerdos y seguimiento operacional (Django 5 + DRF)',
+					'Frontend operativo con dashboards y módulos de compromisos (Next.js, React, TypeScript)',
+					'Despliegue y continuidad con PostgreSQL, Docker y Nginx',
+					'Seguridad con autenticación JWT y control de acceso por roles (RBAC/Firebase)',
 				],
 				en: [
-					'AI-assisted generation and support',
-					'Follow-up and information visualization',
-					'Integration across product, data, and experience',
+					'Backend for KPIs, commitments, and operational follow-up (Django 5 + DRF)',
+					'Operational frontend with dashboards and commitments modules (Next.js, React, TypeScript)',
+					'Deployment and continuity with PostgreSQL, Docker, and Nginx',
+					'Security with JWT authentication and role-based access control (RBAC/Firebase)',
 				],
 			},
 			credentials: {
 				es: [
-					{ label: 'Motor IA', text: 'Integración con LLMs' },
-					{ label: 'Deploy', text: 'Stack cloud' },
+					{ label: 'Backend', text: 'Django 5 + Django REST Framework' },
+					{ label: 'Frontend', text: 'Next.js 15 + React + TypeScript + TailwindCSS' },
+					{ label: 'Infraestructura', text: 'PostgreSQL + Docker + Nginx' },
+					{ label: 'Seguridad', text: 'JWT + RBAC (Firebase Auth)' },
 				],
 				en: [
-					{ label: 'AI engine', text: 'LLM integration' },
-					{ label: 'Deploy', text: 'Cloud stack' },
+					{ label: 'Backend', text: 'Django 5 + Django REST Framework' },
+					{ label: 'Frontend', text: 'Next.js 15 + React + TypeScript + TailwindCSS' },
+					{ label: 'Infrastructure', text: 'PostgreSQL + Docker + Nginx' },
+					{ label: 'Security', text: 'JWT + RBAC (Firebase Auth)' },
 				],
 			},
 			credentialsNote: {
-				es: 'Proyecto en evolución continua.',
-				en: 'Project in continuous evolution.',
+				es: 'La versión pública resume arquitectura y enfoque técnico; parte del alcance operativo es de contexto corporativo.',
+				en: 'The public version summarizes architecture and technical approach; part of the operational scope belongs to a corporate context.',
 			},
 		},
 	},
@@ -261,13 +267,13 @@ export const projectsCatalog = [
 			en: 'Brings control, capture, and data follow-up closer to the people executing real operations.',
 		},
 		role: {
-			es: 'Modelado de flujo, interfaz de captura y enfoque en continuidad de proceso.',
-			en: 'Flow modeling, capture interface, and process continuity focus.',
+			es: 'Habilidades: modelado de flujo, interfaz de captura en terreno y continuidad de proceso.',
+			en: 'Skills: flow modeling, field capture interface, and process continuity.',
 		},
 		stack: ['Traceability', 'Quality', 'UX', 'Data capture'],
 		status: {
-			es: 'Prototipo funcional',
-			en: 'Functional prototype',
+			es: 'Prototipo',
+			en: 'Prototype',
 		},
 		links: {
 			primary: 'https://controldecalidad.netlify.app',
@@ -317,8 +323,8 @@ export const projectsCatalog = [
 			en: 'Centralizes administrative processes and reduces operational friction in course management.',
 		},
 		role: {
-			es: 'Modelado del sistema, backend de gestión y vistas para operación administrativa.',
-			en: 'System modeling, management backend, and administrative operation views.',
+			es: 'Habilidades: modelado del sistema, backend de gestión, frontend administrativo e integración SQL.',
+			en: 'Skills: system modeling, management backend, administrative frontend, and SQL integration.',
 		},
 		stack: ['Python', 'Django', 'SQL', 'React'],
 		status: {

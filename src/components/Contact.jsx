@@ -12,6 +12,8 @@ const Contact = () => {
 	const { lang } = useLocale();
 	const content = siteContent.contact;
 	const labels = content.formLabels;
+	const formspreeEndpoint =
+		import.meta.env.VITE_FORMSPREE_ENDPOINT?.trim() || 'https://formspree.io/f/myznnnde';
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
@@ -30,7 +32,7 @@ const Contact = () => {
 		setIsSubmitting(true);
 
 		try {
-			const response = await fetch('https://formspree.io/f/myznnnde', {
+			const response = await fetch(formspreeEndpoint, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(formData),
