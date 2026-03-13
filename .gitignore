@@ -5,3 +5,6 @@ dist
 
 # Local Netlify folder
 .netlify
+
+# Local references (not part of portfolio repo)
+gentleman_programming/
