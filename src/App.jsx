@@ -14,8 +14,8 @@ import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
 
 const RemodelingRibbon = () => (
-	<div className="pointer-events-none fixed right-[-64px] top-8 z-[140] rotate-45 border border-white/20 bg-accent px-20 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-accent-foreground shadow-[0_12px_40px_rgba(0,0,0,0.35)] md:right-[-54px] md:top-10 md:text-[11px]">
-		Sitio en remodelación
+	<div className="pointer-events-none fixed right-[-58px] top-3 z-[140] rotate-45 border border-white/20 bg-accent px-14 py-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-accent-foreground shadow-[0_12px_40px_rgba(0,0,0,0.35)] md:right-[-54px] md:top-8 md:px-16 md:py-1.5 md:text-[10px]">
+		En remodelación
 	</div>
 );
 
