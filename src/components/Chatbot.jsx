@@ -1,9 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Loader2, MessageSquare, Send, X } from 'lucide-react';
+import { Loader2, Send, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ChimubotAvatar from '@/components/ChimubotAvatar';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
+
+const getChatEndpoints = () => {
+	const configured = import.meta.env.VITE_CHAT_ENDPOINT?.trim();
+	const endpoints = [configured || '/.netlify/functions/chat'];
+
+	if (typeof window !== 'undefined' && ['localhost', '127.0.0.1'].includes(window.location.hostname)) {
+		endpoints.push('http://localhost:8888/.netlify/functions/chat');
+	}
+
+	return [...new Set(endpoints)];
+};
 
 const Chatbot = ({ lang = 'es' }) => {
 	const chatbotCopy = siteContent.chatbot;
@@ -55,16 +67,42 @@ const Chatbot = ({ lang = 'es' }) => {
 		setIsLoading(true);
 
 		try {
-			const callChat = async () =>
-				fetch('/.netlify/functions/chat', {
+			const callChat = async (endpoint) =>
+				fetch(endpoint, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ lang, messages: [...messages, userMessage] }),
 				});
 
-			let response = await callChat();
+			let response = null;
+			const endpoints = getChatEndpoints();
+
+			for (const endpoint of endpoints) {
+				const attempt = await callChat(endpoint).catch(() => null);
+				if (!attempt) continue;
+
+				if (attempt.ok || attempt.status !== 404) {
+					response = attempt;
+					break;
+				}
+			}
+
+			if (!response) {
+				setMessages((prev) => [
+					...prev,
+					{
+						role: 'assistant',
+						content:
+							lang === 'en'
+								? 'The assistant is not reachable in local mode. Run `netlify dev` or set `VITE_CHAT_ENDPOINT` in `.env`.'
+								: 'El asistente no está disponible en modo local. Ejecuta `netlify dev` o define `VITE_CHAT_ENDPOINT` en `.env`.',
+					},
+				]);
+				return;
+			}
+
 			if (!response.ok && response.status >= 500) {
-				response = await callChat();
+				response = (await callChat(endpoints[0]).catch(() => response)) || response;
 			}
 
 			const data = await response.json().catch(() => null);
@@ -84,40 +122,21 @@ const Chatbot = ({ lang = 'es' }) => {
 
 	return (
 		<>
-			<AnimatePresence>
-				{(isReady || isOpen) && (
-					<motion.button
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: 20 }}
-						transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-						className="fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full border border-white/10 bg-background/88 p-3 text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-xl"
-						onClick={() => setIsOpen((prev) => !prev)}
-						whileHover={{ y: -3, scale: 1.02 }}
-						whileTap={{ scale: 0.96 }}
-						aria-label={isOpen ? 'Close assistant' : 'Open assistant'}
-						data-cursor-target="magnetic"
-						data-cursor-size="md"
-						data-pressable="true"
-					>
-						<MessageSquare className="h-5 w-5 text-accent" />
-					</motion.button>
-				)}
-			</AnimatePresence>
+			<ChimubotAvatar isOpen={isOpen} isLoading={isLoading} isVisible={isReady || isOpen} onToggle={() => setIsOpen((prev) => !prev)} lang={lang} />
 
 			<AnimatePresence>
 				{isOpen ? (
 					<motion.div
-						initial={{ opacity: 0, y: 60, scale: 0.96 }}
-						animate={{ opacity: 1, y: 0, scale: 1 }}
-						exit={{ opacity: 0, y: 40, scale: 0.96 }}
-						transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+						initial={{ opacity: 0, y: 92, x: 34, scale: 0.72, filter: 'blur(6px)' }}
+						animate={{ opacity: 1, y: 0, x: 0, scale: 1, filter: 'blur(0px)' }}
+						exit={{ opacity: 0, y: 36, x: 20, scale: 0.9, filter: 'blur(4px)' }}
+						transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
 						className="fixed bottom-24 right-6 z-50 flex h-[520px] max-h-[70vh] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.8rem] border border-white/10 bg-card/92 shadow-[0_36px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl"
 					>
 						<div className="flex items-center justify-between border-b border-white/10 bg-background/72 p-4">
 						<div className="flex items-center gap-3">
-								<div className="rounded-full border border-accent/25 bg-accent/10 p-1">
-									<img src="/images/branding/logo-gato.png" alt="ColDev logo" className="h-7 w-7 rounded-full object-cover" />
+								<div className="h-7 w-7 overflow-hidden rounded-full border border-accent/25 bg-accent/10">
+									<img src="/images/branding/logo-gato.png" alt="ColDev logo" className="h-7 w-auto max-w-none object-left" />
 								</div>
 								<div>
 									<h3 className="text-sm font-semibold text-foreground">{text.title}</h3>

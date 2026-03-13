@@ -13,6 +13,12 @@ import { useLocale } from '@/context/LocaleContext';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
 
+const RemodelingRibbon = () => (
+	<div className="pointer-events-none fixed right-[-64px] top-8 z-[140] rotate-45 border border-white/20 bg-accent px-20 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-accent-foreground shadow-[0_12px_40px_rgba(0,0,0,0.35)] md:right-[-54px] md:top-10 md:text-[11px]">
+		Sitio en remodelación
+	</div>
+);
+
 const App = () => {
 	const location = useLocation();
 	const { lang } = useLocale();
@@ -33,6 +39,7 @@ const App = () => {
 	return (
 		<div className="relative min-h-screen overflow-hidden bg-background text-foreground">
 			<div className="pointer-events-none fixed inset-0 noise-bg" />
+			<RemodelingRibbon />
 			<Cursor />
 			<div className="relative z-10 flex min-h-screen flex-col">
 				<Navbar />

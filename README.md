@@ -39,6 +39,21 @@ El código está estructurado en `src/` con las siguientes divisiones lógicas:
 - `App.jsx`: Orquestador principal de las rutas y manejos de estados transversales.
 - `/netlify/functions/`: 
   - `chat.js`: Lógica Serverless para el chatbot, conteniendo mi currículum e instrucciones al LLM (Gemini) para proveer contexto en las respuestas.
+ - `src/components/ChimubotAvatar.jsx`: Avatar visual de Chimubot (inspirado en Chimu) que actúa como trigger del chat.
+ - `public/images/chimubot/`: Assets visuales del sprite/estados de Chimubot.
+
+---
+
+## 🪟 Patrón UI: Modales globales (Case Study)
+
+- Los modales de casos (`FeaturedProject` y `Projects`) se renderizan mediante **portal a `document.body`** usando `src/components/CaseStudyModalShell.jsx`.
+- Motivo: evitar desplazamientos o deformaciones cuando el árbol padre usa animaciones con `transform`/`filter`.
+- El shell unifica:
+  - cierre por backdrop, botón y tecla `Escape`,
+  - `scroll-lock` del `body` al abrir/cerrar,
+  - scroll interno del contenido con **barra visual oculta** (`scrollbar-none`) manteniendo rueda/touch.
+
+> Si agregas nuevos modales de pantalla completa, reutiliza este patrón para mantener consistencia visual y de accesibilidad base.
 
 ---
 
@@ -70,6 +85,7 @@ Si deseas revisar el código y ejecutar el proyecto localmente, sigue estos paso
    ```env
    GEMINI_API_KEY=tu_clave_api_gemini
    VITE_FORMSPREE_ENDPOINT=https://formspree.io/f/tu_form_id
+   VITE_CHAT_ENDPOINT=/.netlify/functions/chat
    ```
 
 4. **Levanta el entorno local con funciones Netlify (recomendado):**
@@ -77,6 +93,7 @@ Si deseas revisar el código y ejecutar el proyecto localmente, sigue estos paso
    netlify dev
    ```
    Esto permite probar `/.netlify/functions/chat` localmente junto al frontend.
+   Si usas `npm run dev` sin Netlify, define `VITE_CHAT_ENDPOINT` apuntando a un endpoint accesible.
 
 5. **Alternativa solo frontend (sin funciones serverless):**
    ```bash
