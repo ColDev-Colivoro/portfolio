@@ -7,9 +7,9 @@ describe('Skills', () => {
   it('muestra capacidades por dominio en vez de una lista genérica', () => {
     renderWithProviders(<Skills />);
 
-    expect(screen.getByText('Dominios donde puedo aportar')).toBeInTheDocument();
-    expect(screen.getByText('Frontend y experiencia de uso')).toBeInTheDocument();
-    expect(screen.getByText('Backend y reglas de negocio')).toBeInTheDocument();
+    expect(screen.getByText('Capacidades que atraviesan el trabajo')).toBeInTheDocument();
+    expect(screen.getByText('Frontend y experiencia')).toBeInTheDocument();
+    expect(screen.getByText('Backend y reglas')).toBeInTheDocument();
     expect(screen.getByText('Análisis de sistemas')).toBeInTheDocument();
   });
 });

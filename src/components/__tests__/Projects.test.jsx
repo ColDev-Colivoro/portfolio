@@ -9,7 +9,7 @@ describe('Projects', () => {
     const user = userEvent.setup();
     renderWithProviders(<Projects />);
 
-    expect(screen.getByText('Casos y soluciones que muestran distintas capacidades')).toBeInTheDocument();
+    expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
     expect(screen.getByText('ColDevPOS')).toBeInTheDocument();
     expect(screen.getByText('VoyScout')).toBeInTheDocument();
 

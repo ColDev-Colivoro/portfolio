@@ -9,10 +9,10 @@ describe('FeaturedProject', () => {
     const user = userEvent.setup();
     renderWithProviders(<FeaturedProject />);
 
-    expect(screen.getByRole('heading', { name: 'Proyecto destacado' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Caso principal' })).toBeInTheDocument();
     expect(screen.getByText('Sistema POS para operación real')).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: /Ver caso de estudio/i }));
+    await user.click(screen.getByRole('button', { name: /Abrir caso/i }));
     expect(screen.getByText('ColDevPOS — continuidad operativa para punto de venta')).toBeInTheDocument();
   });
 });

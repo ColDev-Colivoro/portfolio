@@ -3,6 +3,8 @@ import { useLocale } from '@/context/LocaleContext';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
 
+const logoPath = '/images/branding/logo-gato.png';
+
 const Footer = () => {
 	const { lang } = useLocale();
 	const content = siteContent.footer;
@@ -15,14 +17,19 @@ const Footer = () => {
 		<footer className="border-t border-white/10 bg-background/95">
 			<div className="container mx-auto px-4 py-10">
 				<div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-					<div className="max-w-2xl">
-						<p className="text-xs uppercase tracking-[0.28em] text-accent">Portfolio</p>
-						<h3 className="mt-3 text-2xl font-semibold text-foreground">
-							{resolveCopy(content.title, lang)}
-						</h3>
-						<p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-							{resolveCopy(content.tagline, lang)}
-						</p>
+					<div className="flex max-w-2xl items-start gap-4">
+						<div className="flex h-14 w-14 items-center justify-center rounded-[1.25rem] border border-white/10 bg-white/[0.03] shadow-[0_18px_48px_rgba(0,0,0,0.24)]">
+							<img src={logoPath} alt="Logo gato ColDev" className="h-10 w-10 object-contain invert brightness-[1.95] contrast-125" />
+						</div>
+						<div>
+							<p className="text-[11px] uppercase tracking-[0.3em] text-accent">Portfolio</p>
+							<h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-foreground">
+								{resolveCopy(content.title, lang)}
+							</h3>
+							<p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+								{resolveCopy(content.tagline, lang)}
+							</p>
+						</div>
 					</div>
 
 					<div className="flex items-center gap-3">
@@ -30,7 +37,7 @@ const Footer = () => {
 							href="https://github.com/ColDev-Colivoro"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="rounded-full border border-white/10 p-3 text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-accent"
+							className="rounded-full border border-white/10 p-3 text-muted-foreground transition-colors hover:border-accent/40 hover:bg-white/[0.05] hover:text-accent"
 							aria-label="GitHub"
 							data-cursor-target="magnetic"
 							data-cursor-size="sm"
@@ -42,7 +49,7 @@ const Footer = () => {
 							href="https://www.linkedin.com/in/camilo-colivoro-1a5206386"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="rounded-full border border-white/10 p-3 text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-accent"
+							className="rounded-full border border-white/10 p-3 text-muted-foreground transition-colors hover:border-accent/40 hover:bg-white/[0.05] hover:text-accent"
 							aria-label="LinkedIn"
 							data-cursor-target="magnetic"
 							data-cursor-size="sm"
@@ -52,7 +59,7 @@ const Footer = () => {
 						</a>
 						<button
 							onClick={goTop}
-							className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-3 text-sm text-foreground transition-colors hover:bg-white/[0.05]"
+							className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-3 text-sm text-foreground transition-colors hover:border-accent/40 hover:bg-white/[0.05]"
 							data-cursor-target="magnetic"
 							data-cursor-size="sm"
 							data-pressable="true"

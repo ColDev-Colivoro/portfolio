@@ -7,7 +7,8 @@ describe('Navbar', () => {
   it('renderiza marca, navegación principal y toggle de idioma', () => {
     renderWithProviders(<Navbar />);
 
-    expect(screen.getByText('COLIVORO / SYSTEMS')).toBeInTheDocument();
+    expect(screen.getByText('José Camilo Colivoro Uribe')).toBeInTheDocument();
+    expect(screen.getByText('Analista Programador')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Inicio' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Proyectos' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'ES' })).toBeInTheDocument();

@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
+import { LayoutGroup, motion } from 'framer-motion';
 import { Download, Globe2, Menu, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useLocale } from '@/context/LocaleContext';
 import { resumeLinks, siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
+
+const logoPath = '/images/branding/logo-gato.png';
 
 const Navbar = () => {
 	const navigate = useNavigate();
@@ -34,7 +36,7 @@ const Navbar = () => {
 				const visible = entries.find((entry) => entry.isIntersecting);
 				if (visible?.target?.id) setActiveSection(visible.target.id);
 			},
-			{ rootMargin: '-30% 0px -55% 0px', threshold: 0.1 },
+			{ rootMargin: '-28% 0px -55% 0px', threshold: 0.15 },
 		);
 
 		sections.forEach((section) => observer.observe(section));
@@ -58,11 +60,13 @@ const Navbar = () => {
 
 	return (
 		<motion.header
-			initial={{ y: -72, opacity: 0 }}
+			initial={{ y: -56, opacity: 0 }}
 			animate={{ y: 0, opacity: 1 }}
-			transition={{ duration: 0.45, ease: 'easeOut' }}
+			transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
 			className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-				scrolled ? 'border-b border-white/10 bg-background/86 shadow-[0_14px_40px_rgba(0,0,0,0.32)] backdrop-blur-xl' : 'bg-transparent'
+				scrolled
+					? 'border-b border-white/10 bg-background/88 shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-2xl'
+					: 'bg-transparent'
 			}`}
 		>
 			<div className="container mx-auto px-4 py-4">
@@ -74,40 +78,59 @@ const Navbar = () => {
 						data-cursor-size="md"
 						data-pressable="true"
 					>
-						<div className="rounded-2xl border border-accent/30 bg-accent/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-							JC
+						<div className="flex h-12 w-12 items-center justify-center rounded-[1.1rem] border border-white/10 bg-white/[0.03] shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
+							<img
+								src={logoPath}
+								alt="Logo gato ColDev"
+								className="h-9 w-9 object-contain invert brightness-[1.95] contrast-125"
+							/>
 						</div>
 						<div>
-							<p className="text-xs uppercase tracking-[0.28em] text-accent/80">Systems · Software</p>
-							<p className="text-sm font-semibold text-foreground md:text-base">{siteContent.nav.brand}</p>
+							<p className="hidden text-[10px] uppercase tracking-[0.32em] text-white/40 sm:block">{resolveCopy(siteContent.nav.eyebrow, lang)}</p>
+							<p className="mt-1 text-sm font-semibold text-foreground sm:text-sm">
+								<span className="sm:hidden">José Colivoro</span>
+								<span className="hidden sm:inline">{siteContent.nav.brand}</span>
+							</p>
+							<p className="mt-1 text-[11px] uppercase tracking-[0.24em] text-accent/80">{resolveCopy(siteContent.nav.role, lang)}</p>
 						</div>
 					</button>
 
-					<nav className="hidden items-center gap-1 lg:flex">
-						{navLinks.map((item) => {
-							const isActive = activeSection === item.id && location.pathname === '/';
-							return (
-								<button
-									key={item.id}
-									onClick={() => goToSection(item.id)}
-									className={`rounded-full px-4 py-2 text-sm transition-colors ${
-										isActive ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-white/[0.05] hover:text-foreground'
-									}`}
-									data-cursor-target="magnetic"
-									data-cursor-size="sm"
-									data-pressable="true"
-								>
-									{resolveCopy(item.label, lang)}
-								</button>
-							);
-						})}
-					</nav>
+					<LayoutGroup>
+						<nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1 lg:flex">
+							{navLinks.map((item) => {
+								const isActive = activeSection === item.id && location.pathname === '/';
+								return (
+									<button
+										key={item.id}
+										onClick={() => goToSection(item.id)}
+										className={`relative rounded-full px-4 py-2 text-sm transition-colors ${
+											isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+										}`}
+										data-cursor-target="magnetic"
+										data-cursor-size="sm"
+										data-pressable="true"
+									>
+										{isActive ? (
+											<motion.span
+												layoutId="active-nav-pill"
+												className="absolute inset-0 rounded-full border border-white/10 bg-white/[0.08]"
+												transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+											/>
+										) : null}
+										<span className="relative z-10">{resolveCopy(item.label, lang)}</span>
+									</button>
+								);
+							})}
+						</nav>
+					</LayoutGroup>
 
 					<div className="hidden items-center gap-3 lg:flex">
-						<div className="inline-flex rounded-full border border-white/10 bg-white/[0.04] p-1">
+						<div className="inline-flex rounded-full border border-white/10 bg-white/[0.03] p-1">
 							<button
 								onClick={() => setLang('es')}
-								className={`rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-[0.18em] ${lang === 'es' ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}`}
+								className={`rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-[0.18em] ${
+									lang === 'es' ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'
+								}`}
 								data-cursor-target="magnetic"
 								data-cursor-size="sm"
 								data-pressable="true"
@@ -116,7 +139,9 @@ const Navbar = () => {
 							</button>
 							<button
 								onClick={() => setLang('en')}
-								className={`rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-[0.18em] ${lang === 'en' ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}`}
+								className={`rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-[0.18em] ${
+									lang === 'en' ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'
+								}`}
 								data-cursor-target="magnetic"
 								data-cursor-size="sm"
 								data-pressable="true"
@@ -127,7 +152,7 @@ const Navbar = () => {
 						<a
 							href={resumeLinks[lang]}
 							download
-							className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-foreground transition-colors hover:bg-white/[0.05]"
+							className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-foreground transition-colors hover:border-accent/40 hover:bg-white/[0.05]"
 							data-cursor-target="magnetic"
 							data-cursor-size="md"
 							data-pressable="true"
@@ -138,7 +163,7 @@ const Navbar = () => {
 					</div>
 
 					<button
-						className="rounded-full border border-white/10 p-2 text-foreground lg:hidden"
+						className="rounded-full border border-white/10 bg-white/[0.03] p-2 text-foreground lg:hidden"
 						onClick={() => setIsOpen((prev) => !prev)}
 						data-pressable="true"
 					>
@@ -147,11 +172,11 @@ const Navbar = () => {
 				</div>
 
 				{isOpen ? (
-					<div className="mt-4 rounded-[1.6rem] border border-white/10 bg-card/95 p-4 lg:hidden">
+					<div className="mt-4 rounded-[1.6rem] border border-white/10 bg-card/95 p-4 shadow-[0_30px_80px_rgba(0,0,0,0.3)] lg:hidden">
 						<div className="mb-4 flex items-center justify-between rounded-2xl border border-white/10 bg-background/70 p-2">
 							<div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
 								<Globe2 className="h-4 w-4 text-accent" />
-								Language
+								{resolveCopy(siteContent.nav.languageLabel, lang)}
 							</div>
 							<div className="inline-flex rounded-full border border-white/10 bg-white/[0.04] p-1">
 								<button
@@ -175,7 +200,7 @@ const Navbar = () => {
 								<button
 									key={item.id}
 									onClick={() => goToSection(item.id)}
-									className="rounded-2xl px-4 py-3 text-left text-sm text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground"
+									className="rounded-2xl border border-transparent px-4 py-3 text-left text-sm text-muted-foreground transition-colors hover:border-white/10 hover:bg-white/[0.05] hover:text-foreground"
 									data-pressable="true"
 								>
 									{resolveCopy(item.label, lang)}
@@ -184,7 +209,7 @@ const Navbar = () => {
 							<a
 								href={resumeLinks[lang]}
 								download
-								className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 px-4 py-3 text-sm text-foreground transition-colors hover:bg-white/[0.05]"
+								className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 px-4 py-3 text-sm text-foreground transition-colors hover:border-accent/40 hover:bg-white/[0.05]"
 								data-pressable="true"
 							>
 								<Download className="h-4 w-4 text-accent" />

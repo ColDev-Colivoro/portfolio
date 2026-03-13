@@ -65,41 +65,33 @@ const Contact = () => {
 	};
 
 	return (
-		<div className="container mx-auto px-4 py-4">
+		<div className="container mx-auto px-4">
 			<div className="mx-auto max-w-6xl">
 				<div className="mb-8 max-w-3xl">
-					<p className="text-xs uppercase tracking-[0.28em] text-accent">
-						{resolveCopy(content.eyebrow, lang)}
-					</p>
-					<h2 className="mt-3 text-3xl font-semibold text-foreground md:text-4xl">
-						{resolveCopy(content.title, lang)}
-					</h2>
-					<p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
-						{resolveCopy(content.description, lang)}
-					</p>
+					<p className="section-eyebrow">{resolveCopy(content.eyebrow, lang)}</p>
+					<h2 className="section-title">{resolveCopy(content.title, lang)}</h2>
+					<p className="section-copy">{resolveCopy(content.description, lang)}</p>
 				</div>
 
-				<div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+				<div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
 					<motion.div
-						initial={{ opacity: 0, y: 18 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, amount: 0.25 }}
-						className="rounded-[2rem] border border-white/10 bg-card/70 p-7"
-						data-pressable="true"
+						initial={{ opacity: 0, y: 42, filter: 'blur(10px)' }}
+						whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+						viewport={{ once: true, amount: 0.22 }}
+						transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
+						className="panel-surface rounded-[1.9rem] p-6"
 					>
-						<p className="text-xs uppercase tracking-[0.28em] text-accent">
-							{resolveCopy(content.formTitle, lang)}
-						</p>
-						<h3 className="mt-4 text-2xl font-semibold text-foreground">
+						<p className="section-eyebrow">{resolveCopy(content.formTitle, lang)}</p>
+						<h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-foreground">
 							{resolveCopy(content.sideTitle, lang)}
 						</h3>
-						<p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+						<p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base">
 							{resolveCopy(content.sideDescription, lang)}
 						</p>
 
-						<div className="mt-6 rounded-[1.5rem] border border-white/10 bg-background/70 p-5">
+						<div className="mt-6 rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
 							<div className="flex items-center gap-3">
-								<div className="rounded-2xl border border-accent/30 bg-accent/10 p-3 text-accent">
+								<div className="rounded-[1rem] border border-accent/25 bg-accent/10 p-3 text-accent">
 									<Linkedin className="h-5 w-5" />
 								</div>
 								<div>
@@ -124,11 +116,11 @@ const Contact = () => {
 
 					<motion.form
 						onSubmit={handleSubmit}
-						initial={{ opacity: 0, y: 18 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, amount: 0.25 }}
-						className="rounded-[2rem] border border-white/10 bg-card/70 p-7"
-						data-pressable="true"
+						initial={{ opacity: 0, y: 42, filter: 'blur(10px)' }}
+						whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+						viewport={{ once: true, amount: 0.22 }}
+						transition={{ duration: 0.82, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+						className="panel-surface rounded-[1.9rem] p-6"
 					>
 						<div className="grid gap-4 md:grid-cols-2">
 							<div className="md:col-span-1">
@@ -143,7 +135,7 @@ const Contact = () => {
 									onChange={handleChange}
 									required
 									autoComplete="name"
-									className="w-full rounded-2xl border border-white/10 bg-background px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+									className="w-full rounded-[1rem] border border-white/10 bg-black/20 px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
 								/>
 							</div>
 							<div className="md:col-span-1">
@@ -158,7 +150,7 @@ const Contact = () => {
 									onChange={handleChange}
 									required
 									autoComplete="email"
-									className="w-full rounded-2xl border border-white/10 bg-background px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+									className="w-full rounded-[1rem] border border-white/10 bg-black/20 px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
 								/>
 							</div>
 							<div className="md:col-span-2">
@@ -173,7 +165,7 @@ const Contact = () => {
 									onChange={handleChange}
 									required
 									autoComplete="off"
-									className="w-full rounded-2xl border border-white/10 bg-background px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+									className="w-full rounded-[1rem] border border-white/10 bg-black/20 px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
 								/>
 							</div>
 							<div className="md:col-span-2">
@@ -188,7 +180,7 @@ const Contact = () => {
 									onChange={handleChange}
 									required
 									autoComplete="off"
-									className="w-full resize-none rounded-[1.5rem] border border-white/10 bg-background px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+									className="w-full resize-none rounded-[1.2rem] border border-white/10 bg-black/20 px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
 								/>
 							</div>
 						</div>
@@ -196,7 +188,7 @@ const Contact = () => {
 						<Button
 							type="submit"
 							disabled={isSubmitting}
-							className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-accent-foreground hover:bg-accent/90"
+							className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-accent-foreground hover:bg-accent/90"
 							data-cursor-target="magnetic"
 							data-cursor-size="lg"
 							data-pressable="true"

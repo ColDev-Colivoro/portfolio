@@ -7,7 +7,7 @@ describe('Footer', () => {
   it('muestra marca, enlaces públicos y volver arriba', () => {
     renderWithProviders(<Footer />);
 
-    expect(screen.getByText('COLIVORO / SYSTEMS')).toBeInTheDocument();
+    expect(screen.getByText('José Camilo Colivoro Uribe')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /github/i })).toHaveAttribute('href', 'https://github.com/ColDev-Colivoro');
     expect(screen.getByRole('link', { name: /linkedin/i })).toHaveAttribute('href', 'https://www.linkedin.com/in/camilo-colivoro-1a5206386');
     expect(screen.getByRole('button', { name: /Volver arriba/i })).toBeInTheDocument();

@@ -4,35 +4,35 @@
 
 @layer base {
   :root {
-    --background: 20 14% 6%;
-    --foreground: 32 33% 96%;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 97%;
 
-    --card: 18 14% 8%;
-    --card-foreground: 32 33% 96%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 97%;
 
-    --popover: 18 14% 8%;
-    --popover-foreground: 32 33% 96%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 97%;
 
-    --primary: 24 100% 50%;
+    --primary: 25 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 18 12% 12%;
-    --secondary-foreground: 32 33% 96%;
+    --secondary: 0 0% 11%;
+    --secondary-foreground: 0 0% 97%;
 
-    --muted: 18 12% 16%;
-    --muted-foreground: 28 12% 67%;
+    --muted: 0 0% 13%;
+    --muted-foreground: 0 0% 67%;
 
-    --accent: 24 100% 50%;
+    --accent: 25 100% 50%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 52%;
+    --destructive: 357 72% 43%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 24 9% 18%;
-    --input: 24 9% 18%;
-    --ring: 24 100% 50%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 25 100% 50%;
 
-    --radius: 0.9rem;
+    --radius: 1rem;
   }
 }
 
@@ -46,26 +46,41 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased selection:bg-accent/30 selection:text-white;
+    @apply bg-background text-foreground antialiased selection:bg-accent/25 selection:text-white;
     font-feature-settings: 'rlig' 1, 'calt' 1;
-    background-image:
-      radial-gradient(circle at 15% 10%, rgba(255, 106, 0, 0.14) 0%, transparent 32%),
-      radial-gradient(circle at 85% 18%, rgba(193, 18, 31, 0.08) 0%, transparent 28%),
+    background:
+      radial-gradient(circle at 18% 14%, rgba(255, 106, 0, 0.12) 0%, transparent 24%),
+      radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.045) 0%, transparent 20%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 18%);
+    background-color: #0d0d0d;
     background-attachment: fixed;
   }
 }
 
+@layer components {
+  .section-eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.32em] text-accent;
+  }
+
+  .section-title {
+    @apply mt-4 text-3xl font-semibold tracking-[-0.04em] text-foreground md:text-4xl;
+  }
+
+  .section-copy {
+    @apply mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg;
+  }
+
+  .panel-surface {
+    @apply border border-white/10 bg-white/[0.03] shadow-[0_28px_90px_rgba(0,0,0,0.32)] backdrop-blur-[2px];
+  }
+}
+
 @layer utilities {
-  .glass-panel {
-    @apply border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_24px_80px_rgba(0,0,0,0.28)];
+  .metal-line {
+    background-image: linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0), rgba(255,255,255,0.14));
   }
 
-  .text-gradient {
-    @apply bg-gradient-to-r from-orange-400 via-orange-200 to-orange-500 bg-clip-text text-transparent;
-  }
-
-  .neon-border {
-    box-shadow: 0 0 0 1px rgba(255, 106, 0, 0.14), 0 0 24px rgba(255, 106, 0, 0.12);
+  .text-balance {
+    text-wrap: balance;
   }
 }

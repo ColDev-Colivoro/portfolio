@@ -7,9 +7,9 @@ describe('About', () => {
   it('muestra el posicionamiento sistémico y sus principios', () => {
     renderWithProviders(<About />);
 
-    expect(screen.getByText('No solo escribo código: abordo sistemas completos')).toBeInTheDocument();
-    expect(screen.getByText('Entender antes de construir')).toBeInTheDocument();
-    expect(screen.getByText('Resolver de punta a punta')).toBeInTheDocument();
-    expect(screen.getByText('Software para operación real')).toBeInTheDocument();
+    expect(screen.getByText('Analizo sistemas y los convierto en software')).toBeInTheDocument();
+    expect(screen.getByText('Entender primero')).toBeInTheDocument();
+    expect(screen.getByText('Resolver completo')).toBeInTheDocument();
+    expect(screen.getByText('Mantener claridad')).toBeInTheDocument();
   });
 });
