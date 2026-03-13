@@ -19,30 +19,30 @@ const HomePage = () => {
 			animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
 			exit={{ opacity: 0, y: -20, filter: 'blur(6px)' }}
 			transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-			className="w-full pt-24 md:pt-28"
+			className="home-main w-full"
 		>
-			<section id="home" className="pb-20 pt-10 md:pb-28">
+			<section id="home" className="home-section home-section-hero">
 				<Hero />
 			</section>
 
-			<section id="projects" className="space-y-14 pb-20 md:space-y-20 md:pb-28">
+			<section id="projects" className="home-projects-stack home-section">
 				<FeaturedProject />
 				<Projects />
 			</section>
 
-			<section id="about" className="pb-20 md:pb-28">
+			<section id="about" className="home-section">
 				<About />
 			</section>
 
-			<section id="capabilities" className="pb-20 md:pb-28">
+			<section id="capabilities" className="home-section">
 				<Skills />
 			</section>
 
-			<section id="certifications" className="pb-20 md:pb-28">
+			<section id="certifications" className="home-section">
 				<Certificates />
 			</section>
 
-			<section id="contact" className="pb-16 md:pb-20">
+			<section id="contact" className="home-section-tight">
 				<Contact />
 			</section>
 		</motion.main>

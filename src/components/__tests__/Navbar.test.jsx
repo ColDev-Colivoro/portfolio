@@ -14,5 +14,9 @@ describe('Navbar', () => {
     expect(screen.getByRole('button', { name: 'ES' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'EN' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Descargar CV/i })).toBeInTheDocument();
+
+    const navLogo = screen.getByAltText('Logo gato ColDev');
+    expect(navLogo).toHaveClass('nav-brand-logo');
+    expect(navLogo.closest('div')).toHaveClass('nav-brand-shell');
   });
 });

@@ -69,7 +69,7 @@ const Navbar = () => {
 					: 'bg-transparent'
 			}`}
 		>
-			<div className="container mx-auto px-4 py-4">
+			<div className="container mx-auto px-6 lg:px-12 py-4">
 				<div className="flex items-center justify-between gap-4">
 					<button
 						onClick={() => goToSection('home')}
@@ -78,11 +78,11 @@ const Navbar = () => {
 						data-cursor-size="md"
 						data-pressable="true"
 					>
-						<div className="flex h-12 w-12 items-center justify-center rounded-[1.1rem] border border-white/10 bg-white/[0.03] shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
+						<div className="nav-brand-shell flex items-center justify-center rounded-[1.1rem] border border-white/10 bg-white/[0.03] shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
 							<img
 								src={logoPath}
 								alt="Logo gato ColDev"
-								className="h-9 w-9 object-contain invert brightness-[1.95] contrast-125"
+								className="nav-brand-logo object-contain invert brightness-[1.95] contrast-125"
 							/>
 						</div>
 						<div>

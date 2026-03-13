@@ -78,7 +78,7 @@ const Projects = () => {
 							className="group sweep-hover card-hover overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.03] shadow-[0_28px_90px_rgba(0,0,0,0.28)]"
 							data-pressable="true"
 						>
-							<div className="relative h-52 overflow-hidden border-b border-white/10 bg-black">
+							<div className="project-card-media relative overflow-hidden border-b border-white/10 bg-black">
 								<img
 									src={project.media.cover}
 									alt={resolveCopy(project.title, lang)}

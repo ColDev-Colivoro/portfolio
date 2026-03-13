@@ -12,6 +12,13 @@ describe('Hero', () => {
     expect(screen.getByRole('button', { name: /Ver proyectos/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Descargar CV/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Solicitar contacto/i })).toBeInTheDocument();
-    expect(screen.getByAltText(/Logo gato/i)).toBeInTheDocument();
+
+    const heroHeading = screen.getByRole('heading', { level: 1, name: 'José Camilo Colivoro Uribe' });
+    expect(heroHeading).toHaveClass('hero-title');
+
+    const heroLogo = screen.getByAltText(/Logo gato/i);
+    expect(heroLogo).toBeInTheDocument();
+    expect(heroLogo).toHaveClass('hero-logo-image');
+    expect(heroLogo.closest('div')).toHaveClass('hero-logo-shell');
   });
 });

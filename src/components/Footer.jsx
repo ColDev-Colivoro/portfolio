@@ -18,12 +18,12 @@ const Footer = () => {
 			<div className="container mx-auto px-4 py-10">
 				<div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
 					<div className="flex max-w-2xl items-start gap-4">
-						<div className="flex h-14 w-14 items-center justify-center rounded-[1.25rem] border border-white/10 bg-white/[0.03] shadow-[0_18px_48px_rgba(0,0,0,0.24)]">
-							<img src={logoPath} alt="Logo gato ColDev" className="h-10 w-10 object-contain invert brightness-[1.95] contrast-125" />
+						<div className="footer-brand-shell flex items-center justify-center rounded-[1.25rem] border border-white/10 bg-white/[0.03] shadow-[0_18px_48px_rgba(0,0,0,0.24)]">
+							<img src={logoPath} alt="Logo gato ColDev" className="footer-brand-logo object-contain invert brightness-[1.95] contrast-125" />
 						</div>
 						<div>
 							<p className="text-[11px] uppercase tracking-[0.3em] text-accent">Portfolio</p>
-							<h3 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-foreground">
+							<h3 className="footer-brand-title mt-3 font-semibold tracking-[-0.03em] text-foreground">
 								{resolveCopy(content.title, lang)}
 							</h3>
 							<p className="mt-4 text-sm leading-relaxed text-muted-foreground">

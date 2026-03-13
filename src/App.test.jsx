@@ -18,4 +18,12 @@ describe('App', () => {
     expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
     expect(screen.getAllByText('Certificaciones').length).toBeGreaterThan(0);
   });
+
+  it('mantiene visible la cinta de remodelación con contrato global', () => {
+    renderWithProviders(<App />);
+
+    const ribbon = screen.getByText('En remodelación');
+    expect(ribbon).toBeInTheDocument();
+    expect(ribbon).toHaveClass('remodeling-ribbon');
+  });
 });

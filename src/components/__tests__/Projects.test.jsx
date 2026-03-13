@@ -12,6 +12,8 @@ describe('Projects', () => {
     expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
     expect(screen.getByText('ColDevPOS')).toBeInTheDocument();
     expect(screen.getByText('VoyScout')).toBeInTheDocument();
+    const cardCover = screen.getAllByAltText('ColDevPOS')[0];
+    expect(cardCover.closest('div')).toHaveClass('project-card-media');
 
     await user.click(screen.getByRole('button', { name: 'IA / Automatización' }));
 

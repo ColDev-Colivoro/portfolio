@@ -47,12 +47,12 @@ const Hero = () => {
 	const tags = resolveCopy(hero.supportingTags, lang);
 
 	return (
-		<div className="container mx-auto px-4">
+		<div className="container mx-auto w-full px-6 lg:px-12 max-w-[1240px]">
 			<motion.div
 				variants={revealParent}
 				initial="hidden"
 				animate="visible"
-				className="grid items-end gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16"
+				className="hero-layout grid lg:grid-cols-[1fr_1fr]"
 			>
 				<div className="max-w-3xl">
 					<motion.p variants={revealItem} className="section-eyebrow">
@@ -61,7 +61,7 @@ const Hero = () => {
 
 					<motion.h1
 						variants={revealItem}
-						className="mt-5 text-[clamp(3.35rem,8vw,7rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-foreground"
+						className="hero-title mt-5 font-semibold leading-[0.88] tracking-[-0.06em] text-foreground"
 					>
 						{resolveCopy(hero.title, lang)}
 					</motion.h1>
@@ -128,14 +128,14 @@ const Hero = () => {
 					</motion.div>
 				</div>
 
-				<motion.div variants={revealItem} className="relative flex justify-center lg:justify-end">
-					<div className="hero-logo-shell relative flex w-full max-w-[28rem] items-center justify-center overflow-hidden rounded-[2.2rem] border border-white/10 bg-white/[0.03] px-6 py-8 shadow-[0_36px_120px_rgba(0,0,0,0.35)]">
+				<motion.div variants={revealItem} className="relative flex justify-center lg:justify-center">
+					<div className="hero-logo-shell relative flex w-full items-center justify-center overflow-hidden rounded-[2.2rem] border border-white/10 bg-white/[0.03] shadow-[0_36px_120px_rgba(0,0,0,0.35)]">
 						<div className="hero-logo-ring pointer-events-none absolute inset-6 rounded-[1.8rem] border border-accent/25" />
 						<div className="hero-logo-glow pointer-events-none absolute inset-x-10 bottom-8 h-20 rounded-full bg-accent/18 blur-3xl" />
 						<img
 							src={logoPath}
 							alt={resolveCopy(hero.logoCaption, lang)}
-							className="hero-logo-float relative z-10 w-full max-w-[18rem] object-contain invert brightness-[1.9] contrast-125"
+							className="hero-logo-float hero-logo-image relative z-10 w-full object-contain invert brightness-[1.9] contrast-125"
 						/>
 					</div>
 				</motion.div>

@@ -11,6 +11,8 @@ describe('FeaturedProject', () => {
 
     expect(screen.getByRole('heading', { name: 'Caso destacado' })).toBeInTheDocument();
     expect(screen.getByText('Ecosistema POS para operación real')).toBeInTheDocument();
+    const featuredCover = screen.getByAltText('ColDevPOS');
+    expect(featuredCover.closest('div')).toHaveClass('featured-media');
 
     await user.click(screen.getByRole('button', { name: /Abrir caso/i }));
     expect(screen.getByText('ColDevPOS — ecosistema en curso para continuidad operativa')).toBeInTheDocument();

@@ -5,6 +5,54 @@
   --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Contracto compact para laptops: reduce densidad sin parches locales por sección */
+@media (min-width: 1024px) and (max-width: 1440px), (min-width: 768px) and (max-height: 900px) {
+  :root {
+    --root-font-size: 14.5px;
+
+    --home-main-pt: 4.75rem;
+    --home-hero-pt: 1.25rem;
+    --home-section-pb: 3.75rem;
+    --home-section-pb-tight: 3.1rem;
+    --home-projects-gap: 2.25rem;
+
+    --section-eyebrow-font-size: 10px;
+    --section-eyebrow-letter-spacing: 0.26em;
+    --section-title-size: clamp(1.7rem, 2.3vw, 2.1rem);
+    --section-copy-size: 0.94rem;
+
+    --hero-title-size: clamp(2rem, 4.7vw, 3.95rem);
+    --hero-grid-gap: 1.5rem;
+    --hero-grid-gap-lg: 2.2rem;
+    --hero-logo-shell-max: 20rem;
+    --hero-logo-shell-pad-x: 0.95rem;
+    --hero-logo-shell-pad-y: 1.05rem;
+    --hero-logo-max: 12.75rem;
+
+    --featured-media-min-h-lg: 300px;
+    --project-card-media-h: 10rem;
+
+    --nav-brand-shell-size: 2.55rem;
+    --nav-brand-logo-size: 1.82rem;
+
+    --footer-brand-shell-size: 2.95rem;
+    --footer-brand-logo-size: 2.08rem;
+    --footer-title-size: 1.22rem;
+
+    --ribbon-right: -10px;
+    --ribbon-top: 1rem;
+    --ribbon-font-size: 8px;
+    --ribbon-padding-x: 2.2rem;
+    --ribbon-padding-y: 0.26rem;
+    --ribbon-tracking: 0.13em;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-6px) scale(1.005);
+    box-shadow: 0 28px 84px rgba(0, 0, 0, 0.32);
+  }
+}
+
 .brutal-smooth-scroll,
 html {
   scroll-behavior: smooth;

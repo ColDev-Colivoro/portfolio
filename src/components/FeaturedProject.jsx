@@ -38,7 +38,7 @@ const FeaturedProject = () => {
 					className="sweep-hover panel-surface overflow-hidden rounded-[2rem]"
 				>
 					<div className="grid gap-0 lg:grid-cols-[1.02fr_0.98fr] lg:items-stretch">
-						<div className="relative min-h-[320px] overflow-hidden border-b border-white/10 bg-black lg:min-h-[420px] lg:border-b-0 lg:border-r">
+						<div className="featured-media relative overflow-hidden border-b border-white/10 bg-black lg:border-b-0 lg:border-r">
 							<img
 								src={project.media.cover}
 								alt={resolveCopy(project.title, lang)}
