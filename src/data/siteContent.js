@@ -64,21 +64,21 @@ export const siteContent = {
 	about: {
 		eyebrow: { es: 'Perfil', en: 'Profile' },
 		title: {
-			es: 'Quién soy: análisis de sistemas + ejecución full stack',
-			en: 'Who I am: systems analysis + full stack execution',
+			es: 'Analizo sistemas y los convierto en software',
+			en: 'I analyze systems and turn them into software',
 		},
 		lead: {
-			es: 'No se trata de listar todo mi CV: convierto experiencia real en habilidades aplicadas por proyecto, con foco en proceso, datos y software mantenible.',
-			en: 'It is not about listing my full CV: I turn real experience into project-based applied skills, focused on process, data, and maintainable software.',
+			es: 'Mi fortaleza no es solo programar: es entender procesos, modelar reglas y construir soluciones completas con criterio.',
+			en: 'My strength is not only coding: it is understanding processes, modeling rules, and building complete solutions with judgment.',
 		},
 		body: [
 			{
-				es: 'Trabajo entre análisis de sistemas, backend, frontend, datos e infraestructura para conectar contexto operativo, experiencia de uso y ejecución técnica sin perder coherencia.',
-				en: 'I work across systems analysis, backend, frontend, data, and infrastructure to connect operational context, user experience, and technical execution without losing coherence.',
+				es: 'Trabajo entre análisis de sistemas, backend, frontend, datos e infraestructura. Eso me permite conectar contexto operativo, experiencia de uso y ejecución técnica sin perder coherencia.',
+				en: 'I work across systems analysis, backend, frontend, data, and infrastructure. That lets me connect operational context, user experience, and technical execution without losing coherence.',
 			},
 			{
-				es: 'Mis casos muestran trazabilidad, inventario, reportes, continuidad operativa e IA aplicada, resaltando habilidades y stack concreto en cada implementación.',
-				en: 'My cases show traceability, inventory, reporting, operational continuity, and applied AI, highlighting concrete skills and stack in each implementation.',
+				es: 'He abordado trazabilidad, inventario, reportes, continuidad operativa e integración de IA aplicada. Busco que cada solución se sienta precisa, sobria y mantenible.',
+				en: 'I have tackled traceability, inventory, reporting, operational continuity, and applied AI integrations. I aim for each solution to feel precise, sober, and maintainable.',
 			},
 		],
 		principles: [

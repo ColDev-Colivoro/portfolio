@@ -55,16 +55,25 @@ const Chatbot = ({ lang = 'es' }) => {
 		setIsLoading(true);
 
 		try {
-			const response = await fetch('/.netlify/functions/chat', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ lang, messages: [...messages, userMessage] }),
-			});
+			const callChat = async () =>
+				fetch('/.netlify/functions/chat', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ lang, messages: [...messages, userMessage] }),
+				});
 
-			if (!response.ok) throw new Error('chat_failed');
+			let response = await callChat();
+			if (!response.ok && response.status >= 500) {
+				response = await callChat();
+			}
 
-			const data = await response.json();
-			setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
+			const data = await response.json().catch(() => null);
+			if (!response.ok) {
+				setMessages((prev) => [...prev, { role: 'assistant', content: data?.reply || text.fallback }]);
+				return;
+			}
+
+			setMessages((prev) => [...prev, { role: 'assistant', content: data?.reply || text.fallback }]);
 		} catch (error) {
 			console.error(error);
 			setMessages((prev) => [...prev, { role: 'assistant', content: text.fallback }]);
