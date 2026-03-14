@@ -134,7 +134,7 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 							<img
 								src={spriteSrc}
 								alt="Chimubot"
-								className="pointer-events-none h-full w-full select-none object-contain drop-shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+								className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-bottom scale-[1.22] drop-shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
 								onError={(e) => {
 									const firstIdleFrame = idleStateConfig.files?.[0];
 									if (firstIdleFrame && !e.target.src.includes(encodeURIComponent(firstIdleFrame))) {
