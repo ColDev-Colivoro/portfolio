@@ -13,12 +13,6 @@ import { useLocale } from '@/context/LocaleContext';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
 
-const RemodelingRibbon = () => (
-	<div className="remodeling-ribbon">
-		En mantenimiento
-	</div>
-);
-
 const App = () => {
 	const location = useLocation();
 	const { lang } = useLocale();
@@ -39,7 +33,6 @@ const App = () => {
 	return (
 		<div className="relative min-h-screen overflow-hidden bg-background text-foreground">
 			<div className="pointer-events-none fixed inset-0 noise-bg" />
-			<RemodelingRibbon />
 			<Cursor />
 			<div className="relative z-10 flex min-h-screen flex-col">
 				<Navbar />

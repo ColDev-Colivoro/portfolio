@@ -45,6 +45,9 @@ const Hero = () => {
 	};
 
 	const tags = resolveCopy(hero.supportingTags, lang);
+	const chimubotTeaser = resolveCopy(hero.chimubotTeaser, lang);
+	const siteStatus = resolveCopy(hero.siteStatus, lang);
+	const siteStatusValue = resolveCopy(hero.siteStatusValue, lang);
 
 	return (
 		<div className="container mx-auto w-full px-6 lg:px-12 max-w-[1240px]">
@@ -129,6 +132,10 @@ const Hero = () => {
 				</div>
 
 				<motion.div variants={revealItem} className="relative flex justify-center lg:justify-center">
+					<div className="absolute -top-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 rounded-full border border-accent/20 bg-background/92 px-3 py-1.5 shadow-[0_10px_28px_rgba(0,0,0,0.22)] backdrop-blur-md ring-1 ring-white/10">
+						<span className="text-[10px] font-medium uppercase tracking-[0.22em] text-muted-foreground">{siteStatus}</span>
+						<span className="rounded-full bg-accent px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-accent-foreground">{siteStatusValue}</span>
+					</div>
 					<div className="hero-logo-shell relative flex w-full items-center justify-center overflow-hidden rounded-[2.2rem] border border-white/10 bg-white/[0.03] shadow-[0_36px_120px_rgba(0,0,0,0.35)]">
 						<div className="hero-logo-ring pointer-events-none absolute inset-6 rounded-[1.8rem] border border-accent/25" />
 						<div className="hero-logo-glow pointer-events-none absolute inset-x-10 bottom-8 h-20 rounded-full bg-accent/18 blur-3xl" />
@@ -138,6 +145,24 @@ const Hero = () => {
 							className="hero-logo-float hero-logo-image relative z-10 w-full object-contain invert brightness-[1.9] contrast-125"
 						/>
 					</div>
+					<motion.button
+						type="button"
+						onClick={() => scrollToSection('projects')}
+						initial={{ opacity: 0, y: 8, scale: 0.96 }}
+						animate={{ opacity: 1, y: 0, scale: 1 }}
+						transition={{ delay: 0.45, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+						whileHover={{ y: -2, scale: 1.02 }}
+						className="absolute -bottom-24 left-1/2 z-20 -translate-x-1/2 rounded-xl border border-accent/30 bg-background/92 px-3 py-2 text-left shadow-[0_10px_24px_rgba(0,0,0,0.28)] backdrop-blur-md ring-1 ring-white/10"
+						data-cursor-target="magnetic"
+						data-cursor-size="md"
+						data-pressable="true"
+					>
+						<p className="text-[12px] font-semibold leading-none text-foreground">{chimubotTeaser}</p>
+						<span
+							aria-hidden="true"
+							className="absolute -bottom-1 right-5 h-2 w-2 rotate-45 border-b border-r border-accent/30 bg-background/92"
+						/>
+					</motion.button>
 				</motion.div>
 			</motion.div>
 		</div>

@@ -67,8 +67,8 @@
     --footer-brand-logo-size: 2.5rem;
     --footer-title-size: 1.5rem;
 
-    --ribbon-right: -8px;
-    --ribbon-top: 1.1rem;
+    --ribbon-right: 1rem;
+    --ribbon-top: 5.8rem;
     --ribbon-font-size: 10px;
     --ribbon-padding-x: 2.5rem;
     --ribbon-padding-y: 0.36rem;
@@ -192,8 +192,7 @@
     right: var(--ribbon-right);
     top: var(--ribbon-top);
     z-index: 140;
-    transform-origin: top right;
-    transform: rotate(45deg);
+    transform: none;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: hsl(var(--accent));
     color: hsl(var(--accent-foreground));
@@ -203,6 +202,7 @@
     text-transform: uppercase;
     letter-spacing: var(--ribbon-tracking);
     line-height: 1;
+    border-radius: 9999px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   }
 

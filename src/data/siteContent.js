@@ -43,6 +43,22 @@ export const siteContent = {
 			es: ['Sistemas', 'Software', 'Operación real'],
 			en: ['Systems', 'Software', 'Real operations'],
 		},
+		chimubotTeaser: {
+			es: 'Miau! 🤖',
+			en: 'Meow! 🤖',
+		},
+		chimubotTeaserHint: {
+			es: 'Baja a la siguiente sección y encuentra a Chimubot.',
+			en: 'Scroll to the next section and find Chimubot.',
+		},
+		siteStatus: {
+			es: 'Estado del sitio',
+			en: 'Site status',
+		},
+		siteStatusValue: {
+			es: 'En mantenimiento',
+			en: 'Under maintenance',
+		},
 		primaryCta: { es: 'Ver proyectos', en: 'View projects' },
 		secondaryCta: { es: 'Descargar CV', en: 'Download resume' },
 		tertiaryCta: { es: 'Solicitar contacto', en: 'Request contact' },

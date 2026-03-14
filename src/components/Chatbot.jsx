@@ -38,7 +38,17 @@ const Chatbot = ({ lang = 'es' }) => {
 	const messagesEndRef = useRef(null);
 
 	useEffect(() => {
-		const onScroll = () => setIsReady(window.scrollY > Math.max(220, window.innerHeight * 0.4));
+		const onScroll = () => {
+			const projectsSection = document.getElementById('projects');
+			const fallbackTrigger = Math.max(120, window.innerHeight * 0.18);
+			if (!projectsSection) {
+				setIsReady(window.scrollY >= fallbackTrigger);
+				return;
+			}
+
+			const triggerPoint = Math.max(0, projectsSection.offsetTop - window.innerHeight * 0.82);
+			setIsReady(window.scrollY >= triggerPoint);
+		};
 		onScroll();
 		window.addEventListener('scroll', onScroll, { passive: true });
 		return () => window.removeEventListener('scroll', onScroll);

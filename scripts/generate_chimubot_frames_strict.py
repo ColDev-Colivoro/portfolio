@@ -97,7 +97,8 @@ def detect_regions(sprite: Image.Image):
         else:
             right_boxes.append(box)
 
-    def merge_boxes(boxes, fallback):
+    def merge_boxes(boxes, fallba
+    ck):
         if not boxes:
             return fallback
         x1 = min(b[0] for b in boxes)

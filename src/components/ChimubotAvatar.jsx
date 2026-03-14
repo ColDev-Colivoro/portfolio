@@ -8,6 +8,7 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 	const [sleeping, setSleeping] = useState(false);
 	const [currentFrame, setCurrentFrame] = useState(0);
 	const [areFramesReady, setAreFramesReady] = useState(false);
+	const [loadedFrameUrls, setLoadedFrameUrls] = useState([]);
 	const preloadedFramesRef = useRef(new Set());
 	
 	// Temporally using a default position, since useChimubotMotion seems missing
@@ -52,13 +53,17 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 	}, [frameFiles, frameFolder]);
 
 	useEffect(() => {
+		setLoadedFrameUrls([]);
+
 		if (!frameUrls.length) {
 			setAreFramesReady(true);
 			return;
 		}
 
-		const allCached = frameUrls.every((url) => preloadedFramesRef.current.has(url));
+		const cachedUrls = frameUrls.filter((url) => preloadedFramesRef.current.has(url));
+		const allCached = cachedUrls.length === frameUrls.length;
 		if (allCached) {
+			setLoadedFrameUrls(cachedUrls);
 			setAreFramesReady(true);
 			return;
 		}
@@ -71,14 +76,17 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 				const img = new Image();
 				img.onload = () => {
 					preloadedFramesRef.current.add(url);
-					resolve(true);
+					resolve({ url, ok: true });
 				};
-				img.onerror = () => resolve(false);
+				img.onerror = () => resolve({ url, ok: false });
 				img.src = url;
 			});
 
-		Promise.all(frameUrls.map(loadImage)).then(() => {
-			if (!cancelled) setAreFramesReady(true);
+		Promise.all(frameUrls.map(loadImage)).then((results) => {
+			if (cancelled) return;
+			const successfulUrls = results.filter((result) => result.ok).map((result) => result.url);
+			setLoadedFrameUrls(successfulUrls);
+			setAreFramesReady(successfulUrls.length > 0);
 		});
 
 		return () => {
@@ -90,14 +98,14 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 	useEffect(() => {
 		setCurrentFrame(0); // Reset frame on state change
 
-		if (!areFramesReady || frameFiles.length <= 1) return undefined;
+		if (!areFramesReady || loadedFrameUrls.length <= 1) return undefined;
 
 		const interval = setInterval(() => {
-			setCurrentFrame((prev) => (prev + 1) % frameFiles.length);
+			setCurrentFrame((prev) => (prev + 1) % loadedFrameUrls.length);
 		}, 1000 / Math.max(stateConfig.fps || 8, 1));
 
 		return () => clearInterval(interval);
-	}, [areFramesReady, frameFiles.length, resolvedState, stateConfig.fps]);
+	}, [areFramesReady, loadedFrameUrls.length, resolvedState, stateConfig.fps]);
 
 	useEffect(() => {
 		const wake = () => setSleeping(false);
@@ -143,11 +151,9 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 	}, [lang]);
 
 	const spriteSrc = useMemo(() => {
-		if (!frameFiles.length) return chimubotConfig.sprite.fallbackSrc;
-		const file = frameFiles[currentFrame % frameFiles.length];
-		if (file.startsWith('/')) return file;
-		return `${chimubotConfig.sprite.basePath}/${frameFolder}/${encodeURIComponent(file)}`;
-	}, [currentFrame, frameFiles, frameFolder]);
+		if (!loadedFrameUrls.length) return null;
+		return loadedFrameUrls[currentFrame % loadedFrameUrls.length];
+	}, [currentFrame, loadedFrameUrls]);
 
 	const handleToggle = () => {
 		setSleeping(false);
@@ -176,20 +182,17 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 						aria-label={isOpen ? 'Close assistant' : 'Open assistant'}
 					>
 						<div className="relative h-[140px] w-[140px] overflow-visible">
-							<img
-								src={spriteSrc}
-								alt="Chimubot"
-								className={`pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-bottom scale-[1.22] drop-shadow-[0_16px_40px_rgba(0,0,0,0.5)] transition-opacity duration-200 ${areFramesReady ? 'opacity-100' : 'opacity-0'}`}
-								onError={(e) => {
-									const firstIdleFrame = idleStateConfig.files?.[0];
-									if (firstIdleFrame && !e.target.src.includes(encodeURIComponent(firstIdleFrame))) {
-										e.target.src = `${chimubotConfig.sprite.basePath}/${idleStateConfig.folder || 'idle'}/${encodeURIComponent(firstIdleFrame)}`;
-										return;
-									}
-									e.target.src = chimubotConfig.sprite.fallbackSrc;
-								}}
-								draggable={false}
-							/>
+							{spriteSrc ? (
+								<img
+									src={spriteSrc}
+									alt="Chimubot"
+									className={`pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-bottom scale-[1.22] drop-shadow-[0_16px_40px_rgba(0,0,0,0.5)] transition-opacity duration-200 ${areFramesReady ? 'opacity-100' : 'opacity-0'}`}
+									onError={() => {
+										setLoadedFrameUrls((prev) => prev.filter((url) => url !== spriteSrc));
+									}}
+									draggable={false}
+								/>
+							) : null}
 						</div>
 						<motion.div
 							aria-hidden="true"
@@ -199,17 +202,21 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 						/>
 					</motion.button>
 
-					{!isOpen ? (
-						<div className="pointer-events-none absolute bottom-[156px] left-1/2 -translate-x-1/2 w-max">
-							<motion.div 
-								initial={{ opacity: 0, y: 10 }}
-								animate={{ opacity: 1, y: 0 }}
-								className="rounded-full border border-white/10 bg-card/85 px-4 py-1.5 text-center text-[11px] font-semibold text-foreground/95 shadow-[0_8px_24px_rgba(0,0,0,0.3)] backdrop-blur-md ring-1 ring-white/5"
-							>
-								{identityLabel}
-							</motion.div>
-						</div>
-					) : null}
+					<AnimatePresence>
+						{!isOpen && !isHover ? (
+							<div className="pointer-events-none absolute bottom-[156px] left-1/2 -translate-x-1/2 w-max">
+								<motion.div
+									initial={{ opacity: 0, y: 10, scale: 0.96 }}
+									animate={{ opacity: 1, y: 0, scale: 1 }}
+									exit={{ opacity: 0, y: 8, scale: 0.96 }}
+									transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+									className="rounded-full border border-white/10 bg-card/85 px-4 py-1.5 text-center text-[11px] font-semibold text-foreground/95 shadow-[0_8px_24px_rgba(0,0,0,0.3)] backdrop-blur-md ring-1 ring-white/5"
+								>
+									{identityLabel}
+								</motion.div>
+							</div>
+						) : null}
+					</AnimatePresence>
 
 					<AnimatePresence>
 						{showPopup ? (
