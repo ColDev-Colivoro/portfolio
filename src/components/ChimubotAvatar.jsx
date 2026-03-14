@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { chimubotConfig } from '@/data/chimubotConfig';
 
@@ -7,6 +7,8 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 	const [showPopup, setShowPopup] = useState(false);
 	const [sleeping, setSleeping] = useState(false);
 	const [currentFrame, setCurrentFrame] = useState(0);
+	const [areFramesReady, setAreFramesReady] = useState(false);
+	const preloadedFramesRef = useRef(new Set());
 	
 	// Temporally using a default position, since useChimubotMotion seems missing
 	const position = { bottom: 20, right: 20 };
@@ -41,18 +43,61 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 		return idleStateConfig.folder || 'idle';
 	}, [idleStateConfig.folder, resolvedState, stateConfig.files, stateConfig.folder]);
 
+	const frameUrls = useMemo(() => {
+		if (!frameFiles.length) return [];
+		return frameFiles.map((file) => {
+			if (file.startsWith('/')) return file;
+			return `${chimubotConfig.sprite.basePath}/${frameFolder}/${encodeURIComponent(file)}`;
+		});
+	}, [frameFiles, frameFolder]);
+
+	useEffect(() => {
+		if (!frameUrls.length) {
+			setAreFramesReady(true);
+			return;
+		}
+
+		const allCached = frameUrls.every((url) => preloadedFramesRef.current.has(url));
+		if (allCached) {
+			setAreFramesReady(true);
+			return;
+		}
+
+		setAreFramesReady(false);
+		let cancelled = false;
+
+		const loadImage = (url) =>
+			new Promise((resolve) => {
+				const img = new Image();
+				img.onload = () => {
+					preloadedFramesRef.current.add(url);
+					resolve(true);
+				};
+				img.onerror = () => resolve(false);
+				img.src = url;
+			});
+
+		Promise.all(frameUrls.map(loadImage)).then(() => {
+			if (!cancelled) setAreFramesReady(true);
+		});
+
+		return () => {
+			cancelled = true;
+		};
+	}, [frameUrls]);
+
 	// Animation logic: Cycle frames based on FPS
 	useEffect(() => {
 		setCurrentFrame(0); // Reset frame on state change
 
-		if (frameFiles.length <= 1) return undefined;
+		if (!areFramesReady || frameFiles.length <= 1) return undefined;
 
 		const interval = setInterval(() => {
 			setCurrentFrame((prev) => (prev + 1) % frameFiles.length);
 		}, 1000 / Math.max(stateConfig.fps || 8, 1));
 
 		return () => clearInterval(interval);
-	}, [frameFiles.length, resolvedState, stateConfig.fps]);
+	}, [areFramesReady, frameFiles.length, resolvedState, stateConfig.fps]);
 
 	useEffect(() => {
 		const wake = () => setSleeping(false);
@@ -134,7 +179,7 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 							<img
 								src={spriteSrc}
 								alt="Chimubot"
-								className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-bottom scale-[1.22] drop-shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+								className={`pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-bottom scale-[1.22] drop-shadow-[0_16px_40px_rgba(0,0,0,0.5)] transition-opacity duration-200 ${areFramesReady ? 'opacity-100' : 'opacity-0'}`}
 								onError={(e) => {
 									const firstIdleFrame = idleStateConfig.files?.[0];
 									if (firstIdleFrame && !e.target.src.includes(encodeURIComponent(firstIdleFrame))) {
