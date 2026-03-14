@@ -127,10 +127,10 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 						onMouseLeave={() => setIsHover(false)}
 						whileHover={{ y: -6, scale: 1.03 }}
 						whileTap={{ scale: 0.97 }}
-						className="group relative flex h-[132px] w-[132px] items-center justify-center border-0 bg-transparent shadow-none"
+						className="group relative flex h-[140px] w-[140px] items-center justify-center border-0 bg-transparent shadow-none"
 						aria-label={isOpen ? 'Close assistant' : 'Open assistant'}
 					>
-						<div className="relative h-[132px] w-[132px] overflow-visible">
+						<div className="relative h-[140px] w-[140px] overflow-visible">
 							<img
 								src={spriteSrc}
 								alt="Chimubot"
@@ -155,27 +155,31 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 					</motion.button>
 
 					{!isOpen ? (
-						<div className="pointer-events-none absolute bottom-[94px] left-1/2 -translate-x-1/2">
-							<div className="max-w-[220px] rounded-full border border-white/10 bg-card/90 px-3 py-1 text-center text-[11px] font-medium text-foreground/95 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur-sm">
+						<div className="pointer-events-none absolute bottom-[156px] left-1/2 -translate-x-1/2 w-max">
+							<motion.div 
+								initial={{ opacity: 0, y: 10 }}
+								animate={{ opacity: 1, y: 0 }}
+								className="rounded-full border border-white/10 bg-card/85 px-4 py-1.5 text-center text-[11px] font-semibold text-foreground/95 shadow-[0_8px_24px_rgba(0,0,0,0.3)] backdrop-blur-md ring-1 ring-white/5"
+							>
 								{identityLabel}
-							</div>
+							</motion.div>
 						</div>
 					) : null}
 
 					<AnimatePresence>
 						{showPopup ? (
-							<div className="pointer-events-none absolute bottom-[132px] left-1/2 -translate-x-1/2">
+							<div className="pointer-events-none absolute bottom-[166px] left-1/2 -translate-x-1/2 w-max">
 								<motion.div
-									initial={{ opacity: 0, y: 6, scale: 0.98 }}
-									animate={{ opacity: 1, y: 0, scale: 1 }}
-									exit={{ opacity: 0, y: 6, scale: 0.98 }}
-									transition={{ duration: 0.22 }}
-									className="relative max-w-[220px] rounded-2xl border border-white/10 bg-card/95 px-3 py-2 text-center text-xs text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.4)]"
+									initial={{ opacity: 0, scale: 0.9, y: 10 }}
+									animate={{ opacity: 1, scale: 1, y: 0 }}
+									exit={{ opacity: 0, scale: 0.9, y: 10 }}
+									transition={{ type: "spring", damping: 25, stiffness: 300 }}
+									className="relative max-w-[240px] rounded-2xl border border-white/15 bg-card/98 px-4 py-2.5 text-center text-xs font-medium text-foreground shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl ring-1 ring-white/10"
 								>
 									{tooltip}
 									<span
 										aria-hidden="true"
-										className="absolute left-1/2 top-full h-2.5 w-2.5 -translate-x-1/2 -translate-y-1 rotate-45 border-b border-r border-white/10 bg-card/95"
+										className="absolute left-1/2 top-full h-3 w-3 -translate-x-1/2 -translate-y-[6px] rotate-45 border-b border-r border-white/15 bg-card/98"
 									/>
 								</motion.div>
 							</div>

@@ -78,20 +78,20 @@ const Navbar = () => {
 						data-cursor-size="md"
 						data-pressable="true"
 					>
-						<div className="nav-brand-shell flex items-center justify-center rounded-[1.1rem] border border-white/10 bg-white/[0.03] shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
+						<div className="nav-brand-shell flex items-center justify-center rounded-[1.1rem] border border-white/15 bg-white/[0.05] shadow-[0_16px_40px_rgba(0,0,0,0.28)]">
 							<img
 								src={logoPath}
 								alt="Logo gato ColDev"
-								className="nav-brand-logo object-contain invert brightness-[1.95] contrast-125"
+								className="nav-brand-logo object-contain invert brightness-[2.35] contrast-150"
 							/>
 						</div>
-						<div>
-							<p className="hidden text-[10px] uppercase tracking-[0.32em] text-white/40 sm:block">{resolveCopy(siteContent.nav.eyebrow, lang)}</p>
-							<p className="mt-1 text-sm font-semibold text-foreground sm:text-sm">
+						<div className="leading-tight">
+							<p className="hidden text-[10px] uppercase tracking-[0.28em] text-white/40 md:block">{resolveCopy(siteContent.nav.eyebrow, lang)}</p>
+							<p className="mt-0.5 text-sm font-semibold text-foreground sm:text-sm">
 								<span className="sm:hidden">José Colivoro</span>
 								<span className="hidden sm:inline">{siteContent.nav.brand}</span>
 							</p>
-							<p className="mt-1 text-[11px] uppercase tracking-[0.24em] text-accent/80">{resolveCopy(siteContent.nav.role, lang)}</p>
+							<p className="mt-0.5 text-[10px] uppercase tracking-[0.18em] text-accent/80 sm:text-[11px]">{resolveCopy(siteContent.nav.role, lang)}</p>
 						</div>
 					</button>
 

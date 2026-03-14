@@ -1,9 +1,9 @@
 @keyframes heroFloat {
   0%, 100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, -8px, 0) scale(1.01);
   }
   50% {
-    transform: translate3d(0, -16px, 0) scale(1.015);
+    transform: translate3d(0, 8px, 0) scale(1.01);
   }
 }
 

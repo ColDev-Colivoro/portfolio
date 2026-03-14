@@ -57,14 +57,14 @@ export const chimubotConfig = {
 		autoHideMs: 2600,
 		messages: {
 			es: {
-				idle: 'Chimubot · tu asistente ColDev 🤖',
+				idle: 'Chimubot',
 				hover: '¿En qué puedo ayudarte hoy?',
 				walking: 'Explorando el portfolio...',
 				thinking: 'Analizando información...',
 				sleeping: 'Modo ahorro de energía activo 🔋',
 			},
 			en: {
-				idle: 'Chimubot · your ColDev assistant 🤖',
+				idle: 'Chimubot',
 				hover: 'How can I help you today?',
 				walking: 'Exploring the portfolio...',
 				thinking: 'Analyzing information...',

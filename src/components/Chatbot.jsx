@@ -131,7 +131,7 @@ const Chatbot = ({ lang = 'es' }) => {
 						animate={{ opacity: 1, y: 0, x: 0, scale: 1, filter: 'blur(0px)' }}
 						exit={{ opacity: 0, y: 36, x: 20, scale: 0.9, filter: 'blur(4px)' }}
 						transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
-						className="fixed bottom-24 right-6 z-50 flex h-[520px] max-h-[70vh] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.8rem] border border-white/10 bg-card/92 shadow-[0_36px_120px_rgba(0,0,0,0.45)] backdrop-blur-xl"
+						className="fixed bottom-24 right-6 z-50 flex h-[580px] max-h-[75vh] w-[min(26rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-card/95 shadow-[0_40px_100px_rgba(0,0,0,0.5)] backdrop-blur-2xl ring-1 ring-white/5"
 					>
 						<div className="flex items-center justify-between border-b border-white/10 bg-background/72 p-4">
 						<div className="flex items-center gap-3">
