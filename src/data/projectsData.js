@@ -272,29 +272,69 @@ export const projectsCatalog = [
 		},
 		stack: ['Traceability', 'Quality', 'UX', 'Data capture'],
 		status: {
-			es: 'Prototipo',
-			en: 'Prototype',
+			es: 'Proyecto privado',
+			en: 'Private project',
 		},
 		links: {
-			primary: 'https://controldecalidad.netlify.app',
-			demo: 'https://controldecalidad.netlify.app',
+			primary: '',
+			demo: '',
 			repo: '',
 		},
 		media: {
-			cover: '/images/mar2control/home.png',
+			cover: '/images/placeholders/voyscout.svg',
 			gallery: [
 				{
 					id: 1,
-					role: { es: 'Operación', en: 'Operations' },
-					type: { es: 'Calidad', en: 'Quality' },
-					title: { es: 'Vista principal', en: 'Main view' },
+					role: { es: 'Gestión', en: 'Management' },
+					type: { es: 'Privado', en: 'Private' },
+					title: { es: 'Caso privado', en: 'Private case' },
 					caption: {
-						es: 'Seguimiento operativo y control de reportes.',
-						en: 'Operational follow-up and report control.',
+						es: 'El detalle visual del proyecto se mantiene privado.',
+						en: 'The visual details of the project remain private.',
 					},
-					src: '/images/mar2control/home.png',
+					src: '/images/placeholders/voyscout.svg',
 				},
 			],
+		},
+		caseStudy: {
+			headline: {
+				es: 'Mar2Control — trazabilidad y control como caso privado',
+				en: 'Mar2Control — traceability and control as a private case',
+			},
+			description: {
+				es: 'Caso orientado a trazabilidad, captura y seguimiento de calidad desde la operación. La versión pública mantiene placeholders y resume el enfoque sin exponer la demo real.',
+				en: 'Case focused on traceability, capture, and quality follow-up from operations. The public version keeps placeholders and summarizes the approach without exposing the real demo.',
+			},
+			microStats: {
+				es: ['Caso privado', 'Trazabilidad', 'Captura operativa'],
+				en: ['Private case', 'Traceability', 'Operational capture'],
+			},
+			features: {
+				es: [
+					'Habilidad: modelado de flujo para control de calidad',
+					'Habilidad: captura usable desde operación y terreno',
+					'Habilidad: seguimiento de datos y trazabilidad del proceso',
+				],
+				en: [
+					'Skill: flow modeling for quality control',
+					'Skill: usable capture from operations and field work',
+					'Skill: data follow-up and process traceability',
+				],
+			},
+			credentials: {
+				es: [
+					{ label: 'Estado público', text: 'Caso presentado con placeholders' },
+					{ label: 'Enfoque', text: 'Trazabilidad, reportes y operación de calidad' },
+				],
+				en: [
+					{ label: 'Public status', text: 'Case presented with placeholders' },
+					{ label: 'Focus', text: 'Traceability, reporting, and quality operations' },
+				],
+			},
+			credentialsNote: {
+				es: 'La demo funcional no se expone públicamente; este caso resume enfoque y tipo de solución.',
+				en: 'The functional demo is not exposed publicly; this case summarizes the approach and solution type.',
+			},
 		},
 	},
 	{
