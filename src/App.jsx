@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import Navbar from '@/components/Navbar';
@@ -17,6 +18,15 @@ const App = () => {
 	const location = useLocation();
 	const { lang } = useLocale();
 
+	const routeTone =
+		location.pathname === '/proyectos'
+			? 'projects'
+			: location.pathname === '/about'
+				? 'about'
+				: location.pathname === '/contact'
+					? 'contact'
+					: 'home';
+
 	useEffect(() => {
 		document.title = resolveCopy(siteContent.seoTitle, lang);
 	}, [lang]);
@@ -31,18 +41,30 @@ const App = () => {
 	}, [location.hash, location.pathname]);
 
 	return (
-		<div className="relative min-h-screen overflow-hidden bg-background text-foreground">
+		<div className="relative min-h-screen overflow-hidden bg-background text-foreground" data-route-tone={routeTone}>
+			<div className="route-atmo-primary pointer-events-none fixed inset-0" />
+			<div className="route-atmo-secondary pointer-events-none fixed inset-0" />
 			<div className="pointer-events-none fixed inset-0 noise-bg" />
 			<Cursor />
 			<div className="relative z-10 flex min-h-screen flex-col">
 				<Navbar />
 				<div className="flex-1">
-					<Routes location={location} key={location.pathname}>
-						<Route path="/" element={<HomePage />} />
-						<Route path="/about" element={<AboutPage />} />
-						<Route path="/proyectos" element={<ProjectsPage />} />
-						<Route path="/contact" element={<ContactPage />} />
-					</Routes>
+					<AnimatePresence mode="wait" initial={false}>
+						<motion.div
+							key={location.pathname}
+							initial={{ opacity: 0, x: 20, filter: 'blur(7px)' }}
+							animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+							exit={{ opacity: 0, x: -16, filter: 'blur(5px)' }}
+							transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+						>
+							<Routes location={location}>
+								<Route path="/" element={<HomePage />} />
+								<Route path="/about" element={<AboutPage />} />
+								<Route path="/proyectos" element={<ProjectsPage />} />
+								<Route path="/contact" element={<ContactPage />} />
+							</Routes>
+						</motion.div>
+					</AnimatePresence>
 				</div>
 				<Chatbot lang={lang} />
 				<Footer />

@@ -11,19 +11,19 @@ describe('App', () => {
     expect(screen.queryByText('Cargando experiencia...')).not.toBeInTheDocument();
   });
 
-  it('incluye secciones clave del portfolio minimal', () => {
-    renderWithProviders(<App />);
+	it('incluye secciones clave del portfolio minimal', () => {
+		renderWithProviders(<App />);
 
-    expect(screen.getAllByRole('heading', { name: 'Caso destacado' }).length).toBeGreaterThan(0);
-    expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
-    expect(screen.getAllByText('Certificaciones').length).toBeGreaterThan(0);
-  });
+		expect(screen.getAllByRole('heading', { name: 'Caso destacado' }).length).toBeGreaterThan(0);
+		expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
+		expect(screen.getByText('Capacidades que atraviesan el trabajo')).toBeInTheDocument();
+		expect(screen.getByText('Conversemos con contexto')).toBeInTheDocument();
+	});
 
-  it('mantiene visible la cinta de remodelación con contrato global', () => {
-    renderWithProviders(<App />);
+	it('aplica las capas de atmosfera por ruta en el shell', () => {
+		const { container } = renderWithProviders(<App />);
 
-    const ribbon = screen.getByText('En remodelación');
-    expect(ribbon).toBeInTheDocument();
-    expect(ribbon).toHaveClass('remodeling-ribbon');
-  });
+		expect(container.querySelector('.route-atmo-primary')).toBeInTheDocument();
+		expect(container.querySelector('.route-atmo-secondary')).toBeInTheDocument();
+	});
 });

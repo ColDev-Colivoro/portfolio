@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { chimubotConfig } from '@/data/chimubotConfig';
+import { useChimubotMotion } from '@/hooks/useChimubotMotion';
 
 const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, onToggle, lang = 'es' }) => {
-	const [isHover, setIsHover] = useState(false);
 	const [showPopup, setShowPopup] = useState(false);
 	const [sleeping, setSleeping] = useState(false);
 	const [currentFrame, setCurrentFrame] = useState(0);
@@ -11,24 +11,25 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 	const [loadedFrameUrls, setLoadedFrameUrls] = useState([]);
 	const preloadedFramesRef = useRef(new Set());
 	
-	// Temporally using a default position, since useChimubotMotion seems missing
-	const position = { bottom: 20, right: 20 };
-	const visualState = 'idle';
+	const { position, visualState, isSimplified } = useChimubotMotion({ isOpen, isLoading });
 
 	const resolvedState = useMemo(() => {
+		if (isOpen && !isLoading) return 'active';
 		if (isLoading) return 'thinking';
 		if (sleeping && !isOpen) return 'sleeping';
-		if (isHover) return 'hover';
 		return visualState;
-	}, [isHover, isLoading, isOpen, sleeping, visualState]);
+	}, [isLoading, isOpen, sleeping, visualState]);
 
 	const idleStateConfig = useMemo(() => {
-		return chimubotConfig.sprite.states.idle || { files: [], folder: 'idle', fps: 8 };
+		return chimubotConfig.sprite.states.idle || { frames: [], fps: 8 };
 	}, []);
 
 	const stateConfig = useMemo(() => {
+		if (resolvedState === 'active' && isOpen && !isLoading) {
+			return chimubotConfig.sprite.states.active || idleStateConfig;
+		}
 		return chimubotConfig.sprite.states[resolvedState] || idleStateConfig;
-	}, [idleStateConfig, resolvedState]);
+	}, [idleStateConfig, isLoading, isOpen, resolvedState]);
 
 	const frameFiles = useMemo(() => {
 		const currentFiles = stateConfig.files;
@@ -48,7 +49,7 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 		if (!frameFiles.length) return [];
 		return frameFiles.map((file) => {
 			if (file.startsWith('/')) return file;
-			return `${chimubotConfig.sprite.basePath}/${frameFolder}/${encodeURIComponent(file)}`;
+			return `/images/chimubot/frames/${frameFolder}/${encodeURIComponent(file)}`;
 		});
 	}, [frameFiles, frameFolder]);
 
@@ -85,6 +86,11 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 		Promise.all(frameUrls.map(loadImage)).then((results) => {
 			if (cancelled) return;
 			const successfulUrls = results.filter((result) => result.ok).map((result) => result.url);
+			if (successfulUrls.length === 0) {
+				setLoadedFrameUrls([chimubotConfig.sprite.fallbackSrc]);
+				setAreFramesReady(true);
+				return;
+			}
 			setLoadedFrameUrls(successfulUrls);
 			setAreFramesReady(successfulUrls.length > 0);
 		});
@@ -120,23 +126,11 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 			window.removeEventListener('scroll', wake);
 			window.removeEventListener('keydown', wake);
 		};
-	}, [isHover, isLoading, isOpen]);
+	}, [isLoading, isOpen]);
 
 	useEffect(() => {
-		if (isOpen) {
-			setShowPopup(false);
-			return;
-		}
-
-		if (!isHover) {
-			setShowPopup(false);
-			return;
-		}
-
-		setShowPopup(true);
-		const timer = setTimeout(() => setShowPopup(false), chimubotConfig.popup.autoHideMs);
-		return () => clearTimeout(timer);
-	}, [isHover, isOpen, resolvedState]);
+		setShowPopup(false);
+	}, [isOpen]);
 
 	const tooltip = useMemo(() => {
 		const locale = lang === 'en' ? 'en' : 'es';
@@ -151,7 +145,7 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 	}, [lang]);
 
 	const spriteSrc = useMemo(() => {
-		if (!loadedFrameUrls.length) return null;
+		if (!loadedFrameUrls.length) return chimubotConfig.sprite.fallbackSrc;
 		return loadedFrameUrls[currentFrame % loadedFrameUrls.length];
 	}, [currentFrame, loadedFrameUrls]);
 
@@ -174,19 +168,27 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 					<motion.button
 						type="button"
 						onClick={handleToggle}
-						onMouseEnter={() => setIsHover(true)}
-						onMouseLeave={() => setIsHover(false)}
-						whileHover={{ y: -6, scale: 1.03 }}
+						animate={isSimplified ? undefined : isOpen ? undefined : { y: [0, -2, 0] }}
+						transition={
+							isSimplified || isOpen
+								? undefined
+								: {
+									duration: 2.2,
+									repeat: Infinity,
+									ease: 'easeInOut',
+								}
+						}
+						whileHover={undefined}
 						whileTap={{ scale: 0.97 }}
-						className="group relative flex h-[140px] w-[140px] items-center justify-center border-0 bg-transparent shadow-none"
+						className="group relative flex h-[112px] w-[112px] items-center justify-center border-0 bg-transparent shadow-none"
 						aria-label={isOpen ? 'Close assistant' : 'Open assistant'}
 					>
-						<div className="relative h-[140px] w-[140px] overflow-visible">
+						<div className="relative h-[112px] w-[112px] overflow-visible">
 							{spriteSrc ? (
 								<img
 									src={spriteSrc}
 									alt="Chimubot"
-									className={`pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-bottom scale-[1.22] drop-shadow-[0_16px_40px_rgba(0,0,0,0.5)] transition-opacity duration-200 ${areFramesReady ? 'opacity-100' : 'opacity-0'}`}
+									className={`pointer-events-none absolute inset-0 h-full w-full select-none object-contain object-bottom scale-[1.04] drop-shadow-[0_14px_28px_rgba(0,0,0,0.4)] transition-opacity duration-200 ${areFramesReady ? 'opacity-100' : 'opacity-0'}`}
 									onError={() => {
 										setLoadedFrameUrls((prev) => prev.filter((url) => url !== spriteSrc));
 									}}
@@ -196,15 +198,17 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 						</div>
 						<motion.div
 							aria-hidden="true"
-							className="pointer-events-none absolute -bottom-1 h-6 w-16 rounded-full bg-accent/25 blur-xl"
-							animate={{ opacity: [0.2, 0.45, 0.2], scale: [0.92, 1.02, 0.92] }}
-							transition={{ duration: 2.3, repeat: Infinity, ease: 'easeInOut' }}
+							className="pointer-events-none absolute -bottom-1 h-5 w-14 rounded-full bg-accent/20 blur-xl"
+							animate={
+								isSimplified ? { opacity: 0.2, scale: 1 } : { opacity: [0.2, 0.45, 0.2], scale: [0.92, 1.02, 0.92] }
+							}
+							transition={isSimplified ? { duration: 0.1 } : { duration: 2.3, repeat: Infinity, ease: 'easeInOut' }}
 						/>
 					</motion.button>
 
 					<AnimatePresence>
-						{!isOpen && !isHover ? (
-							<div className="pointer-events-none absolute bottom-[156px] left-1/2 -translate-x-1/2 w-max">
+						{!isOpen ? (
+							<div className="pointer-events-none absolute bottom-[124px] left-1/2 -translate-x-1/2 w-max">
 								<motion.div
 									initial={{ opacity: 0, y: 10, scale: 0.96 }}
 									animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -220,7 +224,7 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 
 					<AnimatePresence>
 						{showPopup ? (
-							<div className="pointer-events-none absolute bottom-[166px] left-1/2 -translate-x-1/2 w-max">
+							<div className="pointer-events-none absolute bottom-[132px] left-1/2 -translate-x-1/2 w-max">
 								<motion.div
 									initial={{ opacity: 0, scale: 0.9, y: 10 }}
 									animate={{ opacity: 1, scale: 1, y: 0 }}

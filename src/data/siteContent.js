@@ -10,12 +10,10 @@ export const siteContent = {
 		languageLabel: { es: 'Idioma', en: 'Language' },
 		resume: { es: 'Descargar CV', en: 'Download resume' },
 		links: [
-			{ id: 'home', label: { es: 'Inicio', en: 'Home' } },
-			{ id: 'projects', label: { es: 'Proyectos', en: 'Projects' } },
-			{ id: 'about', label: { es: 'Perfil', en: 'Profile' } },
-			{ id: 'capabilities', label: { es: 'Enfoque', en: 'Approach' } },
-			{ id: 'certifications', label: { es: 'Certificados', en: 'Certificates' } },
-			{ id: 'contact', label: { es: 'Contacto', en: 'Contact' } },
+			{ id: 'home', type: 'route', path: '/', label: { es: 'Inicio', en: 'Home' } },
+			{ id: 'projects', type: 'route', path: '/proyectos', label: { es: 'Proyectos', en: 'Projects' } },
+			{ id: 'about', type: 'route', path: '/about', label: { es: 'Perfil', en: 'Profile' } },
+			{ id: 'contact', type: 'route', path: '/contact', label: { es: 'Contacto', en: 'Contact' } },
 		],
 	},
 	hero: {

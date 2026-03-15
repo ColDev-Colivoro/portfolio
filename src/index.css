@@ -35,30 +35,30 @@
     --radius: 1rem;
 
     /* Contracto de densidad global (default desktop) */
-    --root-font-size: 16px;
+    --root-font-size: 15px;
 
-    --home-main-pt: 6rem;
-    --home-hero-pt: 3.25rem;
-    --home-section-pb: 5rem;
-    --home-section-pb-tight: 4rem;
-    --home-projects-gap: 3.5rem;
+    --home-main-pt: 5.25rem;
+    --home-hero-pt: 2.1rem;
+    --home-section-pb: 3.6rem;
+    --home-section-pb-tight: 2.7rem;
+    --home-projects-gap: 2.1rem;
 
     --section-eyebrow-font-size: 11px;
     --section-eyebrow-letter-spacing: 0.32em;
-    --section-title-size: clamp(2rem, 3vw, 2.75rem);
-    --section-copy-size: clamp(1rem, 1.2vw, 1.125rem);
+    --section-title-size: clamp(1.75rem, 2.4vw, 2.3rem);
+    --section-copy-size: clamp(0.95rem, 1.05vw, 1.04rem);
     --panel-surface-shadow: 0 28px 90px rgba(0, 0, 0, 0.32);
 
-    --hero-title-size: clamp(3rem, 7vw, 6rem);
-    --hero-grid-gap: 2.5rem;
-    --hero-grid-gap-lg: 4rem;
-    --hero-logo-shell-max: 28rem;
-    --hero-logo-shell-pad-x: 1.5rem;
-    --hero-logo-shell-pad-y: 2rem;
-    --hero-logo-max: 18rem;
+    --hero-title-size: clamp(2.35rem, 5.3vw, 4.6rem);
+    --hero-grid-gap: 1.35rem;
+    --hero-grid-gap-lg: 2.25rem;
+    --hero-logo-shell-max: 21rem;
+    --hero-logo-shell-pad-x: 1.05rem;
+    --hero-logo-shell-pad-y: 1.15rem;
+    --hero-logo-max: 13.9rem;
 
-    --featured-media-min-h-lg: 420px;
-    --project-card-media-h: 13rem;
+    --featured-media-min-h-lg: 336px;
+    --project-card-media-h: 10.4rem;
 
     --nav-brand-shell-size: 3.35rem;
     --nav-brand-logo-size: 2.75rem;
@@ -73,6 +73,12 @@
     --ribbon-padding-x: 2.5rem;
     --ribbon-padding-y: 0.36rem;
     --ribbon-tracking: 0.16em;
+
+    --route-home-rgb: 255, 87, 34;
+    --route-projects-rgb: 34, 211, 238;
+    --route-about-rgb: 255, 235, 59;
+    --route-contact-rgb: 255, 122, 89;
+    --route-current-rgb: var(--route-home-rgb);
   }
 }
 
@@ -95,6 +101,22 @@
       linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 18%);
     background-color: #0d0d0d;
     background-attachment: fixed;
+  }
+
+  [data-route-tone='home'] {
+    --route-current-rgb: var(--route-home-rgb);
+  }
+
+  [data-route-tone='projects'] {
+    --route-current-rgb: var(--route-projects-rgb);
+  }
+
+  [data-route-tone='about'] {
+    --route-current-rgb: var(--route-about-rgb);
+  }
+
+  [data-route-tone='contact'] {
+    --route-current-rgb: var(--route-contact-rgb);
   }
 }
 
@@ -225,6 +247,22 @@
   .panel-surface {
     @apply border border-white/10 bg-white/[0.03] backdrop-blur-[2px];
     box-shadow: var(--panel-surface-shadow);
+  }
+
+  .route-atmo-primary {
+    background:
+      radial-gradient(920px circle at 18% 12%, rgba(var(--route-current-rgb), 0.19) 0%, transparent 42%),
+      radial-gradient(680px circle at 82% 14%, rgba(255, 255, 255, 0.042) 0%, transparent 33%);
+    opacity: 0.94;
+    transition: background 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .route-atmo-secondary {
+    background:
+      radial-gradient(760px circle at 74% 76%, rgba(var(--route-current-rgb), 0.1) 0%, transparent 43%),
+      radial-gradient(500px circle at 24% 78%, rgba(var(--route-current-rgb), 0.06) 0%, transparent 52%);
+    opacity: 0.85;
+    transition: background 420ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 

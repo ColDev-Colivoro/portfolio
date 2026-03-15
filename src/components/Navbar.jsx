@@ -13,7 +13,6 @@ const Navbar = () => {
 	const location = useLocation();
 	const { lang, setLang } = useLocale();
 	const [isOpen, setIsOpen] = useState(false);
-	const [activeSection, setActiveSection] = useState('home');
 	const [scrolled, setScrolled] = useState(false);
 
 	const navLinks = useMemo(() => siteContent.nav.links, []);
@@ -26,36 +25,43 @@ const Navbar = () => {
 	}, []);
 
 	useEffect(() => {
-		if (location.pathname !== '/') return;
-
-		const sections = Array.from(document.querySelectorAll('section[id]'));
-		if (!sections.length) return;
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				const visible = entries.find((entry) => entry.isIntersecting);
-				if (visible?.target?.id) setActiveSection(visible.target.id);
-			},
-			{ rootMargin: '-28% 0px -55% 0px', threshold: 0.15 },
-		);
-
-		sections.forEach((section) => observer.observe(section));
-		return () => observer.disconnect();
+		setIsOpen(false);
 	}, [location.pathname]);
 
-	const goToSection = (id) => {
+	const goHome = () => {
 		setIsOpen(false);
-		setActiveSection(id);
+
+		if (location.pathname === '/') {
+			document.getElementById('home')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			return;
+		}
+
+		navigate('/');
+	};
+
+	const activateNavLink = (item) => {
+		setIsOpen(false);
+
+		if (item.type === 'route' && item.path) {
+			if (location.pathname === item.path && item.path === '/') {
+				document.getElementById('home')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				return;
+			}
+			navigate(item.path);
+			return;
+		}
+
+		if (!item.id) return;
 
 		if (location.pathname !== '/') {
-			navigate(`/#${id}`);
+			navigate(`/#${item.id}`);
 			setTimeout(() => {
-				document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			}, 140);
 			return;
 		}
 
-		document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	};
 
 	return (
@@ -72,7 +78,7 @@ const Navbar = () => {
 			<div className="container mx-auto px-6 lg:px-12 py-4">
 				<div className="flex items-center justify-between gap-4">
 					<button
-						onClick={() => goToSection('home')}
+						onClick={goHome}
 						className="inline-flex items-center gap-3 text-left"
 						data-cursor-target="magnetic"
 						data-cursor-size="md"
@@ -98,11 +104,11 @@ const Navbar = () => {
 					<LayoutGroup>
 						<nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1 lg:flex">
 							{navLinks.map((item) => {
-								const isActive = activeSection === item.id && location.pathname === '/';
+								const isActive = item.type === 'route' && location.pathname === item.path;
 								return (
 									<button
 										key={item.id}
-										onClick={() => goToSection(item.id)}
+										onClick={() => activateNavLink(item)}
 										className={`relative rounded-full px-4 py-2 text-sm transition-colors ${
 											isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
 										}`}
@@ -199,7 +205,7 @@ const Navbar = () => {
 							{navLinks.map((item) => (
 								<button
 									key={item.id}
-									onClick={() => goToSection(item.id)}
+									onClick={() => activateNavLink(item)}
 									className="rounded-2xl border border-transparent px-4 py-3 text-left text-sm text-muted-foreground transition-colors hover:border-white/10 hover:bg-white/[0.05] hover:text-foreground"
 									data-pressable="true"
 								>

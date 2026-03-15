@@ -1,57 +1,65 @@
+const singleFrontFrame = (prefix) => [`${prefix}-frame-0002.png`];
+const subtleTwoFrame = (prefix) => [`${prefix}-frame-0002.png`, `${prefix}-frame-0016.png`];
+
+const stableIdleRange = subtleTwoFrame('idle');
+const stableThinkingRange = singleFrontFrame('idle');
+const stableSleepRange = singleFrontFrame('idle');
+const stableActiveRange = singleFrontFrame('idle');
+const stableTalkRange = singleFrontFrame('idle');
+
 export const chimubotConfig = {
 	sprite: {
-		basePath: '/images/chimubot/frames',
-		fallbackSrc: '/images/branding/logo-gato.png',
+		fallbackSrc: '/images/chimubot/frames/idle/idle-frame-0002.png',
 		width: 256,
 		height: 256,
 		states: {
 			idle: {
 				folder: 'idle',
-				files: [
-					'idle-r-00.png',
-					'idle-r-01.png',
-					'idle-r-02.png',
-					'idle-r-03.png',
-					'idle-r-04.png',
-					'idle-r-05.png',
-					'idle-r-06.png',
-					'idle-r-07.png',
-					'idle-r-08.png',
-					'idle-r-09.png',
-					'idle-r-10.png',
-					'idle-r-11.png',
-					'idle-r-12.png',
-					'idle-r-13.png',
-					'idle-r-14.png',
-					'idle-r-15.png',
-					'idle-r-16.png',
-					'idle-r-17.png',
-					'idle-r-18.png',
-					'idle-r-19.png',
-					'idle-r-20.png',
-					'idle-r-21.png',
-					'idle-r-22.png',
-					'idle-r-23.png',
-					'idle-r-24.png',
-					'idle-r-25.png',
-					'idle-r-26.png',
-					'idle-r-27.png',
-					'idle-r-28.png',
-					'idle-r-29.png',
-				],
-				fps: 8,
+				files: stableIdleRange,
+				fps: 2,
 			},
-			hover: { fps: 10 },
-			walking: { fps: 12 },
-			thinking: { fps: 8 },
-			sleeping: { fps: 5 },
-			perched: { fps: 6 },
+			hover: {
+				folder: 'idle',
+				files: stableIdleRange,
+				fps: 1,
+			},
+			walking: {
+				folder: 'idle',
+				files: stableActiveRange,
+				fps: 1,
+			},
+			thinking: {
+				folder: 'idle',
+				files: stableThinkingRange,
+				fps: 1,
+			},
+			sleeping: {
+				folder: 'idle',
+				files: stableSleepRange,
+				fps: 1,
+			},
+			perched: {
+				folder: 'idle',
+				files: stableIdleRange,
+				fps: 1,
+			},
+			active: {
+				folder: 'idle',
+				files: stableTalkRange,
+				fps: 1,
+			},
+			talk: {
+				folder: 'idle',
+				files: stableTalkRange,
+				fps: 1,
+			},
 		},
 	},
 	anchors: {
 		hero: { bottom: 20, right: 20 },
-		projects: { bottom: 94, right: 28 },
-		contact: { bottom: 152, right: 22 },
+		projects: { bottom: 72, right: 28 },
+		about: { bottom: 104, right: 24 },
+		contact: { bottom: 142, right: 22 },
 	},
 	popup: {
 		autoHideMs: 2600,

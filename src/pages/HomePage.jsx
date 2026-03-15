@@ -3,9 +3,7 @@ import { motion } from 'framer-motion';
 import Hero from '@/components/Hero';
 import FeaturedProject from '@/components/FeaturedProject';
 import Projects from '@/components/Projects';
-import About from '@/components/About';
 import Skills from '@/components/Skills';
-import Certificates from '@/components/Certificates';
 import Contact from '@/components/Contact';
 
 const HomePage = () => {
@@ -25,21 +23,13 @@ const HomePage = () => {
 				<Hero />
 			</section>
 
-			<section id="projects" className="home-projects-stack home-section">
+			<section id="projects" className="home-projects-stack home-section home-section-tight">
 				<FeaturedProject />
 				<Projects />
 			</section>
 
-			<section id="about" className="home-section">
-				<About />
-			</section>
-
-			<section id="capabilities" className="home-section">
+			<section id="capabilities" className="home-section home-section-tight">
 				<Skills />
-			</section>
-
-			<section id="certifications" className="home-section">
-				<Certificates />
 			</section>
 
 			<section id="contact" className="home-section-tight">

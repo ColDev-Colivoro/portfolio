@@ -32,6 +32,27 @@
   }
 }
 
+@keyframes modalAuraShift {
+  0%,
+  100% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+    opacity: 0.52;
+  }
+  50% {
+    transform: translate3d(2%, 1%, 0) scale(1.05);
+    opacity: 0.68;
+  }
+}
+
+@keyframes modalNoiseDrift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 120px 120px;
+  }
+}
+
 .hero-logo-float {
   animation: heroFloat 11s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
@@ -59,4 +80,16 @@
   .sweep-hover:hover::after {
     animation: gentleSweep 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
+}
+
+.modal-aura {
+  animation: modalAuraShift 12s ease-in-out infinite;
+}
+
+.modal-noise {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.016) 1px, transparent 1px);
+  background-size: 28px 28px;
+  animation: modalNoiseDrift 18s linear infinite;
 }
