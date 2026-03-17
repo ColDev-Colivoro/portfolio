@@ -37,11 +37,11 @@
     /* Contracto de densidad global (default desktop) */
     --root-font-size: 15px;
 
-    --home-main-pt: 5.25rem;
-    --home-hero-pt: 2.1rem;
-    --home-section-pb: 3.6rem;
-    --home-section-pb-tight: 2.7rem;
-    --home-projects-gap: 2.1rem;
+    --home-main-pt: 4rem;
+    --home-hero-pt: 1.5rem;
+    --home-section-pb: 2.5rem;
+    --home-section-pb-tight: 1.8rem;
+    --home-projects-gap: 1.5rem;
 
     --section-eyebrow-font-size: 11px;
     --section-eyebrow-letter-spacing: 0.32em;
@@ -57,8 +57,8 @@
     --hero-logo-shell-pad-y: 1.15rem;
     --hero-logo-max: 13.9rem;
 
-    --featured-media-min-h-lg: 336px;
-    --project-card-media-h: 10.4rem;
+    --featured-media-min-h-lg: 280px;
+    --project-card-media-h: 8.5rem;
 
     --nav-brand-shell-size: 3.35rem;
     --nav-brand-logo-size: 2.75rem;
@@ -254,7 +254,7 @@
       radial-gradient(920px circle at 18% 12%, rgba(var(--route-current-rgb), 0.19) 0%, transparent 42%),
       radial-gradient(680px circle at 82% 14%, rgba(255, 255, 255, 0.042) 0%, transparent 33%);
     opacity: 0.94;
-    transition: background 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background 800ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .route-atmo-secondary {
@@ -262,7 +262,7 @@
       radial-gradient(760px circle at 74% 76%, rgba(var(--route-current-rgb), 0.1) 0%, transparent 43%),
       radial-gradient(500px circle at 24% 78%, rgba(var(--route-current-rgb), 0.06) 0%, transparent 52%);
     opacity: 0.85;
-    transition: background 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: background 800ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 

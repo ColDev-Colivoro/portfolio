@@ -35,7 +35,7 @@ const Projects = () => {
 	return (
 		<div className="container mx-auto px-4">
 			<div className="mx-auto max-w-6xl">
-				<div className="mb-8 max-w-3xl">
+				<div className="mb-5 max-w-3xl">
 					<p className="section-eyebrow">{resolveCopy(content.eyebrow, lang)}</p>
 					<h2 className="section-title">{resolveCopy(content.title, lang)}</h2>
 					<p className="section-copy">{resolveCopy(content.description, lang)}</p>
@@ -67,7 +67,7 @@ const Projects = () => {
 					})}
 				</div>
 
-				<div className="grid gap-5 lg:grid-cols-2">
+				<div className="grid gap-4 lg:grid-cols-2">
 					{projects.map((project, index) => (
 						<motion.article
 							key={project.id}
@@ -90,7 +90,7 @@ const Projects = () => {
 								</div>
 							</div>
 
-							<div className="space-y-4 p-5 md:p-6">
+							<div className="space-y-3 p-4 md:p-5">
 								<div>
 									<h3 className="text-2xl font-semibold tracking-[-0.04em] text-foreground md:text-[1.9rem]">
 										{resolveCopy(project.title, lang)}

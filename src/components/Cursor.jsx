@@ -74,16 +74,14 @@ const Cursor = () => {
 		const syncTargetState = (nextTarget) => {
 			const nextMagnetic = Boolean(nextTarget);
 			const nextSizeKey = nextTarget?.dataset?.cursorSize ?? 'base';
-			const current = targetStateRef.current;
-
-			if (current.magnetic !== nextMagnetic) {
-				setMagnetic(nextMagnetic);
+			
+			// Only update state if the magnetic status or size key actually changed
+			if (targetStateRef.current.magnetic === nextMagnetic && targetStateRef.current.sizeKey === nextSizeKey) {
+				return;
 			}
 
-			if (current.sizeKey !== nextSizeKey) {
-				setSizeKey(nextSizeKey);
-			}
-
+			setMagnetic(nextMagnetic);
+			setSizeKey(nextSizeKey);
 			targetStateRef.current = { magnetic: nextMagnetic, sizeKey: nextSizeKey };
 		};
 

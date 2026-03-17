@@ -280,7 +280,7 @@ export const siteContent = {
 			es: 'Portfolio bilingüe — Español / English',
 			en: 'Bilingual portfolio — English / Español',
 		},
-		backToTop: { es: 'Volver arriba', en: 'Back to top' },
+		
 	},
 };
 

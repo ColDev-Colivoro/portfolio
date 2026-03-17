@@ -24,7 +24,7 @@ const FeaturedProject = () => {
 	return (
 		<div className="container mx-auto px-4">
 			<div className="mx-auto max-w-6xl">
-				<div className="mb-8 max-w-3xl">
+				<div className="mb-4 max-w-3xl">
 					<p className="section-eyebrow">{resolveCopy(content.eyebrow, lang)}</p>
 					<h2 className="section-title">{resolveCopy(content.title, lang)}</h2>
 					<p className="section-copy">{resolveCopy(content.description, lang)}</p>
@@ -50,7 +50,7 @@ const FeaturedProject = () => {
 							</div>
 						</div>
 
-						<div className="flex flex-col justify-between p-6 md:p-8">
+						<div className="flex flex-col justify-between p-5 md:p-6">
 							<div>
 								<div className="flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
 									{domainLabels.map((label) => (

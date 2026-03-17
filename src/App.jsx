@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
@@ -17,6 +17,22 @@ import { resolveCopy } from '@/lib/i18n';
 const App = () => {
 	const location = useLocation();
 	const { lang } = useLocale();
+
+	const routeToIndex = { '/': 0, '/proyectos': 1, '/about': 2, '/contact': 3 };
+	const currentIndex = routeToIndex[location.pathname] ?? 0;
+	const prevIndex = useRef(currentIndex);
+
+	useEffect(() => {
+		prevIndex.current = currentIndex;
+	}, [currentIndex]);
+
+	const direction = currentIndex > prevIndex.current ? 1 : -1;
+
+	const variants = {
+		enter: (dir) => ({ x: dir * 30, y: 0, opacity: 0, filter: 'blur(5px)' }),
+		center: { x: 0, y: 0, opacity: 1, filter: 'blur(0px)' },
+		exit: (dir) => ({ x: dir * -30, y: 0, opacity: 0, filter: 'blur(5px)' })
+	};
 
 	const routeTone =
 		location.pathname === '/proyectos'
@@ -49,13 +65,15 @@ const App = () => {
 			<div className="relative z-10 flex min-h-screen flex-col">
 				<Navbar />
 				<div className="flex-1">
-					<AnimatePresence mode="wait" initial={false}>
+					<AnimatePresence mode="wait" initial={false} custom={direction}>
 						<motion.div
 							key={location.pathname}
-							initial={{ opacity: 0, x: 20, filter: 'blur(7px)' }}
-							animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-							exit={{ opacity: 0, x: -16, filter: 'blur(5px)' }}
-							transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+							custom={direction}
+							variants={variants}
+							initial="enter"
+							animate="center"
+							exit="exit"
+							transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
 						>
 							<Routes location={location}>
 								<Route path="/" element={<HomePage />} />

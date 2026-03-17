@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Hero from '@/components/Hero';
-import FeaturedProject from '@/components/FeaturedProject';
-import Projects from '@/components/Projects';
-import Skills from '@/components/Skills';
-import Contact from '@/components/Contact';
 
 const HomePage = () => {
 	useEffect(() => {
@@ -21,19 +17,6 @@ const HomePage = () => {
 		>
 			<section id="home" className="home-section home-section-hero">
 				<Hero />
-			</section>
-
-			<section id="projects" className="home-projects-stack home-section home-section-tight">
-				<FeaturedProject />
-				<Projects />
-			</section>
-
-			<section id="capabilities" className="home-section home-section-tight">
-				<Skills />
-			</section>
-
-			<section id="contact" className="home-section-tight">
-				<Contact />
 			</section>
 		</motion.main>
 	);

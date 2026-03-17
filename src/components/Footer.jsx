@@ -1,4 +1,4 @@
-import { ArrowUp, Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
 import { useLocale } from '@/context/LocaleContext';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
@@ -8,10 +8,6 @@ const logoPath = '/images/branding/logo-gato.png';
 const Footer = () => {
 	const { lang } = useLocale();
 	const content = siteContent.footer;
-
-	const goTop = () => {
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	};
 
 	return (
 		<footer className="border-t border-white/10 bg-background/95">
@@ -57,16 +53,6 @@ const Footer = () => {
 						>
 							<Linkedin className="h-5 w-5" />
 						</a>
-						<button
-							onClick={goTop}
-							className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-3 text-sm text-foreground transition-colors hover:border-accent/40 hover:bg-white/[0.05]"
-							data-cursor-target="magnetic"
-							data-cursor-size="sm"
-							data-pressable="true"
-						>
-							<ArrowUp className="h-4 w-4 text-accent" />
-							{resolveCopy(content.backToTop, lang)}
-						</button>
 					</div>
 				</div>
 
