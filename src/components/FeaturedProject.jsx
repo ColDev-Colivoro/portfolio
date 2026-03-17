@@ -37,7 +37,7 @@ const FeaturedProject = () => {
 					transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
 					className="sweep-hover panel-surface overflow-hidden rounded-[2rem]"
 				>
-					<div className="grid gap-0 lg:grid-cols-[1.02fr_0.98fr] lg:items-stretch">
+					<div className="inline-flex gap-0 lg:grid-cols-[1.02fr_0.98fr] lg:items-stretch ">
 						<div className="featured-media relative overflow-hidden border-b border-white/10 bg-black lg:border-b-0 lg:border-r">
 							<img
 								src={project.media.cover}
