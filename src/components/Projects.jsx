@@ -122,7 +122,7 @@ const Projects = () => {
 								<div className="flex flex-wrap items-center gap-4 pt-2">
 									<button
 										onClick={() => openProject(project)}
-										className="inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent/80"
+										className="inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent/80 cursor-pointer"
 										data-cursor-target="magnetic"
 										data-cursor-size="md"
 										data-pressable="true"
@@ -135,7 +135,7 @@ const Projects = () => {
 											href={project.links.repo}
 											target="_blank"
 											rel="noopener noreferrer"
-											className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-accent"
+											className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition-colors hover:text-accent cursor-pointer"
 											data-cursor-target="magnetic"
 											data-cursor-size="sm"
 											data-pressable="true"

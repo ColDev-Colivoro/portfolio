@@ -28,7 +28,7 @@ const Certificates = () => {
 							whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
 							viewport={{ once: true, amount: 0.2 }}
 							transition={{ duration: 0.82, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-							className="group card-hover sweep-hover rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5 shadow-[0_24px_72px_rgba(0,0,0,0.24)]"
+							className="group card-hover sweep-hover rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5 shadow-[0_24px_72px_rgba(0,0,0,0.24)] cursor-pointer"
 							data-cursor-target="magnetic"
 							data-cursor-size="md"
 							data-pressable="true"

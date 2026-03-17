@@ -77,9 +77,9 @@ const Navbar = () => {
 		>
 			<div className="container mx-auto px-6 lg:px-12 py-4">
 				<div className="flex items-center justify-between gap-4">
-					<button
+						<button
 						onClick={goHome}
-						className="inline-flex items-center gap-3 text-left"
+						className="inline-flex items-center gap-3 text-left cursor-pointer"
 						data-cursor-target="magnetic"
 						data-cursor-size="md"
 						data-pressable="true"
@@ -109,7 +109,7 @@ const Navbar = () => {
 									<button
 										key={item.id}
 										onClick={() => activateNavLink(item)}
-										className={`relative rounded-full px-4 py-2 text-sm transition-colors ${
+										className={`relative rounded-full px-4 py-2 text-sm transition-colors cursor-pointer ${
 											isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
 										}`}
 										data-cursor-target="magnetic"

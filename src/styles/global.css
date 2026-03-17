@@ -103,7 +103,7 @@ section[id] {
 }
 
 [data-cursor-target='magnetic'] {
-  cursor: auto;
+  cursor: pointer;
 }
 
 .cursor-follower {

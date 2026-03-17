@@ -220,10 +220,10 @@ export const siteContent = {
 	},
 	contact: {
 		eyebrow: { es: 'Contacto', en: 'Contact' },
-		title: { es: 'Conversemos con contexto', en: 'Let’s talk with context' },
+		title: { es: 'Hablemos de tu proyecto', en: 'Let’s talk about your project' },
 		description: {
-			es: 'Si tienes un sistema, un proceso o una idea que ordenar, cuéntame el contexto y vemos si puedo aportar desde análisis, software o implementación.',
-			en: 'If you have a system, a process, or an idea to structure, share the context and we can see whether I can help from analysis, software, or implementation.',
+			es: 'Cuéntame sobre tu idea o desafío. Un poco de contexto ayuda a que podamos aterrizar una solución desde el primer mensaje.',
+			en: 'Tell me about your idea or challenge. A bit of context helps us land a solution from the first message.',
 		},
 		formTitle: { es: 'Solicitud de contacto', en: 'Contact request' },
 		linkedInCta: { es: 'Ver LinkedIn', en: 'View LinkedIn' },
@@ -232,12 +232,12 @@ export const siteContent = {
 			en: 'Public trajectory and professional contact',
 		},
 		sideTitle: {
-			es: 'Canales sobrios y directos',
-			en: 'Sober and direct channels',
+			es: 'Canales de contacto',
+			en: 'Contact channels',
 		},
 		sideDescription: {
-			es: 'Prefiero un mensaje corto y claro sobre el problema, objetivo o colaboración. Desde ahí respondo por el canal adecuado.',
-			en: 'I prefer a short, clear message about the problem, goal, or collaboration. From there I respond through the right channel.',
+			es: 'Escríbeme sobre tu objetivo o colaboración. Te responderé directamente por el canal que mejor se adapte.',
+			en: 'Write to me about your goal or collaboration. I will respond directly through the channel that best fits.',
 		},
 		formLabels: {
 			name: { es: 'Nombre', en: 'Name' },

@@ -83,7 +83,7 @@ const Hero = () => {
 					<motion.div variants={revealItem} className="mt-9 flex flex-wrap gap-3">
 						<Button
 							size="lg"
-							className="gap-2 rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90"
+							className="gap-2 rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90 cursor-pointer"
 							onClick={() => scrollToSection('projects')}
 							data-cursor-target="magnetic"
 							data-cursor-size="lg"
@@ -93,7 +93,7 @@ const Hero = () => {
 							<ArrowDownRight className="h-4 w-4" />
 						</Button>
 
-						<a href={resumeLinks[lang]} download data-cursor-target="magnetic" data-cursor-size="lg" data-pressable="true">
+						<a href={resumeLinks[lang]} download className="cursor-pointer" data-cursor-target="magnetic" data-cursor-size="lg" data-pressable="true">
 							<Button
 								size="lg"
 								variant="outline"
@@ -107,7 +107,7 @@ const Hero = () => {
 						<Button
 							size="sm"
 							variant="ghost"
-							className="gap-2 rounded-full border border-transparent px-3 text-muted-foreground hover:border-white/10 hover:bg-white/[0.03] hover:text-foreground"
+							className="gap-2 rounded-full border border-transparent px-3 text-muted-foreground hover:border-white/10 hover:bg-white/[0.03] hover:text-foreground cursor-pointer"
 							onClick={() => scrollToSection('contact')}
 							data-cursor-target="magnetic"
 							data-cursor-size="md"
