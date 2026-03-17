@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
 import Contact from '@/components/Contact';
 
 const ContactPage = () => {
@@ -8,17 +7,11 @@ const ContactPage = () => {
 	}, []);
 
 	return (
-		<motion.main
-			initial={{ opacity: 0, y: 28, filter: 'blur(10px)' }}
-			animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-			exit={{ opacity: 0, y: -20, filter: 'blur(6px)' }}
-			transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
-			className="w-full pt-24 md:pt-28"
-		>
+		<main className="w-full pt-24 md:pt-28">
 			<section className="pb-32 pt-10 md:pb-40">
 				<Contact />
 			</section>
-		</motion.main>
+		</main>
 	);
 };
 

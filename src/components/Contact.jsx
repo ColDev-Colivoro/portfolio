@@ -179,7 +179,7 @@ const Contact = () => {
 								<Button
 									type="submit"
 									disabled={isSubmitting || !isFormValid}
-									className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground hover:bg-accent/90 transition-all duration-300 w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+									className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground hover:bg-accent/90 transition-all duration-300 w-full md:w-auto"
 									data-cursor-target="magnetic"
 									data-cursor-size="lg"
 									data-pressable="true"

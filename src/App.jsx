@@ -19,7 +19,7 @@ const App = () => {
 	const location = useLocation();
 	const { lang } = useLocale();
 
-	const routeToIndex = { '/': 0, '/proyectos': 1, '/about': 2, '/contact': 3 };
+	const routeToIndex = {  '/proyectos': 1, '/about': 2, '/contact': 3 };
 	const currentIndex = routeToIndex[location.pathname] ?? 0;
 	const prevIndex = useRef(currentIndex);
 
@@ -30,19 +30,22 @@ const App = () => {
 	const direction = currentIndex > prevIndex.current ? 1 : -1;
 
 	const variants = {
-		enter: (dir) => ({ x: dir * 30, y: 0, opacity: 0, filter: 'blur(5px)' }),
-		center: { x: 0, y: 0, opacity: 1, filter: 'blur(0px)' },
-		exit: (dir) => ({ x: dir * -30, y: 0, opacity: 0, filter: 'blur(5px)' })
+		home: {
+			enter: { opacity: 0, scale: 0.96, filter: 'blur(10px)' },
+			center: { opacity: 1, scale: 1, filter: 'blur(0px)' },
+			exit: { opacity: 0, scale: 1.04, filter: 'blur(10px)' }
+		},
+		standard: {
+			enter: (dir) => ({ x: dir * 30, opacity: 0 }),
+			center: { x: 0, opacity: 1 },
+			exit: (dir) => ({ x: dir * -30, opacity: 0 })
+		}
 	};
 
 	const routeTone =
-		location.pathname === '/proyectos'
-			? 'projects'
-			: location.pathname === '/about'
-				? 'about'
-				: location.pathname === '/contact'
-					? 'contact'
-					: 'home';
+		location.pathname === '/' ? 'home' : 'standard';
+
+	const getVariants = () => (routeTone === 'home' ? variants.home : variants.standard);
 
 	useEffect(() => {
 		document.title = resolveCopy(siteContent.seoTitle, lang);
@@ -66,15 +69,16 @@ const App = () => {
 			<div className="relative z-10 flex min-h-screen flex-col">
 				<Navbar />
 				<div className="flex-1">
-					<AnimatePresence mode="wait" initial={false} custom={direction}>
+					<AnimatePresence mode="wait" initial={true} custom={direction}>
 						<motion.div
 							key={location.pathname}
 							custom={direction}
-							variants={variants}
+							variants={getVariants()}
 							initial="enter"
 							animate="center"
 							exit="exit"
-							transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+							transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+							className="h-full"
 						>
 							<Routes location={location}>
 								<Route path="/" element={<HomePage />} />
