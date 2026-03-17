@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Chatbot from '@/components/Chatbot';
+import CommandBar from '@/components/CommandBar';
 import Cursor from '@/components/Cursor';
 import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
@@ -84,9 +85,10 @@ const App = () => {
 						</motion.div>
 					</AnimatePresence>
 				</div>
-				<Chatbot lang={lang} />
-				<Footer />
-				<Toaster />
+					<Chatbot lang={lang} />
+					<CommandBar />
+					<Footer />
+					<Toaster />
 			</div>
 		</div>
 	);
