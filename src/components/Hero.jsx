@@ -45,7 +45,6 @@ const Hero = () => {
 	};
 
 	const tags = resolveCopy(hero.supportingTags, lang);
-	const chimubotTeaser = resolveCopy(hero.chimubotTeaser, lang);
 	const siteStatus = resolveCopy(hero.siteStatus, lang);
 	const siteStatusValue = resolveCopy(hero.siteStatusValue, lang);
 
@@ -145,24 +144,6 @@ const Hero = () => {
 							className="hero-logo-float hero-logo-image relative z-10 w-full object-contain invert brightness-[1.9] contrast-125"
 						/>
 					</div>
-					<motion.button
-						type="button"
-						onClick={() => scrollToSection('projects')}
-						initial={{ opacity: 0, y: 8, scale: 0.96 }}
-						animate={{ opacity: 1, y: 0, scale: 1 }}
-						transition={{ delay: 0.45, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-						whileHover={{ y: -2, scale: 1.02 }}
-						className="absolute -bottom-24 left-1/2 z-20 -translate-x-1/2 rounded-xl border border-accent/30 bg-background/92 px-3 py-2 text-left shadow-[0_10px_24px_rgba(0,0,0,0.28)] backdrop-blur-md ring-1 ring-white/10"
-						data-cursor-target="magnetic"
-						data-cursor-size="md"
-						data-pressable="true"
-					>
-						<p className="text-[12px] font-semibold leading-none text-foreground">{chimubotTeaser}</p>
-						<span
-							aria-hidden="true"
-							className="absolute -bottom-1 right-5 h-2 w-2 rotate-45 border-b border-r border-accent/30 bg-background/92"
-						/>
-					</motion.button>
 				</motion.div>
 			</motion.div>
 		</div>

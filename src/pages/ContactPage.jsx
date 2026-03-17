@@ -15,7 +15,7 @@ const ContactPage = () => {
 			transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
 			className="w-full pt-24 md:pt-28"
 		>
-			<section className="pb-16 pt-10 md:pb-20">
+			<section className="pb-32 pt-10 md:pb-40">
 				<Contact />
 			</section>
 		</motion.main>

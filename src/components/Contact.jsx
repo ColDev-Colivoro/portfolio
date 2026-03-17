@@ -69,49 +69,49 @@ const Contact = () => {
 	return (
 		<div className="container mx-auto px-4">
 			<div className="mx-auto max-w-6xl">
-				<div className="mb-8 max-w-3xl">
+				<div className="mb-6 max-w-3xl">
 					<p className="section-eyebrow">{resolveCopy(content.eyebrow, lang)}</p>
-					<h2 className="section-title">{resolveCopy(content.title, lang)}</h2>
-					<p className="section-copy">{resolveCopy(content.description, lang)}</p>
+					<h2 className="section-title text-3xl">{resolveCopy(content.title, lang)}</h2>
+					<p className="section-copy text-sm">{resolveCopy(content.description, lang)}</p>
 				</div>
 
-				<div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+				<div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
 					<motion.div
 						initial={{ opacity: 0, y: 42, filter: 'blur(10px)' }}
 						whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
 						viewport={{ once: true, amount: 0.22 }}
 						transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
-						className="panel-surface rounded-[1.9rem] p-6"
+						className="panel-surface rounded-[1.5rem] p-5"
 					>
 						<p className="section-eyebrow">{resolveCopy(content.formTitle, lang)}</p>
-						<h3 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-foreground">
+						<h3 className="mt-3 text-xl font-semibold tracking-[-0.03em] text-foreground">
 							{resolveCopy(content.sideTitle, lang)}
 						</h3>
-						<p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base">
+						<p className="mt-2 text-xs leading-relaxed text-muted-foreground md:text-sm">
 							{resolveCopy(content.sideDescription, lang)}
 						</p>
 
-						<div className="mt-6 rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
+						<div className="mt-4 rounded-[1.25rem] border border-white/10 bg-black/20 p-4">
 							<div className="flex items-center gap-3">
-								<div className="rounded-[1rem] border border-accent/25 bg-accent/10 p-3 text-accent">
-									<Linkedin className="h-5 w-5" />
+								<div className="rounded-[1rem] border border-accent/25 bg-accent/10 p-2 text-accent">
+									<Linkedin className="h-4 w-4" />
 								</div>
 								<div>
-									<h4 className="font-semibold text-foreground">LinkedIn</h4>
-									<p className="text-sm text-muted-foreground">{resolveCopy(content.linkedinLabel, lang)}</p>
+									<h4 className="font-semibold text-foreground text-sm">LinkedIn</h4>
+									<p className="text-xs text-muted-foreground">{resolveCopy(content.linkedinLabel, lang)}</p>
 								</div>
 							</div>
 							<a
 								href="https://www.linkedin.com/in/camilo-colivoro-1a5206386"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent/80"
+								className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent hover:text-accent/80"
 								data-cursor-target="magnetic"
 								data-cursor-size="md"
 								data-pressable="true"
 							>
 								{resolveCopy(content.linkedInCta, lang)}
-								<ArrowUpRight className="h-4 w-4" />
+								<ArrowUpRight className="h-3 w-3" />
 							</a>
 						</div>
 					</motion.div>
@@ -122,11 +122,11 @@ const Contact = () => {
 						whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
 						viewport={{ once: true, amount: 0.22 }}
 						transition={{ duration: 0.82, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-						className="panel-surface rounded-[1.9rem] p-6"
+						className="panel-surface rounded-[1.5rem] p-5"
 					>
-						<div className="grid gap-4 md:grid-cols-2">
+						<div className="grid gap-3 md:grid-cols-2">
 							<div className="md:col-span-1">
-								<label htmlFor="name" className="mb-2 block text-sm font-medium text-foreground">
+								<label htmlFor="name" className="mb-1 block text-xs font-medium text-foreground">
 									{resolveCopy(labels.name, lang)}
 								</label>
 								<input
@@ -137,11 +137,11 @@ const Contact = () => {
 									onChange={handleChange}
 									required
 									autoComplete="name"
-									className="w-full rounded-[1rem] border border-white/10 bg-black/20 px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+									className="w-full rounded-[0.75rem] border border-white/10 bg-black/20 px-3 py-2 text-sm text-foreground outline-none ring-0 transition-colors focus:border-accent"
 								/>
 							</div>
 							<div className="md:col-span-1">
-								<label htmlFor="email" className="mb-2 block text-sm font-medium text-foreground">
+								<label htmlFor="email" className="mb-1 block text-xs font-medium text-foreground">
 									{resolveCopy(labels.email, lang)}
 								</label>
 								<input
@@ -152,11 +152,11 @@ const Contact = () => {
 									onChange={handleChange}
 									required
 									autoComplete="email"
-									className="w-full rounded-[1rem] border border-white/10 bg-black/20 px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+									className="w-full rounded-[0.75rem] border border-white/10 bg-black/20 px-3 py-2 text-sm text-foreground outline-none ring-0 transition-colors focus:border-accent"
 								/>
 							</div>
 							<div className="md:col-span-2">
-								<label htmlFor="subject" className="mb-2 block text-sm font-medium text-foreground">
+								<label htmlFor="subject" className="mb-1 block text-xs font-medium text-foreground">
 									{resolveCopy(labels.subject, lang)}
 								</label>
 								<input
@@ -167,22 +167,22 @@ const Contact = () => {
 									onChange={handleChange}
 									required
 									autoComplete="off"
-									className="w-full rounded-[1rem] border border-white/10 bg-black/20 px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+									className="w-full rounded-[0.75rem] border border-white/10 bg-black/20 px-3 py-2 text-sm text-foreground outline-none ring-0 transition-colors focus:border-accent"
 								/>
 							</div>
 							<div className="md:col-span-2">
-								<label htmlFor="message" className="mb-2 block text-sm font-medium text-foreground">
+								<label htmlFor="message" className="mb-1 block text-xs font-medium text-foreground">
 									{resolveCopy(labels.message, lang)}
 								</label>
 								<textarea
 									id="message"
 									name="message"
-									rows={6}
+									rows={3}
 									value={formData.message}
 									onChange={handleChange}
 									required
 									autoComplete="off"
-									className="w-full resize-none rounded-[1.2rem] border border-white/10 bg-black/20 px-4 py-3 text-foreground outline-none ring-0 transition-colors focus:border-accent"
+									className="w-full resize-none rounded-[0.75rem] border border-white/10 bg-black/20 px-3 py-2 text-sm text-foreground outline-none ring-0 transition-colors focus:border-accent"
 								/>
 							</div>
 						</div>
@@ -190,19 +190,19 @@ const Contact = () => {
 						<Button
 							type="submit"
 							disabled={isSubmitting}
-							className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-accent-foreground hover:bg-accent/90"
+							className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-accent-foreground hover:bg-accent/90"
 							data-cursor-target="magnetic"
 							data-cursor-size="lg"
 							data-pressable="true"
 						>
 							{isSubmitting ? (
 								<>
-									<Loader2 className="h-4 w-4 animate-spin" />
+									<Loader2 className="h-3 w-3 animate-spin" />
 									{resolveCopy(labels.sending, lang)}
 								</>
 							) : (
 								<>
-									<Send className="h-4 w-4" />
+									<Send className="h-3 w-3" />
 									{resolveCopy(labels.submit, lang)}
 								</>
 							)}
