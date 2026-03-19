@@ -34,7 +34,7 @@ export const projectsCatalog = [
 			en: 'In progress',
 		},
 		links: {
-			primary: '#featured-project',
+			primary: '',
 			demo: '',
 			repo: '',
 		},
@@ -132,7 +132,7 @@ export const projectsCatalog = [
 		id: 'nutriscoc',
 		featured: true,
 		visible: true,
-		domains: ['ai', 'frontend', 'backend', 'data'],
+		domains: ['ai', 'frontend', 'backend', 'data', 'devops'],
 		title: {
 			es: 'Nutriscoc Connect',
 			en: 'Nutriscoc Connect',
@@ -157,7 +157,7 @@ export const projectsCatalog = [
 			es: 'Habilidades: liderazgo full stack end-to-end, modelado de entidades y APIs, frontend operativo en TypeScript, despliegue con contenedores y seguridad con RBAC/JWT.',
 			en: 'Skills: end-to-end full stack leadership, entity and API modeling, operational frontend in TypeScript, containerized deployment, and RBAC/JWT security.',
 		},
-		stack: ['Django 5', 'Django REST Framework', 'Next.js 15', 'React', 'TypeScript', 'PostgreSQL', 'Docker', 'Nginx', 'JWT', 'Firebase Auth'],
+		stack: ['Django 5', 'Next.js 15', 'TypeScript', 'PostgreSQL', 'Django REST Framework', 'React', 'Docker', 'Nginx', 'JWT', 'Firebase Auth'],
 		status: {
 			es: 'Proyecto corporativo',
 			en: 'Corporate project',
@@ -270,7 +270,7 @@ export const projectsCatalog = [
 			es: 'Habilidades: análisis de sistemas en terreno, diseño de paneles operativos y trazabilidad de eventos críticos.',
 			en: 'Skills: field systems analysis, operational dashboard design, and critical-event traceability.',
 		},
-		stack: ['React', 'Operational UX', 'Field data', 'Traceability'],
+		stack: ['React', 'TypeScript', 'Field Operations', 'KPI Dashboards', 'Traceability'],
 		status: {
 			es: 'Proyecto privado',
 			en: 'Private project',
@@ -300,13 +300,24 @@ export const projectsCatalog = [
 					type: { es: 'Modo oscuro', en: 'Dark mode' },
 					title: { es: 'Marca operativa dark', en: 'Operational dark branding' },
 					caption: {
-						es: 'Version modo oscuro de la identidad de ColDev Radar Sur.',
+						es: 'Versión modo oscuro de la identidad de ColDev Radar Sur.',
 						en: 'Dark-mode version of ColDev Radar Sur visual identity.',
 					},
 					src: '/images/radarsur/logo-radarsur-dark.png',
 				},
 				{
 					id: 3,
+					role: { es: 'Identidad', en: 'Identity' },
+					type: { es: 'Marca oficial', en: 'Official branding' },
+					title: { es: 'Logo oficial', en: 'Official logo' },
+					caption: {
+						es: 'Aplicación oficial de marca para piezas públicas de Radar Sur.',
+						en: 'Official brand application for Radar Sur public assets.',
+					},
+					src: '/images/branding/logo-coldevradarsur-official-dark.png',
+				},
+				{
+					id: 4,
 					role: { es: 'Operador', en: 'Operator' },
 					type: { es: 'Panel', en: 'Dashboard' },
 					title: { es: 'Panel principal', en: 'Main dashboard' },
@@ -373,22 +384,22 @@ export const projectsCatalog = [
 			en: 'Quality follow-up and operational KPIs',
 		},
 		summary: {
-			es: 'Plataforma para supervisar cumplimiento, control de calidad y trazabilidad de indicadores en operacion diaria.',
+			es: 'Plataforma para supervisar cumplimiento, control de calidad y trazabilidad de indicadores en operación diaria.',
 			en: 'Platform to supervise compliance, quality control, and KPI traceability in day-to-day operations.',
 		},
 		problem: {
-			es: 'La operacion necesitaba centralizar monitoreo, incidencias y cumplimiento de compromisos en una sola vista accionable.',
+			es: 'La operación necesitaba centralizar monitoreo, incidencias y cumplimiento de compromisos en una sola vista accionable.',
 			en: 'Operations needed to centralize monitoring, incidents, and commitment compliance in one actionable view.',
 		},
 		impact: {
-			es: 'Reduce friccion en seguimiento operativo y mejora la toma de decisiones con paneles por rol y evidencia historica.',
+			es: 'Reduce fricción en seguimiento operativo y mejora la toma de decisiones con paneles por rol y evidencia histórica.',
 			en: 'It reduces friction in operational follow-up and improves decision-making with role-based dashboards and historical evidence.',
 		},
 		role: {
-			es: 'Habilidades: modelado de flujo operativo, diseno de dashboards por perfil y arquitectura de seguimiento con trazabilidad.',
+			es: 'Habilidades: modelado de flujo operativo, diseño de dashboards por perfil y arquitectura de seguimiento con trazabilidad.',
 			en: 'Skills: operational flow modeling, profile-based dashboard design, and follow-up architecture with traceability.',
 		},
-		stack: ['React', 'Operational Dashboards', 'KPI Tracking', 'Data Traceability'],
+		stack: ['React', 'TypeScript', 'Operational Dashboards', 'KPI Tracking', 'Data Traceability'],
 		status: {
 			es: 'Proyecto privado',
 			en: 'Private project',
@@ -403,28 +414,39 @@ export const projectsCatalog = [
 			gallery: [
 				{
 					id: 1,
-					role: { es: 'Operacion', en: 'Operations' },
+					role: { es: 'Operación', en: 'Operations' },
 					type: { es: 'Dashboard', en: 'Dashboard' },
 					title: { es: 'Vista principal', en: 'Main dashboard' },
 					caption: {
-						es: 'Panel con estado operativo y seguimiento de compromisos por area.',
+						es: 'Panel con estado operativo y seguimiento de compromisos por área.',
 						en: 'Dashboard with operational status and commitment follow-up by area.',
 					},
 					src: '/images/mar2control/home.png',
 				},
 				{
 					id: 2,
+					role: { es: 'Administrador', en: 'Admin' },
+					type: { es: 'Dashboard', en: 'Dashboard' },
+					title: { es: 'Panel administrativo', en: 'Admin dashboard' },
+					caption: {
+						es: 'Vista de administración para control diario y seguimiento de estado.',
+						en: 'Administration view for daily control and status follow-up.',
+					},
+					src: '/images/mar2control/admin-dashboard.png',
+				},
+				{
+					id: 3,
 					role: { es: 'Gerencia', en: 'Management' },
 					type: { es: 'KPIs', en: 'KPIs' },
 					title: { es: 'KPIs ejecutivos', en: 'Executive KPIs' },
 					caption: {
-						es: 'Seguimiento de indicadores clave para decisiones rapidas.',
+						es: 'Seguimiento de indicadores clave para decisiones rápidas.',
 						en: 'Key indicator follow-up for faster decisions.',
 					},
 					src: '/images/mar2control/gerente-kpis.png',
 				},
 				{
-					id: 3,
+					id: 4,
 					role: { es: 'Calidad', en: 'Quality' },
 					type: { es: 'Control', en: 'Control' },
 					title: { es: 'Control de calidad', en: 'Quality control' },
@@ -433,6 +455,28 @@ export const projectsCatalog = [
 						en: 'Compliance and field findings monitoring.',
 					},
 					src: '/images/mar2control/jefe-calidad.png',
+				},
+				{
+					id: 5,
+					role: { es: 'Monitoreo', en: 'Monitoring' },
+					type: { es: 'Operación', en: 'Operations' },
+					title: { es: 'Vista de monitoreo', en: 'Monitoring view' },
+					caption: {
+						es: 'Seguimiento de estado y alertas para continuidad de operación.',
+						en: 'Status and alert follow-up for operational continuity.',
+					},
+					src: '/images/mar2control/monitor.png',
+				},
+				{
+					id: 6,
+					role: { es: 'Acceso', en: 'Access' },
+					type: { es: 'Autenticación', en: 'Authentication' },
+					title: { es: 'Inicio de sesión', en: 'Login flow' },
+					caption: {
+						es: 'Pantalla de acceso para roles operativos y administrativos.',
+						en: 'Access screen for operational and administrative roles.',
+					},
+					src: '/images/mar2control/Login.png',
 				},
 			],
 		},
@@ -451,7 +495,7 @@ export const projectsCatalog = [
 			},
 			features: {
 				es: [
-					'Habilidad: diseno de paneles para operacion y supervision',
+					'Habilidad: diseño de paneles para operación y supervisión',
 					'Habilidad: seguimiento estructurado de compromisos e incidencias',
 					'Habilidad: modelado de indicadores para control de calidad',
 				],
@@ -463,7 +507,7 @@ export const projectsCatalog = [
 			},
 			credentials: {
 				es: [
-					{ label: 'Estado publico', text: 'Caso presentado con visuales de referencia' },
+					{ label: 'Estado público', text: 'Caso presentado con visuales de referencia' },
 					{ label: 'Enfoque', text: 'Calidad operativa, KPIs y trazabilidad' },
 				],
 				en: [
@@ -472,7 +516,7 @@ export const projectsCatalog = [
 				],
 			},
 			credentialsNote: {
-				es: 'La demo funcional no es publica; este caso comunica arquitectura y valor de la solucion.',
+				es: 'La demo funcional no es pública; este caso comunica arquitectura y valor de la solución.',
 				en: 'The functional demo is not public; this case communicates the architecture and value of the solution.',
 			},
 		},

@@ -61,8 +61,8 @@ export const siteContent = {
 		eyebrow: { es: 'Proyecto seleccionado', en: 'Selected project' },
 		title: { es: 'Caso destacado', en: 'Featured case' },
 		description: {
-			es: 'ColDevPOS se presenta como un ecosistema en curso: caja, inventario, roles y continuidad operativa en una sola arquitectura.',
-			en: 'ColDevPOS is presented as an ecosystem in progress: cashier, inventory, roles, and operational continuity in one architecture.',
+			es: 'Nutriscoc Connect integra backend, frontend y despliegue para seguimiento operacional, KPIs y control de compromisos en entorno corporativo.',
+			en: 'Nutriscoc Connect integrates backend, frontend, and deployment for operational follow-up, KPIs, and commitments control in a corporate environment.',
 		},
 		openCase: { es: 'Abrir caso', en: 'Open case' },
 		openDemo: { es: 'Ver demo', en: 'Open demo' },
