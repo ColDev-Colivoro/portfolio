@@ -19,10 +19,43 @@ Capacidades destacadas:
 - Automatización y apoyo con IA aplicada
 - Integración de sistemas y continuidad operativa
 
-Proyectos visibles:
-- ColDevPOS: ecosistema POS para operación local y trazabilidad
-- Sistemas de gestión y automatización para pymes
-- Soluciones web orientadas a procesos y evidencia técnica
+Proyectos visibles (explicar por: problema, enfoque, resultado y stack):
+- Nutriscoc Connect:
+  problema: operación corporativa fragmentada entre seguimiento, compromisos y KPIs.
+  enfoque: plataforma full stack con backend en Django/DRF, frontend en Next.js + React + TypeScript, y despliegue con PostgreSQL + Docker + Nginx.
+  resultado: trazabilidad operacional, paneles para decisión y control por roles.
+  stack: Django 5, DRF, Next.js 15, React, TypeScript, PostgreSQL, Docker, Nginx, JWT, Firebase Auth.
+- ColDevPOS:
+  problema: flujo de venta, inventario y registro con riesgo de fricción en operación real.
+  enfoque: ecosistema POS local con UX operativa y persistencia en desktop.
+  resultado: continuidad operativa y trazabilidad comercial en una sola arquitectura.
+  stack: React, TypeScript, Tauri, SQLite.
+- Dashboard SGC (Sistema de Gestión de Cursos, base VoyScout):
+  problema: coordinación de cursos con registros y seguimiento dispersos.
+  enfoque: gestión centralizada de cursos, asistencia y administración.
+  resultado: mejor control de operación académica y seguimiento administrativo.
+  stack: Python, Django, SQL, React.
+- ColDev Radar Sur:
+  problema: operación de campo con baja visibilidad y control de cumplimiento.
+  enfoque: paneles operativos y trazabilidad para acciones críticas en terreno.
+  resultado: seguimiento estandarizado y decisiones rápidas basadas en evidencia.
+  stack: React, TypeScript, KPI Dashboards, Traceability.
+- Mar2Control:
+  problema: calidad operacional sin una vista unificada de compromisos e incidencias.
+  enfoque: dashboards por rol para control de calidad, KPIs y monitoreo.
+  resultado: menor fricción de seguimiento y mejor coordinación diaria.
+  stack: React, TypeScript, Operational Dashboards, KPI Tracking.
+
+Cómo está hecho el portfolio:
+- Frontend SPA en React + Vite + TailwindCSS.
+- Navegación por rutas laterales con React Router (`/`, `/proyectos`, `/about`, `/contact`).
+- Animaciones con Framer Motion (transiciones laterales compartidas y Hero con movimiento propio).
+- Sección Proyectos en Bento curado de 5 bloques con apertura de caso en modal.
+- Chatbot Chimubot embebido como overlay con endpoint serverless.
+- CommandBar flotante con accesos rápidos y System Log de versión/build/commit.
+- Contenido centralizado en `src/data/siteContent.js` y `src/data/projectsData.js`.
+- System Log alimentado por metadatos de build inyectados por Vite.
+- Endpoint de chat en Netlify Function usando Gemini.
 `,
   en: `
 Current portfolio profile:
@@ -36,10 +69,43 @@ Highlighted capabilities:
 - Automation and applied AI support
 - Systems integration and operational continuity
 
-Visible projects:
-- ColDevPOS: POS ecosystem for local operations and traceability
-- Management and automation systems for SMEs
-- Web solutions focused on processes and technical evidence
+Visible projects (explain by: problem, approach, outcome, and stack):
+- Nutriscoc Connect:
+  problem: corporate operations were fragmented across follow-up, commitments, and KPIs.
+  approach: full stack platform with Django/DRF backend, Next.js + React + TypeScript frontend, and PostgreSQL + Docker + Nginx deployment.
+  outcome: operational traceability, decision dashboards, and role-based control.
+  stack: Django 5, DRF, Next.js 15, React, TypeScript, PostgreSQL, Docker, Nginx, JWT, Firebase Auth.
+- ColDevPOS:
+  problem: sales, inventory, and records had high friction risk in real operation.
+  approach: local POS ecosystem with operational UX and desktop persistence.
+  outcome: operational continuity and commercial traceability in one architecture.
+  stack: React, TypeScript, Tauri, SQLite.
+- SGC Dashboard (Course Management System, VoyScout base):
+  problem: course coordination had scattered records and follow-up.
+  approach: centralized management for courses, attendance, and administration.
+  outcome: better academic operations control and admin follow-up.
+  stack: Python, Django, SQL, React.
+- ColDev Radar Sur:
+  problem: field operations lacked visibility and compliance control.
+  approach: operational dashboards and traceability for critical field actions.
+  outcome: standardized follow-up and faster evidence-based decisions.
+  stack: React, TypeScript, KPI Dashboards, Traceability.
+- Mar2Control:
+  problem: quality operations lacked a unified view of commitments and incidents.
+  approach: role-based dashboards for quality control, KPIs, and monitoring.
+  outcome: lower follow-up friction and better daily coordination.
+  stack: React, TypeScript, Operational Dashboards, KPI Tracking.
+
+How the portfolio is built:
+- Frontend SPA with React + Vite + TailwindCSS.
+- Route-based lateral navigation with React Router (`/`, `/proyectos`, `/about`, `/contact`).
+- Framer Motion animations (shared lateral transitions and independent Hero motion).
+- Projects section as a curated 5-block bento with case-study modal.
+- Embedded Chimubot chatbot as an overlay with a serverless endpoint.
+- Floating CommandBar with quick links and a System Log for version/build/commit.
+- Centralized content in `src/data/siteContent.js` and `src/data/projectsData.js`.
+- System Log fed by build metadata injected by Vite.
+- Chat endpoint on Netlify Functions using Gemini.
 `,
 };
 
@@ -58,6 +124,8 @@ Reglas:
 - Si preguntan algo fuera del ámbito profesional de José, indica ese límite.
 - Si el usuario quiere contactarlo, recomienda usar el formulario o LinkedIn del sitio.
 - No entregues teléfonos personales ni inventes información.
+- Si preguntan por un proyecto específico, responde con la estructura: problema, enfoque, resultado, stack.
+- Si preguntan por cómo está construido el portfolio, explica arquitectura (frontend, rutas, animaciones, data y chatbot) en bullets claros.
 
 Contexto estructurado del portfolio:
 ${buildPortfolioContext(lang)}
