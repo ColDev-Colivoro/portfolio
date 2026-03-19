@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Loader2, Send, X } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ChimubotAvatar from '@/components/ChimubotAvatar';
 import { siteContent } from '@/data/siteContent';
@@ -36,28 +37,24 @@ const Chatbot = ({ lang = 'es' }) => {
 	const [inputValue, setInputValue] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const messagesEndRef = useRef(null);
+	const avatarContainerRef = useRef(null);
+	const panelRef = useRef(null);
+	const location = useLocation();
 
 	useEffect(() => {
-		const timer = setTimeout(() => setIsReady(true), 2000);
+		if (isOpen) {
+			setIsReady(true);
+			return undefined;
+		}
 
-		const onScroll = () => {
-			const projectsSection = document.getElementById('projects');
-			const fallbackTrigger = Math.max(120, window.innerHeight * 0.18);
-			if (!projectsSection) {
-				setIsReady(prev => prev || window.scrollY >= fallbackTrigger);
-				return;
-			}
+		setIsReady(false);
+		const delay = location.pathname === '/' ? 700 : 200;
+		const timer = setTimeout(() => setIsReady(true), delay);
 
-			const triggerPoint = Math.max(0, projectsSection.offsetTop - window.innerHeight * 0.82);
-			setIsReady(prev => prev || window.scrollY >= triggerPoint);
-		};
-		onScroll();
-		window.addEventListener('scroll', onScroll, { passive: true });
 		return () => {
 			clearTimeout(timer);
-			window.removeEventListener('scroll', onScroll);
 		};
-	}, []);
+	}, [isOpen, location.pathname]);
 
 	useEffect(() => {
 		setMessages((prev) => {
@@ -71,6 +68,29 @@ const Chatbot = ({ lang = 'es' }) => {
 			messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
 		}
 	}, [messages, isOpen]);
+
+	useEffect(() => {
+		if (!isOpen) return undefined;
+
+		const handlePointerDown = (event) => {
+			if (!(event.target instanceof Node)) return;
+			if (panelRef.current?.contains(event.target)) return;
+			if (avatarContainerRef.current?.contains(event.target)) return;
+			setIsOpen(false);
+		};
+
+		const handleKeyDown = (event) => {
+			if (event.key === 'Escape') setIsOpen(false);
+		};
+
+		document.addEventListener('pointerdown', handlePointerDown);
+		document.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			document.removeEventListener('pointerdown', handlePointerDown);
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [isOpen]);
 
 	const handleSendMessage = async (event) => {
 		event.preventDefault();
@@ -137,16 +157,34 @@ const Chatbot = ({ lang = 'es' }) => {
 
 	return (
 		<>
-			<ChimubotAvatar isOpen={isOpen} isLoading={isLoading} isVisible={isReady || isOpen} onToggle={() => setIsOpen((prev) => !prev)} lang={lang} />
+			<div ref={avatarContainerRef} data-no-swipe="true">
+				<ChimubotAvatar isOpen={isOpen} isLoading={isLoading} isVisible={isReady || isOpen} onToggle={() => setIsOpen((prev) => !prev)} lang={lang} />
+			</div>
 
 			<AnimatePresence>
 			{isOpen ? (
+					<>
+						<motion.button
+							type="button"
+							aria-label={lang === 'es' ? 'Cerrar asistente' : 'Close assistant'}
+							className="fixed inset-0 z-[63] bg-black/45 backdrop-blur-[1px] md:hidden"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							onClick={() => setIsOpen(false)}
+						/>
 					<motion.div
+						ref={panelRef}
+						data-no-swipe="true"
+						data-overlay-open="true"
+						data-no-arrow-nav="true"
+						role="dialog"
+						aria-modal="true"
 						initial={{ opacity: 0, y: 92, x: 34, scale: 0.72, filter: 'blur(6px)' }}
 						animate={{ opacity: 1, y: 0, x: 0, scale: 1, filter: 'blur(0px)' }}
 						exit={{ opacity: 0, y: 36, x: 20, scale: 0.9, filter: 'blur(4px)' }}
 						transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
-						className="fixed bottom-[150px] right-5 z-[45] flex h-[460px] max-h-[62vh] w-[min(22rem,calc(100vw-1.25rem))] flex-col overflow-hidden rounded-[1.6rem] border border-white/10 bg-card/95 shadow-[0_32px_88px_rgba(0,0,0,0.5)] backdrop-blur-2xl ring-1 ring-white/5"
+						className="fixed bottom-[120px] right-3 z-[64] flex h-[460px] max-h-[68vh] w-[min(22rem,calc(100vw-1.25rem))] flex-col overflow-hidden rounded-[1.6rem] border border-white/10 bg-card/95 shadow-[0_32px_88px_rgba(0,0,0,0.5)] backdrop-blur-2xl ring-1 ring-white/5 md:bottom-[150px] md:right-5 md:max-h-[62vh]"
 					>
 						<div className="flex items-center justify-between border-b border-white/10 bg-background/72 p-4">
 						<div className="flex items-center gap-3">
@@ -211,6 +249,7 @@ const Chatbot = ({ lang = 'es' }) => {
 							</form>
 						</div>
 					</motion.div>
+					</>
 				) : null}
 			</AnimatePresence>
 		</>

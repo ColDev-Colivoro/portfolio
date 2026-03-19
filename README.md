@@ -143,7 +143,7 @@ netlify deploy --prod
 ¿Hablamos sobre oportunidades o desarrollo de software? Consúltale al **Chatbot** de este sitio en la esquina inferior derecha o contáctame directamente:
 
 - **Email**: jose.coldev@gmail.com
-- **WhatsApp**: +56 9 9493 1221 / +56 9 4586 7825
+- **WhatsApp**: +56 9 4586 7825
 - **LinkedIn**: [Perfil de José Colivoro](https://linkedin.com/in/camilo-colivoro-1a5206386)
 
 > Creado desde el Sur de Chile 🇨🇱

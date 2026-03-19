@@ -7,6 +7,7 @@ import CaseStudyModalShell from '@/components/CaseStudyModalShell';
 import { useLocale } from '@/context/LocaleContext';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
+import { getSectionRevealTransition, sectionRevealInitial, sectionRevealInView } from '@/lib/motionPresets';
 
 const FeaturedProject = () => {
 	const { lang } = useLocale();
@@ -31,10 +32,10 @@ const FeaturedProject = () => {
 				</div>
 
 				<motion.article
-					initial={{ opacity: 0, y: 56, filter: 'blur(12px)' }}
-					whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+					initial={sectionRevealInitial}
+					whileInView={sectionRevealInView}
 					viewport={{ once: true, amount: 0.22 }}
-					transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+					transition={getSectionRevealTransition()}
 					className="sweep-hover panel-surface overflow-hidden rounded-[2rem]"
 				>
 					<div className="inline-flex gap-0 lg:grid-cols-[1.02fr_0.98fr] lg:items-stretch ">

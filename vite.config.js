@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 import react from '@vitejs/plugin-react';
 import { createLogger, defineConfig } from 'vite';
 
@@ -14,6 +15,18 @@ logger.error = (msg, options) => {
 
 	loggerError(msg, options);
 };
+
+const getGitCommit = () => {
+	try {
+		return execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+	} catch {
+		return 'local';
+	}
+};
+
+const appVersion = process.env.npm_package_version ?? '0.0.0';
+const buildDate = new Date().toISOString().slice(0, 10);
+const gitCommit = getGitCommit();
 
 export default defineConfig({
 	customLogger: logger,
@@ -36,6 +49,11 @@ export default defineConfig({
 		environment: 'jsdom',
 		setupFiles: './src/setupTests.js',
 		css: true,
+	},
+	define: {
+		'import.meta.env.VITE_APP_VERSION': JSON.stringify(appVersion),
+		'import.meta.env.VITE_BUILD_DATE': JSON.stringify(buildDate),
+		'import.meta.env.VITE_GIT_COMMIT': JSON.stringify(gitCommit),
 	},
 });
 

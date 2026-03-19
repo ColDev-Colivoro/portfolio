@@ -11,13 +11,16 @@ describe('App', () => {
     expect(screen.queryByText('Cargando experiencia...')).not.toBeInTheDocument();
   });
 
-	it('incluye secciones clave del portfolio minimal', () => {
-		renderWithProviders(<App />);
-
-		expect(screen.getAllByRole('heading', { name: 'Caso destacado' }).length).toBeGreaterThan(0);
+	it('renderiza contenido clave por ruta lateral', () => {
+		renderWithProviders(<App />, { route: '/proyectos' });
+		expect(screen.getByRole('heading', { level: 2, name: 'Caso destacado' })).toBeInTheDocument();
 		expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
+
+		renderWithProviders(<App />, { route: '/about' });
 		expect(screen.getByText('Capacidades que atraviesan el trabajo')).toBeInTheDocument();
-		expect(screen.getByText('Conversemos con contexto')).toBeInTheDocument();
+
+		renderWithProviders(<App />, { route: '/contact' });
+		expect(screen.getByRole('heading', { level: 2, name: 'Hablemos de tu proyecto' })).toBeInTheDocument();
 	});
 
 	it('aplica las capas de atmosfera por ruta en el shell', () => {

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { LayoutGroup, motion } from 'framer-motion';
 import { Download, Globe2, Menu, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { useLocale } from '@/context/LocaleContext';
 import { resumeLinks, siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
 
-const logoPath = '/images/branding/logo-gato.png';
+const logoPath = '/images/branding/logo-navbar-icon.png';
 
 const Navbar = () => {
 	const navigate = useNavigate();
@@ -14,6 +14,8 @@ const Navbar = () => {
 	const { lang, setLang } = useLocale();
 	const [isOpen, setIsOpen] = useState(false);
 	const [scrolled, setScrolled] = useState(false);
+	const headerRef = useRef(null);
+	const mobilePanelId = 'mobile-nav-panel';
 
 	const navLinks = useMemo(() => siteContent.nav.links, []);
 
@@ -27,6 +29,34 @@ const Navbar = () => {
 	useEffect(() => {
 		setIsOpen(false);
 	}, [location.pathname]);
+
+	useEffect(() => {
+		if (!isOpen) {
+			document.body.style.overflow = '';
+			return undefined;
+		}
+
+		document.body.style.overflow = 'hidden';
+
+		const handleKeyDown = (event) => {
+			if (event.key === 'Escape') setIsOpen(false);
+		};
+
+		const handlePointerDown = (event) => {
+			if (!(event.target instanceof Node)) return;
+			if (headerRef.current?.contains(event.target)) return;
+			setIsOpen(false);
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+		document.addEventListener('pointerdown', handlePointerDown);
+
+		return () => {
+			document.body.style.overflow = '';
+			document.removeEventListener('keydown', handleKeyDown);
+			document.removeEventListener('pointerdown', handlePointerDown);
+		};
+	}, [isOpen]);
 
 	const goHome = () => {
 		setIsOpen(false);
@@ -42,39 +72,39 @@ const Navbar = () => {
 	const activateNavLink = (item) => {
 		setIsOpen(false);
 
-		if (item.type === 'route' && item.path) {
-			if (location.pathname === item.path && item.path === '/') {
-				document.getElementById('home')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-				return;
-			}
-			navigate(item.path);
+		if (item.type !== 'route' || !item.path) return;
+
+		if (location.pathname === item.path && item.path === '/') {
+			document.getElementById('home')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			return;
 		}
 
-		if (!item.id) return;
-
-		if (location.pathname !== '/') {
-			navigate(`/#${item.id}`);
-			setTimeout(() => {
-				document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			}, 140);
-			return;
-		}
-
-		document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		navigate(item.path);
 	};
 
 	return (
 		<motion.header
+			ref={headerRef}
+			data-overlay-open={isOpen ? 'true' : undefined}
 			initial={{ y: -56, opacity: 0 }}
 			animate={{ y: 0, opacity: 1 }}
-			transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-			className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+			transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+			className={`fixed inset-x-0 top-0 z-[70] transition-all duration-300 ${
 				scrolled
 					? 'border-b border-white/10 bg-background/88 shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-2xl'
 					: 'bg-transparent'
 			}`}
 		>
+			{isOpen ? (
+				<button
+					type="button"
+					aria-label={lang === 'es' ? 'Cerrar menu movil' : 'Close mobile menu'}
+					className="fixed inset-0 z-[68] bg-black/20 backdrop-blur-[1px] lg:hidden"
+					data-no-swipe="true"
+					data-no-arrow-nav="true"
+					onClick={() => setIsOpen(false)}
+				/>
+			) : null}
 			<div className="container mx-auto px-6 lg:px-12 py-4">
 				<div className="flex items-center justify-between gap-4">
 						<button
@@ -88,7 +118,7 @@ const Navbar = () => {
 							<img
 								src={logoPath}
 								alt="Logo gato ColDev"
-								className="nav-brand-logo object-contain invert brightness-[2.35] contrast-150"
+								className="nav-brand-logo mx-auto block object-contain object-center"
 							/>
 						</div>
 						<div className="leading-tight">
@@ -169,8 +199,12 @@ const Navbar = () => {
 					</div>
 
 					<button
+						type="button"
 						className="rounded-full border border-white/10 bg-white/[0.03] p-2 text-foreground lg:hidden"
 						onClick={() => setIsOpen((prev) => !prev)}
+						aria-expanded={isOpen}
+						aria-controls={mobilePanelId}
+						aria-label={isOpen ? (lang === 'es' ? 'Cerrar menu' : 'Close menu') : lang === 'es' ? 'Abrir menu' : 'Open menu'}
 						data-pressable="true"
 					>
 						{isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -178,7 +212,12 @@ const Navbar = () => {
 				</div>
 
 				{isOpen ? (
-					<div className="mt-4 rounded-[1.6rem] border border-white/10 bg-card/95 p-4 shadow-[0_30px_80px_rgba(0,0,0,0.3)] lg:hidden">
+					<div
+						id={mobilePanelId}
+						data-no-swipe="true"
+						data-no-arrow-nav="true"
+						className="fixed right-3 top-[calc(4.4rem+env(safe-area-inset-top))] z-[71] w-[min(82vw,320px)] max-h-[calc(100vh-5.6rem-env(safe-area-inset-top))] overflow-y-auto rounded-[1.4rem] border border-white/12 bg-card/78 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shadow-[0_24px_64px_rgba(0,0,0,0.3)] backdrop-blur-xl lg:hidden"
+					>
 						<div className="mb-4 flex items-center justify-between rounded-2xl border border-white/10 bg-background/70 p-2">
 							<div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted-foreground">
 								<Globe2 className="h-4 w-4 text-accent" />

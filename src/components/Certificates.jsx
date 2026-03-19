@@ -3,6 +3,7 @@ import { ArrowUpRight, BadgeCheck } from 'lucide-react';
 import { useLocale } from '@/context/LocaleContext';
 import { certificateItems, siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
+import { getSectionRevealTransition, sectionRevealInitial, sectionRevealInView } from '@/lib/motionPresets';
 
 const Certificates = () => {
 	const { lang } = useLocale();
@@ -24,10 +25,10 @@ const Certificates = () => {
 							href={item.file}
 							target="_blank"
 							rel="noopener noreferrer"
-							initial={{ opacity: 0, y: 42, filter: 'blur(10px)' }}
-							whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+							initial={sectionRevealInitial}
+							whileInView={sectionRevealInView}
 							viewport={{ once: true, amount: 0.2 }}
-							transition={{ duration: 0.82, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+							transition={getSectionRevealTransition(index, 0.06)}
 							className="group card-hover sweep-hover rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5 shadow-[0_24px_72px_rgba(0,0,0,0.24)] cursor-pointer"
 							data-cursor-target="magnetic"
 							data-cursor-size="md"

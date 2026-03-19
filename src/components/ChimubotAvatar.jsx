@@ -161,9 +161,12 @@ const ChimubotAvatar = ({ isOpen = false, isLoading = false, isVisible = true, o
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: 20 }}
-					transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-					className="fixed z-50"
-					style={{ bottom: `${position.bottom}px`, right: `${position.right}px` }}
+					transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+					className="fixed z-[62]"
+					style={{
+						bottom: `calc(${position.bottom}px + env(safe-area-inset-bottom))`,
+						right: `calc(${position.right}px + env(safe-area-inset-right))`,
+					}}
 				>
 					<motion.button
 						type="button"

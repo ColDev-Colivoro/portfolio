@@ -4,17 +4,15 @@ import Footer from '@/components/Footer';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
 describe('Footer', () => {
-  it('muestra marca, enlaces públicos ', () => {
-    renderWithProviders(<Footer />);
+	it('muestra marca y cierre bilingue sin enlaces públicos en footer', () => {
+		renderWithProviders(<Footer />);
 
-    expect(screen.getByText('José Camilo Colivoro Uribe')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /github/i })).toHaveAttribute('href', 'https://github.com/ColDev-Colivoro');
-    expect(screen.getByRole('link', { name: /linkedin/i })).toHaveAttribute('href', 'https://www.linkedin.com/in/camilo-colivoro-1a5206386');
-;
-
-    const footerLogo = screen.getByAltText('Logo gato ColDev');
-    expect(footerLogo).toHaveClass('footer-brand-logo');
-    expect(footerLogo.closest('div')).toHaveClass('footer-brand-shell');
-    expect(screen.getByRole('heading', { name: 'José Camilo Colivoro Uribe' })).toHaveClass('footer-brand-title');
-  });
+		expect(screen.getByText('ColDev')).toBeInTheDocument();
+		expect(
+			screen.getByText('Portfolio personal de análisis de sistemas, software y construcción de soluciones sobrias.'),
+		).toBeInTheDocument();
+		expect(screen.getByText('Portfolio bilingüe — Español / English')).toBeInTheDocument();
+		expect(screen.queryByRole('link', { name: /github/i })).not.toBeInTheDocument();
+		expect(screen.queryByRole('link', { name: /linkedin/i })).not.toBeInTheDocument();
+	});
 });

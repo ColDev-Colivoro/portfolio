@@ -3,6 +3,7 @@ import { Compass, Network, ScanSearch } from 'lucide-react';
 import { useLocale } from '@/context/LocaleContext';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
+import { getSectionRevealTransition, sectionRevealInitial, sectionRevealInView } from '@/lib/motionPresets';
 
 const icons = [ScanSearch, Network, Compass];
 
@@ -14,10 +15,10 @@ const About = () => {
 		<div className="container mx-auto px-4">
 			<div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.95fr_1.05fr]">
 				<motion.div
-					initial={{ opacity: 0, y: 44, filter: 'blur(10px)' }}
-					whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+					initial={sectionRevealInitial}
+					whileInView={sectionRevealInView}
 					viewport={{ once: true, amount: 0.2 }}
-					transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
+					transition={getSectionRevealTransition()}
 					className="panel-surface rounded-[1.9rem] p-6 md:p-8"
 				>
 					<p className="section-eyebrow">{resolveCopy(content.eyebrow, lang)}</p>
@@ -36,10 +37,10 @@ const About = () => {
 						return (
 							<motion.article
 								key={principle.title.es}
-								initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
-								whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+								initial={sectionRevealInitial}
+								whileInView={sectionRevealInView}
 								viewport={{ once: true, amount: 0.25 }}
-								transition={{ duration: 0.8, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+								transition={getSectionRevealTransition(index, 0.08)}
 								className="card-hover rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5 shadow-[0_24px_72px_rgba(0,0,0,0.24)]"
 								data-pressable="true"
 							>

@@ -1,7 +1,7 @@
 export const projectsCatalog = [
 	{
 		id: 'coldevpos',
-		featured: true,
+		featured: false,
 		visible: true,
 		domains: ['systems', 'backend', 'frontend', 'devops', 'data'],
 		title: {
@@ -130,7 +130,7 @@ export const projectsCatalog = [
 	},
 	{
 		id: 'nutriscoc',
-		featured: false,
+		featured: true,
 		visible: true,
 		domains: ['ai', 'frontend', 'backend', 'data'],
 		title: {
@@ -242,35 +242,35 @@ export const projectsCatalog = [
 		},
 	},
 	{
-		id: 'mar2control',
+		id: 'coldevradarsur',
 		featured: false,
 		visible: true,
 		domains: ['systems', 'frontend', 'backend', 'data'],
 		title: {
-			es: 'Mar2Control',
-			en: 'Mar2Control',
+			es: 'ColDev Radar Sur',
+			en: 'ColDev Radar Sur',
 		},
 		subtitle: {
-			es: 'Trazabilidad y reportes de calidad',
-			en: 'Traceability and quality reporting',
+			es: 'Control operativo y trazabilidad en terreno',
+			en: 'Operational control and field traceability',
 		},
 		summary: {
-			es: 'Herramienta para trazabilidad y reportes de calidad pensada desde la operación de planta y el terreno.',
-			en: 'Tool for traceability and quality reporting designed from plant-floor operations and field work.',
+			es: 'Sistema operativo para seguimiento en terreno, control de KPIs y trazabilidad de acciones críticas en contexto real.',
+			en: 'Operational system for field follow-up, KPI control, and traceability of critical actions in real contexts.',
 		},
 		problem: {
-			es: 'Los procesos de calidad requerían trazabilidad clara, captura usable y mejor visibilidad desde la operación.',
-			en: 'Quality processes needed clear traceability, usable data capture, and better visibility from operations.',
+			es: 'La operación de campo requería visibilidad en tiempo real, control de cumplimiento y una fuente única para reportar desviaciones.',
+			en: 'Field operations required real-time visibility, compliance control, and a single source for reporting deviations.',
 		},
 		impact: {
-			es: 'Acerca control, captura y seguimiento de datos a quienes ejecutan la operación real.',
-			en: 'Brings control, capture, and data follow-up closer to the people executing real operations.',
+			es: 'Estandariza seguimiento operativo y mejora la trazabilidad para decisiones rápidas con evidencia de terreno.',
+			en: 'Standardizes operational follow-up and improves traceability for fast, evidence-based decisions from the field.',
 		},
 		role: {
-			es: 'Habilidades: modelado de flujo, interfaz de captura en terreno y continuidad de proceso.',
-			en: 'Skills: flow modeling, field capture interface, and process continuity.',
+			es: 'Habilidades: análisis de sistemas en terreno, diseño de paneles operativos y trazabilidad de eventos críticos.',
+			en: 'Skills: field systems analysis, operational dashboard design, and critical-event traceability.',
 		},
-		stack: ['Traceability', 'Quality', 'UX', 'Data capture'],
+		stack: ['React', 'Operational UX', 'Field data', 'Traceability'],
 		status: {
 			es: 'Proyecto privado',
 			en: 'Private project',
@@ -281,59 +281,199 @@ export const projectsCatalog = [
 			repo: '',
 		},
 		media: {
-			cover: '/images/placeholders/voyscout.svg',
+			cover: '/images/radarsur/logo-radarsur-dark.png',
 			gallery: [
 				{
 					id: 1,
-					role: { es: 'Gestión', en: 'Management' },
-					type: { es: 'Privado', en: 'Private' },
-					title: { es: 'Caso privado', en: 'Private case' },
+					role: { es: 'Identidad', en: 'Identity' },
+					type: { es: 'Sistema', en: 'System' },
+					title: { es: 'Marca operativa', en: 'Operational branding' },
 					caption: {
-						es: 'El detalle visual del proyecto se mantiene privado.',
-						en: 'The visual details of the project remain private.',
+						es: 'Identidad visual de ColDev Radar Sur para operación en terreno.',
+						en: 'Visual identity for ColDev Radar Sur field operations.',
 					},
-					src: '/images/placeholders/voyscout.svg',
+					src: '/images/radarsur/logo-radarsur.png',
+				},
+				{
+					id: 2,
+					role: { es: 'Identidad', en: 'Identity' },
+					type: { es: 'Modo oscuro', en: 'Dark mode' },
+					title: { es: 'Marca operativa dark', en: 'Operational dark branding' },
+					caption: {
+						es: 'Version modo oscuro de la identidad de ColDev Radar Sur.',
+						en: 'Dark-mode version of ColDev Radar Sur visual identity.',
+					},
+					src: '/images/radarsur/logo-radarsur-dark.png',
+				},
+				{
+					id: 3,
+					role: { es: 'Operador', en: 'Operator' },
+					type: { es: 'Panel', en: 'Dashboard' },
+					title: { es: 'Panel principal', en: 'Main dashboard' },
+					caption: {
+						es: 'Vista operativa para monitoreo y seguimiento diario.',
+						en: 'Operational view for daily monitoring and follow-up.',
+					},
+					src: '/images/mar2control/home.png',
 				},
 			],
 		},
 		caseStudy: {
 			headline: {
-				es: 'Mar2Control — trazabilidad y control como caso privado',
-				en: 'Mar2Control — traceability and control as a private case',
+				es: 'ColDev Radar Sur — control operativo y trazabilidad en terreno',
+				en: 'ColDev Radar Sur — operational control and field traceability',
 			},
 			description: {
-				es: 'Caso orientado a trazabilidad, captura y seguimiento de calidad desde la operación. La versión pública mantiene placeholders y resume el enfoque sin exponer la demo real.',
-				en: 'Case focused on traceability, capture, and quality follow-up from operations. The public version keeps placeholders and summarizes the approach without exposing the real demo.',
+				es: 'Caso centrado en operación real de campo con seguimiento de KPIs, control de incidencias y trazabilidad de acciones. La versión pública resume el enfoque sin exponer datos sensibles.',
+				en: 'Case centered on real field operations with KPI follow-up, incident control, and action traceability. The public version summarizes the approach without exposing sensitive data.',
 			},
 			microStats: {
-				es: ['Caso privado', 'Trazabilidad', 'Captura operativa'],
-				en: ['Private case', 'Traceability', 'Operational capture'],
+				es: ['Proyecto privado', 'Operación en terreno', 'Trazabilidad'],
+				en: ['Private project', 'Field operations', 'Traceability'],
 			},
 			features: {
 				es: [
-					'Habilidad: modelado de flujo para control de calidad',
-					'Habilidad: captura usable desde operación y terreno',
-					'Habilidad: seguimiento de datos y trazabilidad del proceso',
+					'Habilidad: diseño de flujo operativo para entorno de campo',
+					'Habilidad: paneles de seguimiento con foco en decisiones rápidas',
+					'Habilidad: trazabilidad de acciones e incidencias críticas',
 				],
 				en: [
-					'Skill: flow modeling for quality control',
-					'Skill: usable capture from operations and field work',
-					'Skill: data follow-up and process traceability',
+					'Skill: operational flow design for field environments',
+					'Skill: follow-up dashboards focused on fast decisions',
+					'Skill: traceability for critical actions and incidents',
 				],
 			},
 			credentials: {
 				es: [
-					{ label: 'Estado público', text: 'Caso presentado con placeholders' },
-					{ label: 'Enfoque', text: 'Trazabilidad, reportes y operación de calidad' },
+					{ label: 'Estado público', text: 'Caso presentado con visuales curadas' },
+					{ label: 'Enfoque', text: 'Seguimiento operativo y control en terreno' },
 				],
 				en: [
-					{ label: 'Public status', text: 'Case presented with placeholders' },
-					{ label: 'Focus', text: 'Traceability, reporting, and quality operations' },
+					{ label: 'Public status', text: 'Case presented with curated visuals' },
+					{ label: 'Focus', text: 'Operational follow-up and field control' },
 				],
 			},
 			credentialsNote: {
 				es: 'La demo funcional no se expone públicamente; este caso resume enfoque y tipo de solución.',
 				en: 'The functional demo is not exposed publicly; this case summarizes the approach and solution type.',
+			},
+		},
+	},
+	{
+		id: 'mar2control',
+		featured: false,
+		visible: true,
+		domains: ['systems', 'frontend', 'backend', 'data'],
+		title: {
+			es: 'Mar2Control',
+			en: 'Mar2Control',
+		},
+		subtitle: {
+			es: 'Seguimiento de calidad y KPIs operativos',
+			en: 'Quality follow-up and operational KPIs',
+		},
+		summary: {
+			es: 'Plataforma para supervisar cumplimiento, control de calidad y trazabilidad de indicadores en operacion diaria.',
+			en: 'Platform to supervise compliance, quality control, and KPI traceability in day-to-day operations.',
+		},
+		problem: {
+			es: 'La operacion necesitaba centralizar monitoreo, incidencias y cumplimiento de compromisos en una sola vista accionable.',
+			en: 'Operations needed to centralize monitoring, incidents, and commitment compliance in one actionable view.',
+		},
+		impact: {
+			es: 'Reduce friccion en seguimiento operativo y mejora la toma de decisiones con paneles por rol y evidencia historica.',
+			en: 'It reduces friction in operational follow-up and improves decision-making with role-based dashboards and historical evidence.',
+		},
+		role: {
+			es: 'Habilidades: modelado de flujo operativo, diseno de dashboards por perfil y arquitectura de seguimiento con trazabilidad.',
+			en: 'Skills: operational flow modeling, profile-based dashboard design, and follow-up architecture with traceability.',
+		},
+		stack: ['React', 'Operational Dashboards', 'KPI Tracking', 'Data Traceability'],
+		status: {
+			es: 'Proyecto privado',
+			en: 'Private project',
+		},
+		links: {
+			primary: '',
+			demo: '',
+			repo: '',
+		},
+		media: {
+			cover: '/images/mar2control/home.png',
+			gallery: [
+				{
+					id: 1,
+					role: { es: 'Operacion', en: 'Operations' },
+					type: { es: 'Dashboard', en: 'Dashboard' },
+					title: { es: 'Vista principal', en: 'Main dashboard' },
+					caption: {
+						es: 'Panel con estado operativo y seguimiento de compromisos por area.',
+						en: 'Dashboard with operational status and commitment follow-up by area.',
+					},
+					src: '/images/mar2control/home.png',
+				},
+				{
+					id: 2,
+					role: { es: 'Gerencia', en: 'Management' },
+					type: { es: 'KPIs', en: 'KPIs' },
+					title: { es: 'KPIs ejecutivos', en: 'Executive KPIs' },
+					caption: {
+						es: 'Seguimiento de indicadores clave para decisiones rapidas.',
+						en: 'Key indicator follow-up for faster decisions.',
+					},
+					src: '/images/mar2control/gerente-kpis.png',
+				},
+				{
+					id: 3,
+					role: { es: 'Calidad', en: 'Quality' },
+					type: { es: 'Control', en: 'Control' },
+					title: { es: 'Control de calidad', en: 'Quality control' },
+					caption: {
+						es: 'Monitoreo de cumplimiento y hallazgos en terreno.',
+						en: 'Compliance and field findings monitoring.',
+					},
+					src: '/images/mar2control/jefe-calidad.png',
+				},
+			],
+		},
+		caseStudy: {
+			headline: {
+				es: 'Mar2Control - seguimiento operativo con foco en calidad',
+				en: 'Mar2Control - operational follow-up focused on quality',
+			},
+			description: {
+				es: 'Caso de plataforma orientada a control de calidad, cumplimiento y KPIs. El enfoque prioriza decisiones rapidas y trazabilidad por rol sin exponer datos sensibles del entorno real.',
+				en: 'Platform case focused on quality control, compliance, and KPIs. The approach prioritizes fast decisions and role-based traceability without exposing sensitive production data.',
+			},
+			microStats: {
+				es: ['Proyecto privado', 'KPIs operativos', 'Trazabilidad por rol'],
+				en: ['Private project', 'Operational KPIs', 'Role-based traceability'],
+			},
+			features: {
+				es: [
+					'Habilidad: diseno de paneles para operacion y supervision',
+					'Habilidad: seguimiento estructurado de compromisos e incidencias',
+					'Habilidad: modelado de indicadores para control de calidad',
+				],
+				en: [
+					'Skill: dashboard design for operations and supervision',
+					'Skill: structured follow-up for commitments and incidents',
+					'Skill: indicator modeling for quality control',
+				],
+			},
+			credentials: {
+				es: [
+					{ label: 'Estado publico', text: 'Caso presentado con visuales de referencia' },
+					{ label: 'Enfoque', text: 'Calidad operativa, KPIs y trazabilidad' },
+				],
+				en: [
+					{ label: 'Public status', text: 'Case presented with reference visuals' },
+					{ label: 'Focus', text: 'Operational quality, KPIs, and traceability' },
+				],
+			},
+			credentialsNote: {
+				es: 'La demo funcional no es publica; este caso comunica arquitectura y valor de la solucion.',
+				en: 'The functional demo is not public; this case communicates the architecture and value of the solution.',
 			},
 		},
 	},

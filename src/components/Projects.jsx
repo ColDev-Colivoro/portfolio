@@ -7,6 +7,7 @@ import { useLocale } from '@/context/LocaleContext';
 import { resolveCopy } from '@/lib/i18n';
 import ProjectModalContent from '@/components/ProjectModalContent';
 import CaseStudyModalShell from '@/components/CaseStudyModalShell';
+import { getSectionRevealTransition, sectionRevealInitial, sectionRevealInView } from '@/lib/motionPresets';
 
 const Projects = () => {
 	const { lang } = useLocale();
@@ -71,10 +72,10 @@ const Projects = () => {
 					{projects.map((project, index) => (
 						<motion.article
 							key={project.id}
-							initial={{ opacity: 0, y: 48, filter: 'blur(12px)' }}
-							whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+							initial={sectionRevealInitial}
+							whileInView={sectionRevealInView}
 							viewport={{ once: true, amount: 0.15 }}
-							transition={{ duration: 0.8, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+							transition={getSectionRevealTransition(index, 0.05)}
 							className="group sweep-hover card-hover overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.03] shadow-[0_28px_90px_rgba(0,0,0,0.28)]"
 							data-pressable="true"
 						>

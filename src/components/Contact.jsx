@@ -6,6 +6,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useLocale } from '@/context/LocaleContext';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
+import { getSectionRevealTransition, sectionRevealInitial, sectionRevealInView } from '@/lib/motionPresets';
 
 const Contact = () => {
 	const { toast } = useToast();
@@ -93,10 +94,10 @@ const Contact = () => {
 
 				<div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] items-start">
 					<motion.div
-						initial={{ opacity: 0, x: -20 }}
-						whileInView={{ opacity: 1, x: 0 }}
+						initial={sectionRevealInitial}
+						whileInView={sectionRevealInView}
 						viewport={{ once: true }}
-						transition={{ duration: 0.6 }}
+						transition={getSectionRevealTransition()}
 						className="panel-surface rounded-[1.5rem] p-6 border border-white/5 bg-white/[0.02]"
 					>
 						<p className="section-eyebrow">{resolveCopy(content.formTitle, lang)}</p>
@@ -134,10 +135,10 @@ const Contact = () => {
 
 					<motion.form
 						onSubmit={handleSubmit}
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
+						initial={sectionRevealInitial}
+						whileInView={sectionRevealInView}
 						viewport={{ once: true }}
-						transition={{ duration: 0.6, delay: 0.1 }}
+						transition={getSectionRevealTransition(1, 0.1)}
 						className="panel-surface rounded-[1.5rem] p-6 border border-white/5 bg-white/[0.02] h-full"
 					>
 						<div className="grid md:grid-cols-2 gap-6 h-full">
@@ -145,19 +146,19 @@ const Contact = () => {
 							<div className="flex flex-col gap-4">
 								<AnimatePresence>
 									{revealedFields.includes('name') && (
-										<motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
+									<motion.div key="field-name" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
 											<label htmlFor="name" className={labelClass}>{resolveCopy(labels.name, lang)}</label>
 											<input id="name" name="name" type="text" value={formData.name} onChange={handleChange} required autoComplete="name" className={inputClass} />
 										</motion.div>
 									)}
 									{revealedFields.includes('email') && (
-										<motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
+									<motion.div key="field-email" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
 											<label htmlFor="email" className={labelClass}>{resolveCopy(labels.email, lang)}</label>
 											<input id="email" name="email" type="email" value={formData.email} onChange={handleChange} required autoComplete="email" className={inputClass} />
 										</motion.div>
 									)}
 									{revealedFields.includes('subject') && (
-										<motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
+									<motion.div key="field-subject" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
 											<label htmlFor="subject" className={labelClass}>{resolveCopy(labels.subject, lang)}</label>
 											<input id="subject" name="subject" type="text" value={formData.subject} onChange={handleChange} required autoComplete="off" className={inputClass} />
 										</motion.div>
@@ -166,20 +167,20 @@ const Contact = () => {
 							</div>
 							
 							{/* Columna derecha del formulario */}
-							<div className="flex flex-col gap-4 h-full items-center">
+							<div className="flex flex-col gap-4 w-full">
 								<AnimatePresence>
 									{revealedFields.includes('message') && (
-										<motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="flex flex-col flex-grow w-full">
+									<motion.div key="field-message" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="flex flex-col w-full">
 											<label htmlFor="message" className={labelClass}>{resolveCopy(labels.message, lang)}</label>
-											<textarea id="message" name="message" rows={6} value={formData.message} onChange={handleChange} required autoComplete="off" className={inputClass + " resize-none flex-grow"} />
+											<textarea id="message" name="message" rows={6} value={formData.message} onChange={handleChange} required autoComplete="off" className={inputClass + " resize-none"} />
 										</motion.div>
 									)}
 								</AnimatePresence>
-								
+
 								<Button
 									type="submit"
 									disabled={isSubmitting || !isFormValid}
-									className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground hover:bg-accent/90 transition-all duration-300 w-full md:w-auto"
+									className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground hover:bg-accent/90 transition-all duration-300 w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed mt-[2.1rem]"
 									data-cursor-target="magnetic"
 									data-cursor-size="lg"
 									data-pressable="true"
