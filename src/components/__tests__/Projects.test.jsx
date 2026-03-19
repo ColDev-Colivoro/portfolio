@@ -8,7 +8,7 @@ describe('Projects', () => {
 	it('muestra una seleccion curada en formato bento sin barra de filtros', () => {
 		renderWithProviders(<Projects />);
 
-		expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
+		expect(screen.queryByText('Trabajo seleccionado')).not.toBeInTheDocument();
 		expect(screen.queryByText('Filtrar por dominio')).not.toBeInTheDocument();
 		expect(screen.queryByRole('button', { name: 'IA / Automatización' })).not.toBeInTheDocument();
 

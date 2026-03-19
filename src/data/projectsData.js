@@ -1,7 +1,6 @@
 export const projectsCatalog = [
 	{
 		id: 'coldevpos',
-		featured: false,
 		visible: true,
 		domains: ['systems', 'backend', 'frontend', 'devops', 'data'],
 		title: {
@@ -130,7 +129,6 @@ export const projectsCatalog = [
 	},
 	{
 		id: 'nutriscoc',
-		featured: true,
 		visible: true,
 		domains: ['ai', 'frontend', 'backend', 'data', 'devops'],
 		title: {
@@ -243,7 +241,6 @@ export const projectsCatalog = [
 	},
 	{
 		id: 'coldevradarsur',
-		featured: false,
 		visible: true,
 		domains: ['systems', 'frontend', 'backend', 'data'],
 		title: {
@@ -372,7 +369,6 @@ export const projectsCatalog = [
 	},
 	{
 		id: 'mar2control',
-		featured: false,
 		visible: true,
 		domains: ['systems', 'frontend', 'backend', 'data'],
 		title: {
@@ -523,7 +519,6 @@ export const projectsCatalog = [
 	},
 	{
 		id: 'voyscout',
-		featured: false,
 		visible: true,
 		domains: ['systems', 'backend', 'frontend'],
 		title: {
@@ -578,7 +573,5 @@ export const projectsCatalog = [
 		},
 	},
 ];
-
-export const featuredProjects = projectsCatalog.filter((project) => project.featured);
 
 export const portfolioProjects = projectsCatalog.filter((project) => project.visible !== false);

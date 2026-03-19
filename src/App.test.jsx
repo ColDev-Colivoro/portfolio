@@ -13,8 +13,7 @@ describe('App', () => {
 
 	it('renderiza contenido clave por ruta lateral', () => {
 		renderWithProviders(<App />, { route: '/proyectos' });
-		expect(screen.getByRole('heading', { level: 2, name: 'Caso destacado' })).toBeInTheDocument();
-		expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
+		expect(screen.getByText('Nutriscoc Connect')).toBeInTheDocument();
 
 		renderWithProviders(<App />, { route: '/about' });
 		expect(screen.getByText('Capacidades que atraviesan el trabajo')).toBeInTheDocument();

@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { featuredProjects, portfolioProjects, projectsCatalog } from '@/data/projectsData';
+import { portfolioProjects, projectsCatalog } from '@/data/projectsData';
 
 describe('projectsData', () => {
-	it('deriva Nutriscoc Connect como caso destacado desde un catálogo único', () => {
+	it('expone un catálogo único con proyectos clave para la vista curada', () => {
 		expect(projectsCatalog.length).toBeGreaterThan(1);
-		expect(featuredProjects).toHaveLength(1);
-		expect(featuredProjects[0].id).toBe('nutriscoc');
+		const ids = projectsCatalog.map((project) => project.id);
+		expect(ids).toContain('nutriscoc');
+		expect(ids).toContain('coldevpos');
+		expect(ids).toContain('voyscout');
 	});
 
   it('mantiene visibles solo proyectos marcados como públicos', () => {

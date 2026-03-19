@@ -57,16 +57,6 @@ export const siteContent = {
 			en: 'Cat logo · ColDev identity',
 		},
 	},
-	featuredProject: {
-		eyebrow: { es: 'Proyecto seleccionado', en: 'Selected project' },
-		title: { es: 'Caso destacado', en: 'Featured case' },
-		description: {
-			es: 'Nutriscoc Connect integra backend, frontend y despliegue para seguimiento operacional, KPIs y control de compromisos en entorno corporativo.',
-			en: 'Nutriscoc Connect integrates backend, frontend, and deployment for operational follow-up, KPIs, and commitments control in a corporate environment.',
-		},
-		openCase: { es: 'Abrir caso', en: 'Open case' },
-		openDemo: { es: 'Ver demo', en: 'Open demo' },
-	},
 	about: {
 		eyebrow: { es: 'Perfil', en: 'Profile' },
 		title: {

@@ -59,12 +59,6 @@ const Projects = () => {
 	return (
 		<div className="container mx-auto px-4">
 			<div className="mx-auto max-w-6xl">
-				<div className="mb-6 max-w-3xl">
-					<p className="section-eyebrow">{resolveCopy(content.eyebrow, lang)}</p>
-					<h2 className="section-title">{resolveCopy(content.title, lang)}</h2>
-					<p className="section-copy">{resolveCopy(content.description, lang)}</p>
-				</div>
-
 				<div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-6 xl:[grid-auto-flow:dense]">
 					{projects.map((project, index) => {
 						const display = getProjectDisplay(project);
