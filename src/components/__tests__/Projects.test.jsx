@@ -5,21 +5,19 @@ import Projects from '@/components/Projects';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
 describe('Projects', () => {
-  it('muestra proyectos por dominio y filtra por IA / Automatización', async () => {
-    const user = userEvent.setup();
-    renderWithProviders(<Projects />);
+	it('muestra una seleccion curada en formato bento sin barra de filtros', () => {
+		renderWithProviders(<Projects />);
 
-    expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
-    expect(screen.getByText('ColDevPOS')).toBeInTheDocument();
-    expect(screen.getByText('VoyScout')).toBeInTheDocument();
-    const cardCover = screen.getAllByAltText('ColDevPOS')[0];
-    expect(cardCover.closest('div')).toHaveClass('project-card-media');
+		expect(screen.getByText('Trabajo seleccionado')).toBeInTheDocument();
+		expect(screen.queryByText('Filtrar por dominio')).not.toBeInTheDocument();
+		expect(screen.queryByRole('button', { name: 'IA / Automatización' })).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'IA / Automatización' }));
-
-    expect(screen.getByText('Nutriscoc Connect')).toBeInTheDocument();
-    expect(screen.queryByText('VoyScout')).not.toBeInTheDocument();
-  });
+		expect(screen.getByText('Nutriscoc Connect')).toBeInTheDocument();
+		expect(screen.getByText('ColDevPOS')).toBeInTheDocument();
+		expect(screen.getByText('Dashboard SGC')).toBeInTheDocument();
+		expect(screen.getByText('ColDev Radar Sur')).toBeInTheDocument();
+		expect(screen.getByText('Mar2Control')).toBeInTheDocument();
+	});
 
   it('abre y cierra modal de caso de estudio usando portal', async () => {
     const user = userEvent.setup();

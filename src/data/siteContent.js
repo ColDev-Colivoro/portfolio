@@ -188,14 +188,6 @@ export const siteContent = {
 			es: 'Proyectos para mostrar cómo abordo sistemas, interfaces, operación, datos y despliegue desde un portfolio personal.',
 			en: 'Projects that show how I approach systems, interfaces, operations, data, and delivery from a personal portfolio.',
 		},
-		filters: [
-			{ id: 'all', label: { es: 'Todo', en: 'All' } },
-			{ id: 'systems', label: { es: 'Sistemas', en: 'Systems' } },
-			{ id: 'backend', label: { es: 'Backend', en: 'Backend' } },
-			{ id: 'frontend', label: { es: 'Frontend', en: 'Frontend' } },
-			{ id: 'devops', label: { es: 'DevOps', en: 'DevOps' } },
-			{ id: 'ai', label: { es: 'IA / Automatización', en: 'AI / Automation' } },
-		],
 		domainLabels: {
 			systems: { es: 'Sistemas', en: 'Systems' },
 			backend: { es: 'Backend', en: 'Backend' },
@@ -207,7 +199,6 @@ export const siteContent = {
 		openCase: { es: 'Abrir caso', en: 'Open case' },
 		openDemo: { es: 'Ver demo', en: 'Open demo' },
 		openRepo: { es: 'Ver código', en: 'View code' },
-		filterLabel: { es: 'Filtrar por dominio', en: 'Filter by domain' },
 	},
 	certifications: {
 		eyebrow: { es: 'Certificados', en: 'Certificates' },

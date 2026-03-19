@@ -58,7 +58,6 @@
     --hero-logo-max: 13.9rem;
 
     --featured-media-min-h-lg: 280px;
-    --project-card-media-h: 8.5rem;
 
     --nav-brand-shell-size: 3.35rem;
     --nav-brand-logo-size: 2.75rem;
@@ -177,10 +176,6 @@
     .featured-media {
       min-height: var(--featured-media-min-h-lg);
     }
-  }
-
-  .project-card-media {
-    height: var(--project-card-media-h);
   }
 
   .nav-brand-shell {
