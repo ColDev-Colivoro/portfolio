@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BarChart3, ChevronsLeft, ChevronsRight, CreditCard, Filter, Home } from 'lucide-react';
+import { BarChart3, CreditCard, Filter, Home } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SGCDashboardExecutive from '@/components/demos/sgc/SGCDashboardExecutive';
 import SGCPaymentsDashboard from '@/components/demos/sgc/SGCPaymentsDashboard';
@@ -121,21 +121,6 @@ const SGCPlatformView = () => {
 						);
 					})}
 
-					<div className="mt-3 border-t border-white/10 pt-3">
-						<button
-							type="button"
-							onClick={() => setCollapsed((previous) => !previous)}
-							className={`group relative flex w-full items-center gap-4 rounded-xl border border-transparent px-4 py-3.5 text-white/70 transition-all duration-200 hover:bg-white/5 hover:text-white ${collapsed ? 'justify-center' : ''}`}
-							title={collapsed ? 'Expandir panel' : 'Contraer panel'}
-						>
-							{collapsed ? (
-								<ChevronsRight className="text-white/60 transition-all duration-200 group-hover:text-white" size={16} />
-							) : (
-								<ChevronsLeft className="text-white/60 transition-all duration-200 group-hover:text-white" size={16} />
-							)}
-							{!collapsed ? <span className="text-xs font-medium text-white/70">Contraer panel lateral</span> : null}
-						</button>
-					</div>
 				</nav>
 
 				<div className="border-t border-white/10 p-4">

@@ -394,7 +394,7 @@ const SGCDashboardExecutive = ({ selectedCourse = 'all' }) => {
 								<CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
 								<XAxis dataKey="name" stroke="#6B7280" tick={{ fill: '#9CA3AF', fontSize: 12 }} axisLine={false} tickLine={false} />
 								<YAxis stroke="#6B7280" tick={{ fill: '#9CA3AF', fontSize: 12 }} axisLine={false} tickLine={false} />
-								<Tooltip contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', color: '#F3F4F6', fontSize: '12px', borderRadius: '8px' }} />
+								<Tooltip cursor={{ fill: 'rgba(255,255,255,0.05)' }} contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', color: '#F3F4F6', fontSize: '12px', borderRadius: '8px' }} />
 								<Legend wrapperStyle={{ fontSize: '11px', color: '#9CA3AF' }} />
 								<Bar dataKey="Ingresos" stackId="a" fill="#10B981" radius={[0, 0, 4, 4]} />
 								<Bar dataKey="Egresos" stackId="a" fill="#EF4444" radius={[4, 4, 0, 0]} />
@@ -411,7 +411,7 @@ const SGCDashboardExecutive = ({ selectedCourse = 'all' }) => {
 					<div className="h-40 xl:h-44">
 						<ResponsiveContainer width="100%" height="100%">
 							<PieChart>
-								<Pie data={chartData.providerData} cx="50%" cy="50%" innerRadius={40} outerRadius={60} paddingAngle={5} dataKey="value">
+								<Pie data={chartData.providerData} cx="50%" cy="42%" innerRadius={35} outerRadius={55} paddingAngle={5} dataKey="value">
 									{chartData.providerData.map((entry, index) => (
 										<Cell key={`provider-cell-${entry.name}`} fill={index === 0 ? '#10B981' : '#6B7280'} />
 									))}
@@ -436,7 +436,7 @@ const SGCDashboardExecutive = ({ selectedCourse = 'all' }) => {
 								<CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
 								<XAxis type="number" stroke="#6B7280" hide />
 								<YAxis dataKey="name" type="category" stroke="#9CA3AF" tick={{ fill: '#9CA3AF', fontSize: 11 }} width={40} tickLine={false} axisLine={false} />
-								<Tooltip contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', color: '#F3F4F6', fontSize: '12px', borderRadius: '8px' }} />
+								<Tooltip cursor={{ fill: 'rgba(255,255,255,0.05)' }} contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', color: '#F3F4F6', fontSize: '12px', borderRadius: '8px' }} />
 								<Bar dataKey="value" fill="#8B5CF6" radius={[0, 4, 4, 0]} barSize={16} />
 							</BarChart>
 						</ResponsiveContainer>
