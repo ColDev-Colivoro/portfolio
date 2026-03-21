@@ -8,7 +8,7 @@ const SystemLog = ({ isOpen, onClose }) => {
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    exit={{ opacit1y: 0 }}
+                    exit={{ opacity: 0 }}
                     className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
                     data-overlay-open="true"
                     onClick={onClose}
