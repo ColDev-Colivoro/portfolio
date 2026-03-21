@@ -28,4 +28,12 @@ describe('App', () => {
 		expect(container.querySelector('.route-atmo-primary')).toBeInTheDocument();
 		expect(container.querySelector('.route-atmo-secondary')).toBeInTheDocument();
 	});
+
+	it('renderiza la plataforma SGC en ruta dedicada sin shell de portfolio', () => {
+		const { container } = renderWithProviders(<App />, { route: '/demo/sgc' });
+
+		expect(screen.getAllByText('Vista Ejecutiva').length).toBeGreaterThan(0);
+		expect(screen.queryByText('Jose Camilo Colivoro Uribe')).not.toBeInTheDocument();
+		expect(container.querySelector('.route-atmo-primary')).not.toBeInTheDocument();
+	});
 });

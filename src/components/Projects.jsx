@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { portfolioProjects } from '@/data/projectsData';
 import { siteContent } from '@/data/siteContent';
 import { useLocale } from '@/context/LocaleContext';
@@ -21,6 +22,7 @@ const bentoSlotClassMap = {
 
 const Projects = () => {
 	const { lang } = useLocale();
+	const navigate = useNavigate();
 	const [activeProject, setActiveProject] = useState(null);
 	const content = siteContent.projects;
 
@@ -46,6 +48,11 @@ const Projects = () => {
 	};
 
 	const openProject = (project) => {
+		if (project.id === 'voyscout' && project.caseStudy?.interactiveDemo?.type === 'sgc-dashboard') {
+			navigate('/demo/sgc');
+			return;
+		}
+
 		if (project.caseStudy) {
 			setActiveProject(project);
 			return;
@@ -63,6 +70,12 @@ const Projects = () => {
 					{projects.map((project, index) => {
 						const display = getProjectDisplay(project);
 						const hasCaseAction = Boolean(project.caseStudy || project.links.primary);
+						const actionLabel =
+							project.id === 'voyscout'
+								? lang === 'es'
+									? 'Abrir plataforma'
+									: 'Open platform'
+								: resolveCopy(content.openCase, lang);
 
 						return (
 							<motion.article
@@ -110,7 +123,7 @@ const Projects = () => {
 												data-cursor-size="md"
 												data-pressable="true"
 											>
-												{resolveCopy(content.openCase, lang)}
+												{actionLabel}
 												<ArrowUpRight className="h-4 w-4" />
 											</button>
 										) : (

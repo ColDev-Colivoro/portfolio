@@ -530,19 +530,19 @@ export const projectsCatalog = [
 			en: 'Integrated management for scout courses',
 		},
 		summary: {
-			es: 'Plataforma integral para gestionar inscripciones, pagos y asistencia en cursos Scouts.',
-			en: 'Integrated platform to manage registrations, payments, and attendance for Scout courses.',
+			es: 'Dashboard SGC para gestion de cursos scouts, con foco en lectura operativa de KPIs y seguimiento administrativo.',
+			en: 'SGC dashboard for scout course management, focused on operational KPI reading and administrative follow-up.',
 		},
 		problem: {
-			es: 'La coordinación de cursos requería unificar registros, pagos, asistencia y seguimiento administrativo.',
+			es: 'La coordinacion de cursos tenia datos dispersos y poca visibilidad para tomar decisiones diarias.',
 			en: 'Course coordination required unified records, payments, attendance, and administrative follow-up.',
 		},
 		impact: {
-			es: 'Centraliza procesos administrativos y disminuye fricción operativa en la gestión de cursos.',
+			es: 'La capa de dashboards permite ver estado de cursos, pagos e inscripciones en un flujo visual unico.',
 			en: 'Centralizes administrative processes and reduces operational friction in course management.',
 		},
 		role: {
-			es: 'Habilidades: modelado del sistema, backend de gestión, frontend administrativo e integración SQL.',
+			es: 'Habilidad principal: diseno y construccion de dashboards ejecutivos con trazabilidad y lectura rapida de indicadores.',
 			en: 'Skills: system modeling, management backend, administrative frontend, and SQL integration.',
 		},
 		stack: ['Python', 'Django', 'SQL', 'React'],
@@ -570,6 +570,67 @@ export const projectsCatalog = [
 					src: '/images/placeholders/voyscout.svg',
 				},
 			],
+		},
+		caseStudy: {
+			headline: {
+				es: 'Dashboard SGC - sistema de gestion de cursos scout',
+				en: 'SGC Dashboard - scout course management system',
+			},
+			description: {
+				es: 'Este caso muestra la capa de dashboards del SGC. Se prioriza lectura operativa de cursos, pagos e inscripciones con una vista clara para coordinacion.',
+				en: 'This case showcases the SGC dashboard layer. It focuses on operational reading for courses, payments, and enrollments in a clear coordination view.',
+			},
+			microStats: {
+				es: ['Solo dashboards', 'Datos mock anonimizados', 'KPIs operativos'],
+				en: ['Dashboards only', 'Anonymized mock data', 'Operational KPIs'],
+			},
+			features: {
+				es: [
+					'Habilidad: extraccion y reconstruccion visual del dashboard ejecutivo.',
+					'Habilidad: modelado de KPIs para cursos, acreditacion y pagos.',
+					'Habilidad: diseno UX para lectura rapida en contexto administrativo.',
+				],
+				en: [
+					'Skill: extraction and visual reconstruction of the executive dashboard.',
+					'Skill: KPI modeling for courses, accreditation, and payments.',
+					'Skill: UX design for fast reading in administrative contexts.',
+				],
+			},
+			credentials: {
+				es: [
+					{ label: 'Stack', text: 'React + Vite + Tailwind + dashboard patterns' },
+					{ label: 'Base de referencia', text: 'Modulo dashboard del proyecto SGC real' },
+					{ label: 'Alcance visible', text: 'Solo capa de visualizacion y analitica' },
+				],
+				en: [
+					{ label: 'Stack', text: 'React + Vite + Tailwind + dashboard patterns' },
+					{ label: 'Reference base', text: 'Dashboard module from the real SGC project' },
+					{ label: 'Visible scope', text: 'Visualization and analytics layer only' },
+				],
+			},
+			credentialsNote: {
+				es: 'La demo del portfolio no expone base de datos ni procesos sensibles del sistema productivo.',
+				en: 'The portfolio demo does not expose database content or sensitive production workflows.',
+			},
+			interactiveDemo: {
+				type: 'sgc-dashboard',
+				title: {
+					es: 'Demo interactiva del dashboard',
+					en: 'Interactive dashboard demo',
+				},
+				description: {
+					es: 'Extraccion del dashboard SGC a una misma plataforma de portfolio para visualizar graficos con calidad y contexto funcional.',
+					en: 'SGC dashboard extraction into the portfolio platform to display charts with clarity and functional context.',
+				},
+				scopeNote: {
+					es: 'Alcance actual: solo dashboards. Los modulos transaccionales se mantienen fuera de esta demo publica.',
+					en: 'Current scope: dashboards only. Transactional modules remain outside this public demo.',
+				},
+				dataNote: {
+					es: 'Datos mock con estructura realista para mostrar KPIs y comportamiento de graficos sin exponer informacion sensible.',
+					en: 'Mock data with realistic structure to show KPIs and chart behavior without exposing sensitive information.',
+				},
+			},
 		},
 	},
 ];

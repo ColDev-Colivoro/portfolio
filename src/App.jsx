@@ -11,6 +11,7 @@ import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
 import ProjectsPage from '@/pages/ProjectsPage';
 import ContactPage from '@/pages/ContactPage';
+import SGCPlatformPage from '@/pages/SGCPlatformPage';
 import { useLocale } from '@/context/LocaleContext';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
@@ -63,19 +64,23 @@ const App = () => {
 	const direction = currentIndex > prevIndex.current ? 1 : -1;
 
 	const routeTone = getRouteTone(location.pathname);
+	const isSgcPlatformRoute = location.pathname.startsWith('/demo/sgc');
 
 	useEffect(() => {
 		document.title = resolveCopy(siteContent.seoTitle, lang);
 	}, [lang]);
 
 	return (
-		<div className="relative min-h-screen overflow-hidden bg-background text-foreground" data-route-tone={routeTone}>
-			<div className="route-atmo-primary pointer-events-none fixed inset-0" />
-			<div className="route-atmo-secondary pointer-events-none fixed inset-0" />
-			<div className="pointer-events-none fixed inset-0 noise-bg" />
-			{isOverlayReady ? <Cursor /> : null}
-			<div className="relative z-10 flex min-h-screen flex-col">
-				<Navbar />
+		<div
+			className={`relative min-h-screen ${isSgcPlatformRoute ? 'bg-[#020617] text-white' : 'overflow-hidden bg-background text-foreground'}`}
+			data-route-tone={routeTone}
+		>
+			{!isSgcPlatformRoute ? <div className="route-atmo-primary pointer-events-none fixed inset-0" /> : null}
+			{!isSgcPlatformRoute ? <div className="route-atmo-secondary pointer-events-none fixed inset-0" /> : null}
+			{!isSgcPlatformRoute ? <div className="pointer-events-none fixed inset-0 noise-bg" /> : null}
+			{!isSgcPlatformRoute && isOverlayReady ? <Cursor /> : null}
+			<div className={`relative z-10 flex min-h-screen ${isSgcPlatformRoute ? '' : 'flex-col'}`}>
+				{!isSgcPlatformRoute ? <Navbar /> : null}
 				<div className="flex-1" ref={routeContainerRef} style={{ touchAction: 'pan-y' }}>
 					<AnimatePresence mode="popLayout" initial={true} custom={direction}>
 						<motion.div
@@ -93,13 +98,14 @@ const App = () => {
 								<Route path="/about" element={<AboutPage />} />
 								<Route path="/proyectos" element={<ProjectsPage />} />
 								<Route path="/contact" element={<ContactPage />} />
+								<Route path="/demo/sgc" element={<SGCPlatformPage />} />
 							</Routes>
 						</motion.div>
 					</AnimatePresence>
 				</div>
-				<Chatbot lang={lang} />
-				{isOverlayReady ? <CommandBar /> : null}
-				<Footer />
+				{!isSgcPlatformRoute ? <Chatbot lang={lang} /> : null}
+				{!isSgcPlatformRoute && isOverlayReady ? <CommandBar /> : null}
+				{!isSgcPlatformRoute ? <Footer /> : null}
 				<Toaster />
 			</div>
 		</div>

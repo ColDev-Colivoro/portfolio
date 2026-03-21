@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import Projects from '@/components/Projects';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
@@ -17,6 +17,15 @@ describe('Projects', () => {
 		expect(screen.getByText('Dashboard SGC')).toBeInTheDocument();
 		expect(screen.getByText('ColDev Radar Sur')).toBeInTheDocument();
 		expect(screen.getByText('Mar2Control')).toBeInTheDocument();
+	});
+
+	it('expone CTA de plataforma para Dashboard SGC', () => {
+		renderWithProviders(<Projects />);
+
+		const sgcCard = screen.getByText('Dashboard SGC').closest('article');
+		expect(sgcCard).not.toBeNull();
+
+		expect(within(sgcCard).getByRole('button', { name: /Abrir plataforma/i })).toBeInTheDocument();
 	});
 
   it('abre y cierra modal de caso de estudio usando portal', async () => {

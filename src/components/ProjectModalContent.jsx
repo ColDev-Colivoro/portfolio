@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import SGCDashboardDemo from '@/components/demos/SGCDashboardDemo';
 import { resolveCopy } from '@/lib/i18n';
 
 const ProjectModalContent = ({ project, lang = 'es' }) => {
@@ -42,12 +43,23 @@ const ProjectModalContent = ({ project, lang = 'es' }) => {
 			features: resolveCopy(project.caseStudy.features, lang),
 			credentials: resolveCopy(project.caseStudy.credentials, lang),
 			credentialsNote: resolveCopy(project.caseStudy.credentialsNote, lang),
+			interactiveDemo: project.caseStudy.interactiveDemo
+				? {
+						type: project.caseStudy.interactiveDemo.type,
+						title: resolveCopy(project.caseStudy.interactiveDemo.title, lang),
+						description: resolveCopy(project.caseStudy.interactiveDemo.description, lang),
+						scopeNote: resolveCopy(project.caseStudy.interactiveDemo.scopeNote, lang),
+						dataNote: resolveCopy(project.caseStudy.interactiveDemo.dataNote, lang),
+				  }
+				: null,
 			problem: resolveCopy(project.problem, lang),
 			impact: resolveCopy(project.impact, lang),
 			role: resolveCopy(project.role, lang),
 			gallery,
 		};
 	}, [lang, project]);
+
+	const hasSgcDemo = modalDetails.interactiveDemo?.type === 'sgc-dashboard';
 
 	const roleOptions = useMemo(() => {
 		const options = modalDetails.gallery.map((panel) => panel.roleLabel).filter(Boolean);
@@ -147,72 +159,93 @@ const ProjectModalContent = ({ project, lang = 'es' }) => {
 						</div>
 					</div>
 
-					<div className="mt-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-						<div>
-							<h2 className="text-2xl font-semibold text-foreground">
-								{lang === 'es' ? 'Galería del sistema' : 'System gallery'}
-							</h2>
-							<p className="mt-2 text-sm text-muted-foreground">
-								{lang === 'es'
-									? 'Paneles, vistas y piezas que muestran cómo se materializa la solución.'
-									: 'Panels, views, and pieces that show how the solution is materialized.'}
-							</p>
-						</div>
-						<div className="flex flex-wrap gap-3 text-sm">
-							<select
-								value={filterRole}
-								onChange={(event) => setFilterRole(event.target.value)}
-								className="rounded-full border border-white/10 bg-background px-4 py-2 text-foreground"
-							>
-								{roleOptions.map((role) => (
-									<option key={role} value={role}>
-										{role === 'all' ? (lang === 'es' ? 'Todos los roles' : 'All roles') : role}
-									</option>
-								))}
-							</select>
-							<select
-								value={filterType}
-								onChange={(event) => setFilterType(event.target.value)}
-								className="rounded-full border border-white/10 bg-background px-4 py-2 text-foreground"
-							>
-								{typeOptions.map((type) => (
-									<option key={type} value={type}>
-										{type === 'all' ? (lang === 'es' ? 'Todos los tipos' : 'All types') : type}
-									</option>
-								))}
-							</select>
-						</div>
-					</div>
+					{hasSgcDemo ? (
+						<div className="mt-8 space-y-5">
+							<div className="rounded-[1.5rem] border border-white/10 bg-background/65 p-4 md:p-5">
+								<h2 className="text-2xl font-semibold text-foreground">{modalDetails.interactiveDemo.title}</h2>
+								<p className="mt-2 text-sm leading-relaxed text-muted-foreground">{modalDetails.interactiveDemo.description}</p>
+								<div className="mt-4 grid gap-3 md:grid-cols-2">
+									<div className="rounded-2xl border border-amber-500/25 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
+										{modalDetails.interactiveDemo.scopeNote}
+									</div>
+									<div className="rounded-2xl border border-sky-500/25 bg-sky-500/10 px-4 py-3 text-sm text-sky-100">
+										{modalDetails.interactiveDemo.dataNote}
+									</div>
+								</div>
+							</div>
 
-					<div className="mt-6 grid gap-4 sm:grid-cols-2">
-						{filteredPanels.map((panel) => (
-							<article
-								key={panel.id}
-								className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-background/70"
-								data-pressable="true"
-							>
-								<button
-									className="w-full text-left"
-									onClick={() => setOpenImage(panel)}
-									data-cursor-target="magnetic"
-									data-cursor-size="md"
-									data-pressable="true"
-								>
-									<div className="h-52 overflow-hidden border-b border-white/10 bg-background">
-										<img src={panel.src} alt={panel.title} className="h-full w-full object-cover" />
-									</div>
-									<div className="space-y-2 p-4">
-										<div className="flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.2em] text-accent/90">
-											{panel.roleLabel ? <span>{panel.roleLabel}</span> : null}
-											{panel.typeLabel ? <span>{panel.typeLabel}</span> : null}
-										</div>
-										<h3 className="text-lg font-semibold text-foreground">{panel.title}</h3>
-										<p className="text-sm leading-relaxed text-muted-foreground">{panel.caption}</p>
-									</div>
-								</button>
-							</article>
-						))}
-					</div>
+							<SGCDashboardDemo lang={lang} />
+						</div>
+					) : (
+						<>
+							<div className="mt-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+								<div>
+									<h2 className="text-2xl font-semibold text-foreground">
+										{lang === 'es' ? 'Galeria del sistema' : 'System gallery'}
+									</h2>
+									<p className="mt-2 text-sm text-muted-foreground">
+										{lang === 'es'
+											? 'Paneles, vistas y piezas que muestran como se materializa la solucion.'
+											: 'Panels, views, and pieces that show how the solution is materialized.'}
+									</p>
+								</div>
+								<div className="flex flex-wrap gap-3 text-sm">
+									<select
+										value={filterRole}
+										onChange={(event) => setFilterRole(event.target.value)}
+										className="rounded-full border border-white/10 bg-background px-4 py-2 text-foreground"
+									>
+										{roleOptions.map((role) => (
+											<option key={role} value={role}>
+												{role === 'all' ? (lang === 'es' ? 'Todos los roles' : 'All roles') : role}
+											</option>
+										))}
+									</select>
+									<select
+										value={filterType}
+										onChange={(event) => setFilterType(event.target.value)}
+										className="rounded-full border border-white/10 bg-background px-4 py-2 text-foreground"
+									>
+										{typeOptions.map((type) => (
+											<option key={type} value={type}>
+												{type === 'all' ? (lang === 'es' ? 'Todos los tipos' : 'All types') : type}
+											</option>
+										))}
+									</select>
+								</div>
+							</div>
+
+							<div className="mt-6 grid gap-4 sm:grid-cols-2">
+								{filteredPanels.map((panel) => (
+									<article
+										key={panel.id}
+										className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-background/70"
+										data-pressable="true"
+									>
+										<button
+											className="w-full text-left"
+											onClick={() => setOpenImage(panel)}
+											data-cursor-target="magnetic"
+											data-cursor-size="md"
+											data-pressable="true"
+										>
+											<div className="h-52 overflow-hidden border-b border-white/10 bg-background">
+												<img src={panel.src} alt={panel.title} className="h-full w-full object-cover" />
+											</div>
+											<div className="space-y-2 p-4">
+												<div className="flex flex-wrap gap-2 text-[11px] uppercase tracking-[0.2em] text-accent/90">
+													{panel.roleLabel ? <span>{panel.roleLabel}</span> : null}
+													{panel.typeLabel ? <span>{panel.typeLabel}</span> : null}
+												</div>
+												<h3 className="text-lg font-semibold text-foreground">{panel.title}</h3>
+												<p className="text-sm leading-relaxed text-muted-foreground">{panel.caption}</p>
+											</div>
+										</button>
+									</article>
+								))}
+							</div>
+						</>
+					)}
 				</section>
 
 				<aside className="rounded-[2rem] border border-white/10 bg-card/70 p-6 lg:sticky lg:top-6 lg:h-fit">
