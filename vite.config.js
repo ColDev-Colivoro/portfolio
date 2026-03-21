@@ -18,7 +18,9 @@ logger.error = (msg, options) => {
 
 const getGitCommit = () => {
 	try {
-		return execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+		const hash = execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+		const msg = execSync('git log -1 --format=%s', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+		return `${hash} - ${msg}`;
 	} catch {
 		return 'local';
 	}

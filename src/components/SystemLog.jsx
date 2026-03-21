@@ -27,7 +27,7 @@ const SystemLog = ({ isOpen, onClose }) => {
                         <div className="mt-4 text-sm text-muted-foreground">
                             <p>{appVersionLabel} - Build metadata synchronized automatically.</p>
                             <p className="mt-2">Build date: {appMeta.buildDate}</p>
-                            <p className="mt-1">Commit: {appMeta.commit}</p>
+                            <p className="mt-1 line-clamp-2" title={appMeta.commit}>Commit: {appMeta.commit}</p>
                         </div>
                         <button onClick={onClose} className="mt-6 w-full rounded-full bg-accent py-2 text-sm text-accent-foreground">Close</button>
                     </motion.div>
