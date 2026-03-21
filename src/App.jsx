@@ -72,17 +72,55 @@ const App = () => {
 
 	return (
 		<div
-			className={`relative min-h-screen ${isSgcPlatformRoute ? 'bg-[#020617] text-white' : 'overflow-hidden bg-background text-foreground'}`}
+			className={`relative min-h-screen w-full max-w-[100vw] overflow-hidden ${isSgcPlatformRoute ? 'bg-[#0f172a] text-white' : 'bg-background text-foreground'}`}
 			data-route-tone={routeTone}
 		>
-			{!isSgcPlatformRoute ? <div className="route-atmo-primary pointer-events-none fixed inset-0" /> : null}
-			{!isSgcPlatformRoute ? <div className="route-atmo-secondary pointer-events-none fixed inset-0" /> : null}
-			{!isSgcPlatformRoute ? <div className="pointer-events-none fixed inset-0 noise-bg" /> : null}
-			{!isSgcPlatformRoute && isOverlayReady ? <Cursor /> : null}
+			<AnimatePresence>
+				{!isSgcPlatformRoute ? (
+					<motion.div
+						key="bg-atmosphere"
+						initial={{ opacity: 1 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.5 }}
+						className="pointer-events-none fixed inset-0 z-0"
+					>
+						<div className="route-atmo-primary absolute inset-0" />
+						<div className="route-atmo-secondary absolute inset-0" />
+						<div className="noise-bg absolute inset-0" />
+					</motion.div>
+				) : null}
+			</AnimatePresence>
+			
+			<AnimatePresence>
+				{!isSgcPlatformRoute && isOverlayReady ? (
+					<motion.div
+						key="cursor"
+						initial={{ opacity: 1 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.3 }}
+					>
+						<Cursor />
+					</motion.div>
+				) : null}
+			</AnimatePresence>
 			<div className={`relative z-10 flex min-h-screen ${isSgcPlatformRoute ? '' : 'flex-col'}`}>
-				{!isSgcPlatformRoute ? <Navbar /> : null}
-				<div className="flex-1" ref={routeContainerRef} style={{ touchAction: 'pan-y' }}>
-					<AnimatePresence mode="popLayout" initial={true} custom={direction}>
+				<AnimatePresence>
+					{!isSgcPlatformRoute ? (
+						<motion.div
+							key="navbar"
+							initial={{ opacity: 1 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							transition={{ duration: 0.4 }}
+						>
+							<Navbar />
+						</motion.div>
+					) : null}
+				</AnimatePresence>
+				<div className="relative flex-1 overflow-x-hidden" ref={routeContainerRef} style={{ touchAction: 'pan-y' }}>
+					<AnimatePresence mode="popLayout" initial={true} custom={direction} onExitComplete={() => window.scrollTo(0, 0)}>
 						<motion.div
 							key={location.pathname}
 							custom={direction}
@@ -91,7 +129,7 @@ const App = () => {
 							animate="center"
 							exit="exit"
 							transition={routeTransition}
-							className="h-full"
+							className="h-full w-full"
 						>
 							<Routes location={location}>
 								<Route path="/" element={<HomePage />} />
@@ -103,9 +141,22 @@ const App = () => {
 						</motion.div>
 					</AnimatePresence>
 				</div>
-				{!isSgcPlatformRoute ? <Chatbot lang={lang} /> : null}
-				{!isSgcPlatformRoute && isOverlayReady ? <CommandBar /> : null}
-				{!isSgcPlatformRoute ? <Footer /> : null}
+				<AnimatePresence>
+					{!isSgcPlatformRoute ? (
+						<motion.div
+							key="bottom-elements"
+							initial={{ opacity: 1 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0, position: 'absolute', bottom: 0, left: 0, right: 0 }}
+							transition={{ duration: 0.4 }}
+							className="flex flex-col"
+						>
+							<Chatbot lang={lang} />
+							{isOverlayReady && <CommandBar />}
+							<Footer />
+						</motion.div>
+					) : null}
+				</AnimatePresence>
 				<Toaster />
 			</div>
 		</div>

@@ -1,13 +1,8 @@
-import { useEffect } from 'react';
 import About from '@/components/About';
 import Skills from '@/components/Skills';
 import Certificates from '@/components/Certificates';
 
 const AboutPage = () => {
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, []);
-
 	return (
 		<main className="w-full pt-24 md:pt-28">
 			<section className="pb-20 pt-10 md:pb-28">

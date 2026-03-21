@@ -54,6 +54,10 @@ const SGCDashboardExecutive = ({ selectedCourse = 'all' }) => {
 				setLoading(true);
 				setError(null);
 
+				// Pausa artificial para liberar el CPU y permitir que la animación de entrada
+				// de Framer Motion fluya a 60fps sin interrupciones del renderizado de gráficas.
+				await new Promise((resolve) => setTimeout(resolve, 500));
+
 				setCourses(sgcExecutiveMock.courses);
 				setSections(sgcExecutiveMock.sections);
 				setRegistrations(sgcExecutiveMock.registrations);

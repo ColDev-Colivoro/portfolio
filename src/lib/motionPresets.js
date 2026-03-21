@@ -17,6 +17,7 @@ export const routeIndexMap = {
 	'/proyectos': 1,
 	'/about': 2,
 	'/contact': 3,
+	'/demo/sgc': 4,
 };
 
 export const getRouteTone = (pathname) => {
@@ -31,13 +32,11 @@ export const routeLateralVariants = {
 	enter: (direction = 1) => ({
 		x: direction * motionTokens.routeDistanceX,
 		opacity: 0,
-		filter: `blur(${motionTokens.sharedBlurIn}px)`,
 	}),
-	center: { x: 0, opacity: 1, filter: 'blur(0px)' },
+	center: { x: 0, opacity: 1 },
 	exit: (direction = 1) => ({
 		x: direction * -motionTokens.routeDistanceX,
 		opacity: 0,
-		filter: `blur(${motionTokens.sharedBlurIn}px)`,
 	}),
 };
 
