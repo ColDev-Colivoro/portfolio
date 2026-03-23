@@ -1,21 +1,24 @@
+
+// Importa los iconos Lucide en el archivo donde se usen estos objetos, no aquí directamente.
+// Aquí solo se referencian por nombre para facilitar el mapeo en el componente visual.
 export const PROJECT_PHASES = {
 	building: {
 		es: 'En Construcción',
 		en: 'Under Construction',
 		color: 'amber',
-		icon: '🔨',
+		icon: 'Hammer',
 	},
 	mvp: {
 		es: 'MVP',
 		en: 'MVP',
 		color: 'sky',
-		icon: '🧪',
+		icon: 'FlaskConical',
 	},
 	production: {
 		es: 'En Producción',
 		en: 'In Production',
 		color: 'emerald',
-		icon: '✅',
+		icon: 'BadgeCheck',
 	},
 };
 
@@ -24,19 +27,19 @@ export const PROJECT_ACCESS = {
 		es: 'Privado',
 		en: 'Private',
 		color: 'rose',
-		icon: '🔒',
+		icon: 'Lock',
 	},
 	corporate: {
 		es: 'Corporativo',
 		en: 'Corporate',
 		color: 'violet',
-		icon: '🏢',
+		icon: 'Building2',
 	},
 	open: {
 		es: 'Abierto',
 		en: 'Open Source',
 		color: 'cyan',
-		icon: '🌐',
+		icon: 'Globe',
 	},
 };
 

@@ -13,8 +13,8 @@
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 97%;
 
-    --primary: 25 100% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 120 91% 58%;
+    --primary-foreground: 0 0% 5%;
 
     --secondary: 0 0% 11%;
     --secondary-foreground: 0 0% 97%;
@@ -22,15 +22,15 @@
     --muted: 0 0% 13%;
     --muted-foreground: 0 0% 67%;
 
-    --accent: 25 100% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 120 91% 58%;
+    --accent-foreground: 0 0% 5%;
 
     --destructive: 357 72% 43%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 25 100% 50%;
+    --ring: 120 91% 58%;
 
     --radius: 1rem;
 
@@ -73,7 +73,7 @@
     --ribbon-padding-y: 0.36rem;
     --ribbon-tracking: 0.16em;
 
-    --route-home-rgb: 255, 87, 34;
+    --route-home-rgb: 51, 245, 52;
     --route-projects-rgb: 34, 211, 238;
     --route-about-rgb: 255, 235, 59;
     --route-contact-rgb: 255, 122, 89;
@@ -95,7 +95,7 @@
     @apply bg-background text-foreground antialiased selection:bg-accent/25 selection:text-white;
     font-feature-settings: 'rlig' 1, 'calt' 1;
     background:
-      radial-gradient(circle at 18% 14%, rgba(255, 106, 0, 0.12) 0%, transparent 24%),
+      radial-gradient(circle at 18% 14%, rgba(51, 245, 52, 0.12) 0%, transparent 24%),
       radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.045) 0%, transparent 20%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 18%);
     background-color: #0d0d0d;

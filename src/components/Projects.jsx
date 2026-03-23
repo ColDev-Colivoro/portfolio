@@ -1,6 +1,15 @@
 import { useMemo, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, ShieldAlert } from 'lucide-react';
+import { ArrowUpRight, ShieldAlert, Hammer, FlaskConical, BadgeCheck, Lock, Building2, Globe } from 'lucide-react';
+// Mapeo de nombres a componentes Lucide
+const iconMap = {
+    Hammer,
+    FlaskConical,
+    BadgeCheck,
+    Lock,
+    Building2,
+    Globe,
+};
 import { useNavigate } from 'react-router-dom';
 import { portfolioProjects, PROJECT_PHASES, PROJECT_ACCESS } from '@/data/projectsData';
 import { siteContent } from '@/data/siteContent';
@@ -110,12 +119,15 @@ const Projects = () => {
                                     {lang === 'es' ? 'Fase de Desarrollo' : 'Development Phase'}
                                 </p>
                                 <div className="space-y-2">
-                                    {Object.entries(PROJECT_PHASES).map(([key, cfg]) => (
-                                        <div key={key} className="flex items-center gap-2">
-                                            <span className="text-sm">{cfg.icon}</span>
-                                            <span className="text-xs font-medium text-foreground">{lang === 'es' ? cfg.es : cfg.en}</span>
-                                        </div>
-                                    ))}
+                                                                        {Object.entries(PROJECT_PHASES).map(([key, cfg]) => {
+                                                                            const Icon = iconMap[cfg.icon];
+                                                                            return (
+                                                                                <div key={key} className="flex items-center gap-2">
+                                                                                    {Icon && <Icon className="w-4 h-4" />}
+                                                                                    <span className="text-xs font-medium text-foreground">{lang === 'es' ? cfg.es : cfg.en}</span>
+                                                                                </div>
+                                                                            );
+                                                                        })}
                                 </div>
                             </div>
 
@@ -125,12 +137,15 @@ const Projects = () => {
                                     {lang === 'es' ? 'Tipo de Acceso' : 'Access Type'}
                                 </p>
                                 <div className="space-y-2">
-                                    {Object.entries(PROJECT_ACCESS).map(([key, cfg]) => (
-                                        <div key={key} className="flex items-center gap-2">
-                                            <span className="text-sm">{cfg.icon}</span>
-                                            <span className="text-xs font-medium text-foreground">{lang === 'es' ? cfg.es : cfg.en}</span>
-                                        </div>
-                                    ))}
+                                                                        {Object.entries(PROJECT_ACCESS).map(([key, cfg]) => {
+                                                                            const Icon = iconMap[cfg.icon];
+                                                                            return (
+                                                                                <div key={key} className="flex items-center gap-2">
+                                                                                    {Icon && <Icon className="w-4 h-4" />}
+                                                                                    <span className="text-xs font-medium text-foreground">{lang === 'es' ? cfg.es : cfg.en}</span>
+                                                                                </div>
+                                                                            );
+                                                                        })}
                                 </div>
                             </div>
                         </div>
@@ -183,10 +198,10 @@ const Projects = () => {
                                                 return (
                                                     <>
                                                         <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium backdrop-blur-md shadow-sm ${phaseColorMap[phaseCfg.color]}`}>
-                                                            {phaseCfg.icon} {lang === 'es' ? phaseCfg.es : phaseCfg.en}
+                                                            {(() => { const Icon = iconMap[phaseCfg.icon]; return Icon ? <Icon className="inline w-4 h-4 mr-1 align-text-bottom" /> : null; })()} {lang === 'es' ? phaseCfg.es : phaseCfg.en}
                                                         </span>
                                                         <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium backdrop-blur-md shadow-sm ${accessColorMap[accessCfg.color]}`}>
-                                                            {accessCfg.icon} {lang === 'es' ? accessCfg.es : accessCfg.en}
+                                                            {(() => { const Icon = iconMap[accessCfg.icon]; return Icon ? <Icon className="inline w-4 h-4 mr-1 align-text-bottom" /> : null; })()} {lang === 'es' ? accessCfg.es : accessCfg.en}
                                                         </span>
                                                     </>
                                                 );

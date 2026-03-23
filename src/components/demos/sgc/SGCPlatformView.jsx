@@ -127,7 +127,7 @@ const SGCPlatformView = () => {
 					<AnimatePresence mode="wait">
 						{!collapsed ? (
 							<div>
-								<p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#ffc9b2]/80">
+								<p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#c1ffbc]/80">
 									Salir de la demo
 								</p>
 								<motion.button
@@ -136,9 +136,9 @@ const SGCPlatformView = () => {
 									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
 									exit={{ opacity: 0 }}
-									className="group flex w-full items-center gap-3 rounded-xl border border-[#ff7a4a]/80 bg-[#0d0d0d] px-3 py-2 text-left text-[#ffb190] shadow-[0_12px_28px_rgba(0,0,0,0.55)] transition-all hover:border-[#ff5722] hover:bg-[#151515] hover:shadow-[0_14px_30px_rgba(255,87,34,0.28)]"
+									className="group flex w-full items-center gap-3 rounded-xl border border-[#2dfc24]/80 bg-[#0d0d0d] px-3 py-2 text-left text-[#8eff87] shadow-[0_12px_28px_rgba(0,0,0,0.55)] transition-all hover:border-[#33F534] hover:bg-[#151515] hover:shadow-[0_14px_30px_rgba(51,245,52,0.28)]"
 								>
-									<div className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#ff7a4a]/70 bg-[#1a1a1a] shadow-[0_8px_18px_rgba(0,0,0,0.5)]">
+									<div className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#2dfc24]/70 bg-[#1a1a1a] shadow-[0_8px_18px_rgba(0,0,0,0.5)]">
 										<img
 											src="/images/branding/logo-navbar-icon.png"
 											alt="ColDev"
@@ -146,10 +146,10 @@ const SGCPlatformView = () => {
 										/>
 									</div>
 									<div className="min-w-0 flex-1">
-										<p className="truncate text-sm font-semibold text-[#ff7a4a]">Volver a ColDev</p>
-										<p className="truncate text-xs text-[#ffc9b2]">Portfolio principal</p>
+										<p className="truncate text-sm font-semibold text-[#2dfc24]">Volver a ColDev</p>
+										<p className="truncate text-xs text-[#c1ffbc]">Portfolio principal</p>
 									</div>
-									<Home className="h-4 w-4 text-[#ff7a4a] transition-transform group-hover:translate-x-0.5" />
+									<Home className="h-4 w-4 text-[#2dfc24] transition-transform group-hover:translate-x-0.5" />
 								</motion.button>
 							</div>
 						) : (
@@ -162,7 +162,7 @@ const SGCPlatformView = () => {
 								className="flex w-full justify-center"
 								title="Salir de la demo y volver a ColDev"
 							>
-								<div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#ff7a4a]/80 bg-[#0d0d0d] shadow-[0_10px_24px_rgba(0,0,0,0.6)]">
+								<div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#2dfc24]/80 bg-[#0d0d0d] shadow-[0_10px_24px_rgba(0,0,0,0.6)]">
 									<img
 										src="/images/branding/logo-navbar-icon.png"
 										alt="ColDev"
