@@ -48,16 +48,16 @@ Proyectos visibles (explicar por: problema, enfoque, resultado y stack):
 
 Cómo está hecho el portfolio:
 - Frontend SPA en React + Vite + TailwindCSS.
-- Navegación por rutas laterales con React Router (`/`, `/proyectos`, `/about`, `/contact`).
+- Navegación por rutas laterales con React Router ('/', '/proyectos', '/about', '/contact').
 - Animaciones con Framer Motion (transiciones laterales compartidas y Hero con movimiento propio).
 - Sección Proyectos en Bento curado de 5 bloques con apertura de caso en modal.
 - Chatbot Chimubot embebido como overlay con endpoint serverless.
 - CommandBar flotante con accesos rápidos y System Log de versión/build/commit.
-- Contenido centralizado en `src/data/siteContent.js` y `src/data/projectsData.js`.
+- Contenido centralizado en 'src/data/siteContent.js' y 'src/data/projectsData.js'.
 - System Log alimentado por metadatos de build inyectados por Vite.
 - Endpoint de chat en Netlify Function usando Gemini.
-`,
-  en: `
+\`,
+  en: \`
 Current portfolio profile:
 - Name: José Camilo Colivoro Uribe
 - Role: Software Analyst / Full Stack Developer
@@ -98,12 +98,12 @@ Visible projects (explain by: problem, approach, outcome, and stack):
 
 How the portfolio is built:
 - Frontend SPA with React + Vite + TailwindCSS.
-- Route-based lateral navigation with React Router (`/`, `/proyectos`, `/about`, `/contact`).
+- Route-based lateral navigation with React Router ('/', '/proyectos', '/about', '/contact').
 - Framer Motion animations (shared lateral transitions and independent Hero motion).
 - Projects section as a curated 5-block bento with case-study modal.
 - Embedded Chimubot chatbot as an overlay with a serverless endpoint.
 - Floating CommandBar with quick links and a System Log for version/build/commit.
-- Centralized content in `src/data/siteContent.js` and `src/data/projectsData.js`.
+- Centralized content in 'src/data/siteContent.js' and 'src/data/projectsData.js'.
 - System Log fed by build metadata injected by Vite.
 - Chat endpoint on Netlify Functions using Gemini.
 `,
