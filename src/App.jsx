@@ -12,6 +12,7 @@ import AboutPage from '@/pages/AboutPage';
 import ProjectsPage from '@/pages/ProjectsPage';
 import ContactPage from '@/pages/ContactPage';
 import SGCPlatformPage from '@/pages/SGCPlatformPage';
+import SlideIndicator from '@/components/SlideIndicator';
 import { useLocale } from '@/context/LocaleContext';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
@@ -159,6 +160,7 @@ const App = () => {
 				</AnimatePresence>
 				<Toaster />
 			</div>
+			{!isSgcPlatformRoute ? <SlideIndicator /> : null}
 		</div>
 	);
 };
