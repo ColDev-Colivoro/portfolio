@@ -1,6 +1,6 @@
-import { useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, ShieldAlert, Hammer, FlaskConical, BadgeCheck, Lock, Building2, Globe } from 'lucide-react';
+import { ArrowUpRight, ShieldAlert, Hammer, FlaskConical, BadgeCheck, Lock, Building2, Globe, X } from 'lucide-react';
 // Mapeo de nombres a componentes Lucide
 const iconMap = {
     Hammer,
@@ -47,6 +47,23 @@ const Projects = () => {
     // State for Floating Overlay
     const rightPanelRef = useRef(null);
     const [activeProject, setActiveProject] = useState(null);
+
+	useEffect(() => {
+		if (!activeProject) return undefined;
+
+		const previousOverflow = document.body.style.overflow;
+		const handleEscape = (event) => {
+			if (event.key === 'Escape') setActiveProject(null);
+		};
+
+		document.body.style.overflow = 'hidden';
+		document.addEventListener('keydown', handleEscape);
+
+		return () => {
+			document.body.style.overflow = previousOverflow;
+			document.removeEventListener('keydown', handleEscape);
+		};
+	}, [activeProject]);
 	
     const content = siteContent.projects;
 
@@ -162,8 +179,8 @@ const Projects = () => {
                             const actionLabel =
                                 project.id === 'voyscout'
                                     ? lang === 'es'
-                                        ? 'Plataforma'
-                                        : 'Platform'
+                                        ? 'Abrir plataforma'
+                                        : 'Open platform'
                                     : resolveCopy(content.openCase, lang);
 
                             const slotClass = bentoSlotClassMap[index] ?? 'md:col-span-1 lg:col-span-2 lg:row-span-1';
@@ -224,11 +241,31 @@ const Projects = () => {
                                                 </motion.p>
                                                 
                                                 <div className="flex flex-wrap items-center gap-4 pt-2">
+													{project.links.showOnCard && project.links.primary ? (
+														<a
+															href={project.links.primary}
+															target="_blank"
+															rel="noopener noreferrer"
+															onClick={(event) => event.stopPropagation()}
+															aria-label={lang === 'es' ? `Abrir ${display.title}` : `Open ${display.title}`}
+															className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-3 py-2 text-sm font-semibold text-accent transition-colors hover:bg-accent/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:w-auto"
+														>
+															{lang === 'es' ? 'Abrir plataforma' : 'Open platform'}
+															<ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+														</a>
+                                                    ) : null}
                                                     {hasCaseAction ? (
-                                                        <div className="inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent/80">
+                                                        <button
+                                                            type="button"
+                                                            onClick={(event) => {
+                                                                event.stopPropagation();
+                                                                handleProjectClick(event, project);
+                                                            }}
+                                                            className="inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                                        >
                                                             {actionLabel}
-                                                            <ArrowUpRight className="h-4 w-4" />
-                                                        </div>
+                                                            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                                                        </button>
                                                     ) : (
                                                         <span className="text-sm text-muted-foreground">{lang === 'es' ? 'Caso privado' : 'Private case'}</span>
                                                     )}
@@ -263,6 +300,10 @@ const Projects = () => {
                                     {/* Elemento que flota */}
                                     <motion.div
                                         layoutId={`card-container-${activeProject.id}`}
+                                        role="dialog"
+                                        aria-modal="true"
+                                        aria-labelledby={`project-modal-title-${activeProject.id}`}
+                                        onClick={(event) => event.stopPropagation()}
                                         className="relative flex flex-col w-[90vw] max-w-5xl max-h-[85vh] bg-background/95 border border-white/10 rounded-[2rem] shadow-[0_40px_100px_rgba(0,0,0,0.6)] overflow-y-auto overflow-x-hidden pointer-events-auto my-auto z-50 custom-scrollbar"
                                     >
                                         {/* ═══ HEADER COMPACTO: imagen + info + stack ═══ */}
@@ -283,7 +324,7 @@ const Projects = () => {
                                             {/* Título + subtítulo + status + pills */}
                                             <motion.div layoutId={`card-content-${activeProject.id}`} className="flex-1 min-w-0">
                                                 <div className="flex items-center gap-3 mb-1">
-                                                    <motion.h3 layoutId={`card-title-${activeProject.id}`} className="font-bold tracking-tight text-foreground text-xl md:text-2xl leading-tight truncate">
+                                                    <motion.h3 id={`project-modal-title-${activeProject.id}`} layoutId={`card-title-${activeProject.id}`} className="font-bold tracking-tight text-foreground text-xl md:text-2xl leading-tight truncate">
                                                         {display.title}
                                                     </motion.h3>
                                                     <motion.div layoutId={`card-status-${activeProject.id}`} className="shrink-0 flex items-center gap-1.5">
@@ -325,18 +366,28 @@ const Projects = () => {
                                                     {lang === 'es' ? '🚀 Dashboard' : '🚀 Dashboard'}
                                                 </button>
                                             ) : (
-                                                activeProject.links.demo && (
+                                                activeProject.links.primary && (
                                                     <a
-                                                        href={activeProject.links.demo}
+                                                        href={activeProject.links.primary}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         onClick={(e) => e.stopPropagation()}
-                                                        className="shrink-0 self-center inline-flex cursor-pointer items-center gap-2 rounded-full border border-accent/50 bg-accent/20 px-4 py-1.5 text-xs font-semibold text-accent transition-all hover:scale-105 hover:bg-accent/30"
+                                                        aria-label={lang === 'es' ? `Abrir ${display.title}` : `Open ${display.title}`}
+                                                        className="shrink-0 self-center inline-flex cursor-pointer items-center gap-2 rounded-full border border-accent/50 bg-accent/20 px-4 py-2 text-xs font-semibold text-accent transition-all hover:scale-105 hover:bg-accent/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                                                     >
-                                                        {lang === 'es' ? '🚀 Ver Demo' : '🚀 View Demo'}
+                                                        {lang === 'es' ? 'Abrir plataforma' : 'Open platform'}
+                                                        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                                                     </a>
                                                 )
                                             )}
+                                            <button
+                                                type="button"
+                                                onClick={() => setActiveProject(null)}
+                                                aria-label={lang === 'es' ? 'Cerrar' : 'Close'}
+                                                className="shrink-0 self-center rounded-full p-2 text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                            >
+                                                <X className="h-4 w-4" aria-hidden="true" />
+                                            </button>
                                         </div>
 
                                         {/* ═══ CUERPO SCROLLABLE ═══ */}

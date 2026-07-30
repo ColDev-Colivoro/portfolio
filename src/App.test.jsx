@@ -13,7 +13,7 @@ describe('App', () => {
 
 	it('renderiza contenido clave por ruta lateral', () => {
 		renderWithProviders(<App />, { route: '/proyectos' });
-		expect(screen.getByText('Nutriscoc Connect')).toBeInTheDocument();
+		expect(screen.getByText('NutriscoConnect')).toBeInTheDocument();
 
 		renderWithProviders(<App />, { route: '/about' });
 		expect(screen.getByText('Capacidades que atraviesan el trabajo')).toBeInTheDocument();

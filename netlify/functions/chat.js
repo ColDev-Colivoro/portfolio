@@ -1,131 +1,111 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { projectsCatalog } from '../../src/data/projectsData.js';
 
 const MAX_HISTORY_MESSAGES = 10;
 const MAX_MESSAGE_LENGTH = 700;
 
-const trimText = (value = '', maxLength = MAX_MESSAGE_LENGTH) =>
+export const normalizeMessageInput = (value = '', maxLength = MAX_MESSAGE_LENGTH) =>
   String(value).replace(/\s+/g, ' ').trim().slice(0, maxLength);
 
-const PORTFOLIO_CONTEXT = {
-  es: `
-Perfil actual del portfolio:
+export const normalizeStructuredResponse = (value = '') =>
+  String(value)
+    .replace(/\r\n?/g, '\n')
+    .replace(/[ \t]+$/gm, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+    .trimEnd();
+
+const PORTFOLIO_CONTEXT_SECTIONS = {
+  es: [
+    `Perfil profesional:
 - Nombre: José Camilo Colivoro Uribe
 - Rol: Analista Programador / Full Stack Developer
-- Enfoque: diseño e implementación de software aplicado a operación real
+- Enfoque: diseño e implementación de software aplicado a operación real`,
 
-Capacidades destacadas:
+    `Capacidades:
 - Desarrollo frontend (React, Vite, Tailwind)
 - Backend y APIs (Node.js, Python, SQL)
 - Automatización y apoyo con IA aplicada
-- Integración de sistemas y continuidad operativa
+- Integración de sistemas y continuidad operativa`,
 
-Proyectos visibles (explicar por: problema, enfoque, resultado y stack):
-- Nutriscoc Connect:
-  problema: operación corporativa fragmentada entre seguimiento, compromisos y KPIs.
-  enfoque: plataforma full stack con backend en Django/DRF, frontend en Next.js + React + TypeScript, y despliegue con PostgreSQL + Docker + Nginx.
-  resultado: trazabilidad operacional, paneles para decisión y control por roles.
-  stack: Django 5, DRF, Next.js 15, React, TypeScript, PostgreSQL, Docker, Nginx, JWT, Firebase Auth.
-- ColDevPOS:
-  problema: flujo de venta, inventario y registro con riesgo de fricción en operación real.
-  enfoque: ecosistema POS local con UX operativa y persistencia en desktop.
-  resultado: continuidad operativa y trazabilidad comercial en una sola arquitectura.
-  stack: React, TypeScript, Tauri, SQLite.
-- Dashboard SGC (Sistema de Gestión de Cursos, base VoyScout):
-  problema: coordinación de cursos con registros y seguimiento dispersos.
-  enfoque: gestión centralizada de cursos, asistencia y administración.
-  resultado: mejor control de operación académica y seguimiento administrativo.
-  stack: Python, Django, SQL, React.
-- ColDev Radar Sur:
-  problema: operación de campo con baja visibilidad y control de cumplimiento.
-  enfoque: paneles operativos y trazabilidad para acciones críticas en terreno.
-  resultado: seguimiento estandarizado y decisiones rápidas basadas en evidencia.
-  stack: React, TypeScript, KPI Dashboards, Traceability.
-- Mar2Control:
-  problema: calidad operacional sin una vista unificada de compromisos e incidencias.
-  enfoque: dashboards por rol para control de calidad, KPIs y monitoreo.
-  resultado: menor fricción de seguimiento y mejor coordinación diaria.
-  stack: React, TypeScript, Operational Dashboards, KPI Tracking.
-
-Cómo está hecho el portfolio:
+    `Arquitectura del portfolio:
 - Frontend SPA en React + Vite + TailwindCSS.
 - Navegación por rutas laterales con React Router ('/', '/proyectos', '/about', '/contact').
 - Animaciones con Framer Motion (transiciones laterales compartidas y Hero con movimiento propio).
-- Sección Proyectos en Bento curado de 5 bloques con apertura de caso en modal.
+- Sección Proyectos en Bento curado con apertura de caso en modal y enlaces directos cuando existe una demo pública.
 - Chatbot Chimubot embebido como overlay con endpoint serverless.
 - CommandBar flotante con accesos rápidos y System Log de versión/build/commit.
 - Contenido centralizado en 'src/data/siteContent.js' y 'src/data/projectsData.js'.
 - System Log alimentado por metadatos de build inyectados por Vite.
-- Endpoint de chat en Netlify Function usando Gemini.
-\`,
-  en: \`
-Current portfolio profile:
+- Endpoint de chat en Netlify Function usando Gemini.`,
+  ],
+  en: [
+    `Professional profile:
 - Name: José Camilo Colivoro Uribe
 - Role: Software Analyst / Full Stack Developer
-- Focus: designing and implementing software for real operations
+- Focus: designing and implementing software for real operations`,
 
-Highlighted capabilities:
+    `Capabilities:
 - Frontend development (React, Vite, Tailwind)
 - Backend and APIs (Node.js, Python, SQL)
 - Automation and applied AI support
-- Systems integration and operational continuity
+- Systems integration and operational continuity`,
 
-Visible projects (explain by: problem, approach, outcome, and stack):
-- Nutriscoc Connect:
-  problem: corporate operations were fragmented across follow-up, commitments, and KPIs.
-  approach: full stack platform with Django/DRF backend, Next.js + React + TypeScript frontend, and PostgreSQL + Docker + Nginx deployment.
-  outcome: operational traceability, decision dashboards, and role-based control.
-  stack: Django 5, DRF, Next.js 15, React, TypeScript, PostgreSQL, Docker, Nginx, JWT, Firebase Auth.
-- ColDevPOS:
-  problem: sales, inventory, and records had high friction risk in real operation.
-  approach: local POS ecosystem with operational UX and desktop persistence.
-  outcome: operational continuity and commercial traceability in one architecture.
-  stack: React, TypeScript, Tauri, SQLite.
-- SGC Dashboard (Course Management System, VoyScout base):
-  problem: course coordination had scattered records and follow-up.
-  approach: centralized management for courses, attendance, and administration.
-  outcome: better academic operations control and admin follow-up.
-  stack: Python, Django, SQL, React.
-- ColDev Radar Sur:
-  problem: field operations lacked visibility and compliance control.
-  approach: operational dashboards and traceability for critical field actions.
-  outcome: standardized follow-up and faster evidence-based decisions.
-  stack: React, TypeScript, KPI Dashboards, Traceability.
-- Mar2Control:
-  problem: quality operations lacked a unified view of commitments and incidents.
-  approach: role-based dashboards for quality control, KPIs, and monitoring.
-  outcome: lower follow-up friction and better daily coordination.
-  stack: React, TypeScript, Operational Dashboards, KPI Tracking.
-
-How the portfolio is built:
+    `Portfolio architecture:
 - Frontend SPA with React + Vite + TailwindCSS.
 - Route-based lateral navigation with React Router ('/', '/proyectos', '/about', '/contact').
 - Framer Motion animations (shared lateral transitions and independent Hero motion).
-- Projects section as a curated 5-block bento with case-study modal.
+- Projects section as a curated bento with a case-study modal and direct links for public demos.
 - Embedded Chimubot chatbot as an overlay with a serverless endpoint.
 - Floating CommandBar with quick links and a System Log for version/build/commit.
 - Centralized content in 'src/data/siteContent.js' and 'src/data/projectsData.js'.
 - System Log fed by build metadata injected by Vite.
-- Chat endpoint on Netlify Functions using Gemini.
-`,
+- Chat endpoint on Netlify Functions using Gemini.`,
+  ],
 };
 
-const buildPortfolioContext = (lang = 'es') => {
-  return trimText(PORTFOLIO_CONTEXT[lang] ?? PORTFOLIO_CONTEXT.es, 2400);
+const localize = (value, lang) => value?.[lang] ?? value?.es ?? '';
+
+const buildProjectsContext = (lang) => {
+  const labels =
+    lang === 'en'
+      ? { heading: 'Projects', summary: 'summary', problem: 'problem', outcome: 'outcome', stack: 'stack' }
+      : { heading: 'Proyectos', summary: 'resumen', problem: 'problema', outcome: 'resultado', stack: 'stack' };
+
+  const projectBlocks = projectsCatalog
+    .filter(({ visible }) => visible)
+    .map(
+      (project) => `## ${localize(project.title, lang)}
+- ${labels.summary}: ${localize(project.summary, lang)}
+- ${labels.problem}: ${localize(project.problem, lang)}
+- ${labels.outcome}: ${localize(project.impact, lang)}
+- ${labels.stack}: ${project.stack.join(', ')}`,
+    );
+
+  return `${labels.heading} (explicar por problema, enfoque, resultado y stack):\n\n${projectBlocks.join('\n\n')}`;
 };
 
-const buildSystemInstruction = (lang = 'es') => `
+export const buildPortfolioContext = (lang = 'es') => {
+  const sections = PORTFOLIO_CONTEXT_SECTIONS[lang] ?? PORTFOLIO_CONTEXT_SECTIONS.es;
+  return [sections[0], sections[1], buildProjectsContext(lang), sections[2]]
+    .map((section) => normalizeStructuredResponse(section))
+    .join('\n\n');
+};
+
+export const buildSystemInstruction = (lang = 'es') => `
 Eres el asistente virtual del portafolio de José Camilo Colivoro Uribe (ColDev).
 
 Reglas:
 - Responde SIEMPRE en ${lang === 'en' ? 'inglés' : 'español'}.
 - Mantén un tono profesional, claro, amable y seguro.
-- Sé breve: máximo dos párrafos cortos o bullets compactos.
+- Sé breve y legible: usa párrafos cortos y listas cuando ayuden a ordenar la respuesta.
 - Basarte SOLO en el contexto entregado en este mensaje.
 - Si preguntan algo fuera del ámbito profesional de José, indica ese límite.
 - Si el usuario quiere contactarlo, recomienda usar el formulario o LinkedIn del sitio.
 - No entregues teléfonos personales ni inventes información.
 - Si preguntan por un proyecto específico, responde con la estructura: problema, enfoque, resultado, stack.
 - Si preguntan por cómo está construido el portfolio, explica arquitectura (frontend, rutas, animaciones, data y chatbot) en bullets claros.
+- No cortes una idea o bloque a la mitad. Si una explicación requiere más espacio, entrega primero los bloques más relevantes e indica que puedes continuar.
 
 Contexto estructurado del portfolio:
 ${buildPortfolioContext(lang)}
@@ -195,7 +175,7 @@ export const handler = async (event) => {
       .slice(-MAX_HISTORY_MESSAGES)
       .map((message) => ({
         role: message.role,
-        content: trimText(message.content),
+        content: normalizeMessageInput(message.content),
       }));
 
     const latestMessage = sanitizedMessages[sanitizedMessages.length - 1]?.content ?? '';
@@ -230,7 +210,7 @@ export const handler = async (event) => {
 
     const chat = model.startChat({ history });
     const result = await chat.sendMessage(latestMessage);
-    const responseText = trimText(result.response.text(), 900);
+    const responseText = normalizeStructuredResponse(result.response.text());
 
     return {
       statusCode: 200,

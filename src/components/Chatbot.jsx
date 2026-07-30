@@ -4,6 +4,7 @@ import { Loader2, Send, X } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ChimubotAvatar from '@/components/ChimubotAvatar';
+import ChatMessageContent from '@/components/ChatMessageContent';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
 
@@ -212,7 +213,7 @@ const Chatbot = ({ lang = 'es' }) => {
 							{messages.map((message, index) => (
 								<div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
 									<div className={`max-w-[85%] rounded-2xl p-3 text-sm ${message.role === 'user' ? 'rounded-tr-none bg-accent text-accent-foreground' : 'rounded-tl-none border border-white/10 bg-background/80 text-foreground'}`}>
-										{message.content}
+										{message.role === 'assistant' ? <ChatMessageContent content={message.content} /> : message.content}
 									</div>
 								</div>
 							))}
