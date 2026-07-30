@@ -69,4 +69,49 @@ describe('Projects', () => {
       expect(document.body.style.overflow).toBe('');
     });
   });
+
+  it('permite abrir una tarjeta con Enter y devuelve el foco al cerrarla con Escape', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<Projects />);
+
+    const card = screen.getByText('NutriscoConnect').closest('article');
+    card.focus();
+    await user.keyboard('{Enter}');
+
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toHaveAttribute('aria-modal', 'true');
+    expect(dialog).toHaveAttribute('aria-describedby');
+    expect(within(dialog).getByRole('button', { name: /Cerrar/i })).toHaveFocus();
+
+    await user.keyboard('{Escape}');
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(card).toHaveFocus();
+    });
+  });
+
+  it('permite abrir una tarjeta con Espacio y cerrar el detalle desde el velo', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<Projects />);
+
+    const card = screen.getByText('NutriscoConnect').closest('article');
+    card.focus();
+    await user.keyboard(' ');
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /Cerrar detalles del proyecto/i }));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
+  it('mantiene el CTA y el encabezado del modal adaptables en pantallas pequeñas', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(<Projects />);
+
+    await user.click(screen.getByText('NutriscoConnect').closest('article'));
+
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toHaveClass('w-full', 'max-h-[calc(100dvh-2rem)]', 'sm:max-h-[85vh]');
+    expect(within(dialog).getByRole('link', { name: /abrir nutriscoconnect/i })).toHaveClass('flex-1', 'sm:flex-none');
+  });
 });

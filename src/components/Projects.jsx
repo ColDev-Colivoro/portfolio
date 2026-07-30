@@ -46,20 +46,34 @@ const Projects = () => {
 	
     // State for Floating Overlay
     const rightPanelRef = useRef(null);
+    const closeButtonRef = useRef(null);
+    const lastTriggerRef = useRef(null);
     const [activeProject, setActiveProject] = useState(null);
+
+    const closeModal = () => {
+        setActiveProject(null);
+
+        requestAnimationFrame(() => {
+            lastTriggerRef.current?.focus();
+        });
+    };
 
 	useEffect(() => {
 		if (!activeProject) return undefined;
 
 		const previousOverflow = document.body.style.overflow;
 		const handleEscape = (event) => {
-			if (event.key === 'Escape') setActiveProject(null);
+			if (event.key === 'Escape') closeModal();
 		};
 
 		document.body.style.overflow = 'hidden';
 		document.addEventListener('keydown', handleEscape);
+		const focusFrame = requestAnimationFrame(() => {
+			closeButtonRef.current?.focus();
+		});
 
 		return () => {
+			cancelAnimationFrame(focusFrame);
 			document.body.style.overflow = previousOverflow;
 			document.removeEventListener('keydown', handleEscape);
 		};
@@ -90,9 +104,17 @@ const Projects = () => {
 
 	const handleProjectClick = (e, project) => {
 		if (project.caseStudy || project.links.primary) {
+            lastTriggerRef.current = e.currentTarget;
             setActiveProject(project);
 		}
 	};
+
+    const handleProjectKeyDown = (event, project) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+
+        event.preventDefault();
+        handleProjectClick(event, project);
+    };
 
 	return (
 		<div className="container mx-auto px-4">
@@ -197,6 +219,11 @@ const Projects = () => {
                                     className={`group overflow-hidden flex flex-col rounded-[1.75rem] border border-white/10 bg-background/60 shadow-[0_28px_90px_rgba(0,0,0,0.28)] transition-shadow duration-500 hover:shadow-[0_28px_90px_rgba(0,0,0,0.4)] min-h-[16rem] md:min-h-[18rem] ${slotClass} sweep-hover card-hover cursor-pointer`}
                                     data-pressable="true"
                                     onClick={(e) => handleProjectClick(e, project)}
+                                    onKeyDown={(event) => handleProjectKeyDown(event, project)}
+                                    tabIndex={hasCaseAction ? 0 : undefined}
+                                    aria-label={hasCaseAction
+                                        ? (lang === 'es' ? `Abrir detalles de ${display.title}` : `Open details for ${display.title}`)
+                                        : undefined}
                                 >
                                     {/* Image Container */}
                                     <motion.div layoutId={`card-image-wrapper-${project.id}`} className="relative overflow-hidden bg-black shrink-0 h-40 md:h-48 w-full">
@@ -286,15 +313,17 @@ const Projects = () => {
                                 <motion.div 
                                     key="project-modal"
                                     className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 cursor-pointer"
-                                    onClick={() => setActiveProject(null)}
                                 >
                                     {/* Velo translúcido tenue a pantalla completa */}
-                                    <motion.div
+                                    <motion.button
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
                                         transition={{ duration: 0.3 }}
-                                        className="absolute inset-0 bg-background/50 backdrop-blur-sm"
+                                        type="button"
+                                        onClick={closeModal}
+                                        aria-label={lang === 'es' ? 'Cerrar detalles del proyecto' : 'Close project details'}
+                                        className="absolute inset-0 bg-background/50 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
                                     />
                                     
                                     {/* Elemento que flota */}
@@ -303,11 +332,15 @@ const Projects = () => {
                                         role="dialog"
                                         aria-modal="true"
                                         aria-labelledby={`project-modal-title-${activeProject.id}`}
-                                        onClick={(event) => event.stopPropagation()}
-                                        className="relative flex flex-col w-[90vw] max-w-5xl max-h-[85vh] bg-background/95 border border-white/10 rounded-[2rem] shadow-[0_40px_100px_rgba(0,0,0,0.6)] overflow-y-auto overflow-x-hidden pointer-events-auto my-auto z-50 custom-scrollbar"
+                                        aria-describedby={`project-modal-description-${activeProject.id}`}
+                                        tabIndex="-1"
+                                        className="relative z-50 flex w-full max-w-5xl max-h-[calc(100dvh-2rem)] flex-col overflow-x-hidden overflow-y-auto rounded-2xl border border-white/10 bg-background/95 shadow-[0_40px_100px_rgba(0,0,0,0.6)] pointer-events-auto custom-scrollbar sm:max-h-[85vh] sm:rounded-[2rem]"
                                     >
+                                        <p id={`project-modal-description-${activeProject.id}`} className="sr-only">
+                                            {lang === 'es' ? 'Detalles del proyecto seleccionado.' : 'Details of the selected project.'}
+                                        </p>
                                         {/* ═══ HEADER COMPACTO: imagen + info + stack ═══ */}
-                                        <div className="flex items-start gap-5 p-6 pb-4 border-b border-white/5">
+                                        <div className="flex flex-col gap-4 border-b border-white/5 p-4 sm:flex-row sm:items-start sm:gap-5 sm:p-6 sm:pb-4">
                                             {/* Imagen miniatura */}
                                             <motion.div
                                                 layoutId={`card-image-wrapper-${activeProject.id}`}
@@ -323,8 +356,8 @@ const Projects = () => {
 
                                             {/* Título + subtítulo + status + pills */}
                                             <motion.div layoutId={`card-content-${activeProject.id}`} className="flex-1 min-w-0">
-                                                <div className="flex items-center gap-3 mb-1">
-                                                    <motion.h3 id={`project-modal-title-${activeProject.id}`} layoutId={`card-title-${activeProject.id}`} className="font-bold tracking-tight text-foreground text-xl md:text-2xl leading-tight truncate">
+                                                <div className="mb-1 flex flex-wrap items-center gap-2 sm:gap-3">
+                                                    <motion.h3 id={`project-modal-title-${activeProject.id}`} layoutId={`card-title-${activeProject.id}`} className="min-w-0 font-bold tracking-tight text-foreground text-xl leading-tight sm:text-2xl">
                                                         {display.title}
                                                     </motion.h3>
                                                     <motion.div layoutId={`card-status-${activeProject.id}`} className="shrink-0 flex items-center gap-1.5">
@@ -356,42 +389,44 @@ const Projects = () => {
                                                 </div>
                                             </motion.div>
 
-                                            {/* Botón de acción — esquina superior derecha */}
-                                            {activeProject.id === 'voyscout' ? (
-                                                <button
-                                                    type="button"
-                                                    onClick={(e) => { e.stopPropagation(); navigate('/demo/sgc'); }}
-                                                    className="shrink-0 self-center inline-flex cursor-pointer items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-400 transition-all hover:scale-105 hover:bg-emerald-500/20"
-                                                >
-                                                    {lang === 'es' ? '🚀 Dashboard' : '🚀 Dashboard'}
-                                                </button>
-                                            ) : (
-                                                activeProject.links.primary && (
+                                            <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:flex-nowrap sm:self-center">
+                                                {/* Botón de acción — esquina superior derecha */}
+                                                {activeProject.id === 'voyscout' ? (
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => navigate('/demo/sgc')}
+                                                        className="inline-flex min-h-10 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold text-emerald-400 transition-all hover:scale-105 hover:bg-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 sm:flex-none"
+                                                    >
+                                                        {lang === 'es' ? '🚀 Dashboard' : '🚀 Dashboard'}
+                                                    </button>
+                                                ) : (
+                                                    activeProject.links.primary && (
                                                     <a
                                                         href={activeProject.links.primary}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        onClick={(e) => e.stopPropagation()}
                                                         aria-label={lang === 'es' ? `Abrir ${display.title}` : `Open ${display.title}`}
-                                                        className="shrink-0 self-center inline-flex cursor-pointer items-center gap-2 rounded-full border border-accent/50 bg-accent/20 px-4 py-2 text-xs font-semibold text-accent transition-all hover:scale-105 hover:bg-accent/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                                        className="inline-flex min-h-10 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-accent/50 bg-accent/20 px-4 py-2 text-xs font-semibold text-accent transition-all hover:scale-105 hover:bg-accent/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:flex-none"
                                                     >
                                                         {lang === 'es' ? 'Abrir plataforma' : 'Open platform'}
                                                         <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                                                     </a>
                                                 )
-                                            )}
-                                            <button
-                                                type="button"
-                                                onClick={() => setActiveProject(null)}
-                                                aria-label={lang === 'es' ? 'Cerrar' : 'Close'}
-                                                className="shrink-0 self-center rounded-full p-2 text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                                            >
-                                                <X className="h-4 w-4" aria-hidden="true" />
-                                            </button>
+                                                )}
+                                                <button
+                                                    ref={closeButtonRef}
+                                                    type="button"
+                                                    onClick={closeModal}
+                                                    aria-label={lang === 'es' ? 'Cerrar' : 'Close'}
+                                                    className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-full p-2 text-muted-foreground transition-colors hover:bg-white/[0.05] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                                >
+                                                    <X className="h-4 w-4" aria-hidden="true" />
+                                                </button>
+                                            </div>
                                         </div>
 
                                         {/* ═══ CUERPO SCROLLABLE ═══ */}
-                                        <div className="flex-1 overflow-y-auto custom-scrollbar p-6 pt-5">
+                                        <div className="flex-1 overflow-y-auto p-4 pt-5 custom-scrollbar sm:p-6 sm:pt-5">
 
                                             {/* Resumen general a ancho completo */}
                                             {activeProject.summary && (
