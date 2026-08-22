@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
-import { Compass, Network, ScanSearch } from 'lucide-react';
+import { Compass, Download, Network, ScanSearch } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { useLocale } from '@/context/LocaleContext';
-import { siteContent } from '@/data/siteContent';
+import { resumeLinks, siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
 import { getSectionRevealTransition, sectionRevealInitial, sectionRevealInView } from '@/lib/motionPresets';
 
@@ -29,6 +30,12 @@ const About = () => {
 							<p key={paragraph.es}>{resolveCopy(paragraph, lang)}</p>
 						))}
 					</div>
+					<a href={resumeLinks[lang]} download className="mt-6 inline-block cursor-pointer">
+						<Button variant="outline" className="gap-2 rounded-full">
+							<Download className="h-4 w-4" />
+							{resolveCopy(siteContent.nav.resume, lang)}
+						</Button>
+					</a>
 				</motion.div>
 
 				<div className="grid gap-4">

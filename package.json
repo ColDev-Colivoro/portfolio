@@ -9,7 +9,12 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "test:visual": "playwright test",
+    "test:colors": "vitest run src/data/__tests__/colorRegistry.test.js scripts/__tests__/validate-color-registry.test.js --maxWorkers=1",
+    "colors:baseline": "node scripts/audit-colors.mjs --output tests/chromatic/baseline.v1.json --expect-hex-count 61",
+    "colors:registry:generate": "node scripts/generate-color-registry.mjs",
+    "colors:check": "node scripts/validate-color-registry.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -35,6 +40,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",

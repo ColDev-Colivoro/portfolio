@@ -10,14 +10,16 @@ const iconMap = {
     Building2,
     Globe,
 };
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import { portfolioProjects, PROJECT_PHASES, PROJECT_ACCESS } from '@/data/projectsData';
 import { siteContent } from '@/data/siteContent';
 import { useLocale } from '@/context/LocaleContext';
 import { resolveCopy } from '@/lib/i18n';
 import { getSectionRevealTransition, sectionRevealInitial, sectionRevealInView } from '@/lib/motionPresets';
 
-const CURATED_PROJECT_IDS = ['nutriscoc', 'coldevpos', 'voyscout', 'coldevradarsur', 'mar2control', 'coldevpay'];
+export const CURATED_PROJECT_IDS = ['nutriscoc', 'coldevpos', 'voyscout', 'coldevradarsur', 'mar2control', 'coldevpay'];
+export const FEATURED_PROJECT_IDS = ['nutriscoc', 'voyscout', 'coldevpos'];
 
 const bentoSlotClassMap = {
 	0: 'md:col-span-2 lg:col-span-2 lg:row-span-2',
@@ -40,7 +42,38 @@ const accessColorMap = {
 	cyan: 'border-cyan-400/30 bg-cyan-400/10 text-cyan-400',
 };
 
-const Projects = () => {
+export const ProjectStatusBadge = ({ project, lang, density = 'card' }) => {
+	const phaseCfg = PROJECT_PHASES[project.phase];
+	const accessCfg = PROJECT_ACCESS[project.access];
+	const PhaseIcon = iconMap[phaseCfg.icon];
+	const AccessIcon = iconMap[accessCfg.icon];
+	const phaseClassName = density === 'card'
+		? `rounded-full border px-2.5 py-0.5 text-[10px] font-medium backdrop-blur-md shadow-sm ${phaseColorMap[phaseCfg.color]}`
+		: `rounded-full border px-2 py-0.5 text-[9px] font-medium ${phaseColorMap[phaseCfg.color]}`;
+	const accessClassName = density === 'card'
+		? `rounded-full border px-2.5 py-0.5 text-[10px] font-medium backdrop-blur-md shadow-sm ${accessColorMap[accessCfg.color]}`
+		: `rounded-full border px-2 py-0.5 text-[9px] font-medium ${accessColorMap[accessCfg.color]}`;
+
+	return (
+		<>
+			<span className={phaseClassName}>
+				{PhaseIcon ? <PhaseIcon className="inline w-4 h-4 mr-1 align-text-bottom" aria-hidden="true" /> : null}
+				{lang === 'es' ? phaseCfg.es : phaseCfg.en}
+			</span>
+			<span className={accessClassName}>
+				{AccessIcon ? <AccessIcon className="inline w-4 h-4 mr-1 align-text-bottom" aria-hidden="true" /> : null}
+				{lang === 'es' ? accessCfg.es : accessCfg.en}
+			</span>
+		</>
+	);
+};
+
+export const ProjectCollection = ({
+	projectIds = CURATED_PROJECT_IDS,
+	showContext = true,
+	featured = false,
+	intro = null,
+}) => {
 	const { lang } = useLocale();
 	const navigate = useNavigate();
 	
@@ -83,8 +116,12 @@ const Projects = () => {
 
 	const projects = useMemo(() => {
 		const projectById = new Map(portfolioProjects.map((project) => [project.id, project]));
-		return CURATED_PROJECT_IDS.map((projectId) => projectById.get(projectId)).filter(Boolean);
-	}, []);
+		return projectIds.map((projectId) => {
+			const project = projectById.get(projectId);
+			if (!project) throw new Error(`Unknown portfolio project: ${projectId}`);
+			return project;
+		});
+	}, [projectIds]);
 
 	const getProjectDisplay = (project) => {
 		if (project.id !== 'voyscout') {
@@ -121,7 +158,7 @@ const Projects = () => {
 			<div className="mx-auto flex flex-col gap-10 max-w-7xl lg:flex-row lg:items-start lg:gap-12">
 				
                 {/* Panel Lateral Izquierdo: Contexto y Deslinde de Responsabilidad */}
-                <div className="w-full lg:w-[28%] lg:shrink-0 pt-0">
+                {showContext ? <div className="w-full lg:w-[28%] lg:shrink-0 pt-0">
                     <div className="sticky top-24 space-y-8">
                         <div>
                             <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
@@ -189,10 +226,11 @@ const Projects = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> : null}
 
                 {/* Grilla Bento Clásica */}
                 <div className="flex-1 relative" ref={rightPanelRef}>
+                    {intro}
                     
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:[grid-auto-flow:dense]">
                         {projects.map((project, index) => {
@@ -201,8 +239,8 @@ const Projects = () => {
                             const actionLabel =
                                 project.id === 'voyscout'
                                     ? lang === 'es'
-                                        ? 'Abrir plataforma'
-                                        : 'Open platform'
+                                        ? 'Abrir demo'
+                                        : 'Open demo'
                                     : resolveCopy(content.openCase, lang);
 
                             const slotClass = bentoSlotClassMap[index] ?? 'md:col-span-1 lg:col-span-2 lg:row-span-1';
@@ -217,6 +255,8 @@ const Projects = () => {
                                     viewport={{ once: true, amount: 0.15 }}
                                     transition={getSectionRevealTransition(index, 0.05)}
                                     className={`group overflow-hidden flex flex-col rounded-[1.75rem] border border-white/10 bg-background/60 shadow-[0_28px_90px_rgba(0,0,0,0.28)] transition-shadow duration-500 hover:shadow-[0_28px_90px_rgba(0,0,0,0.4)] min-h-[16rem] md:min-h-[18rem] ${slotClass} sweep-hover card-hover cursor-pointer`}
+                                    data-project-id={project.id}
+                                    data-featured-project={featured ? '' : undefined}
                                     data-pressable="true"
                                     onClick={(e) => handleProjectClick(e, project)}
                                     onKeyDown={(event) => handleProjectKeyDown(event, project)}
@@ -236,20 +276,7 @@ const Projects = () => {
                                         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
                                         
                                         <motion.div layoutId={`card-status-${project.id}`} className="absolute left-4 top-4 flex items-center gap-1.5">
-                                            {(() => {
-                                                const phaseCfg = PROJECT_PHASES[project.phase];
-                                                const accessCfg = PROJECT_ACCESS[project.access];
-                                                return (
-                                                    <>
-                                                        <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium backdrop-blur-md shadow-sm ${phaseColorMap[phaseCfg.color]}`}>
-                                                            {(() => { const Icon = iconMap[phaseCfg.icon]; return Icon ? <Icon className="inline w-4 h-4 mr-1 align-text-bottom" /> : null; })()} {lang === 'es' ? phaseCfg.es : phaseCfg.en}
-                                                        </span>
-                                                        <span className={`rounded-full border px-2.5 py-0.5 text-[10px] font-medium backdrop-blur-md shadow-sm ${accessColorMap[accessCfg.color]}`}>
-                                                            {(() => { const Icon = iconMap[accessCfg.icon]; return Icon ? <Icon className="inline w-4 h-4 mr-1 align-text-bottom" /> : null; })()} {lang === 'es' ? accessCfg.es : accessCfg.en}
-                                                        </span>
-                                                    </>
-                                                );
-                                            })()}
+											<ProjectStatusBadge project={project} lang={lang} density="card" />
                                         </motion.div>
                                     </motion.div>
 
@@ -361,20 +388,7 @@ const Projects = () => {
                                                         {display.title}
                                                     </motion.h3>
                                                     <motion.div layoutId={`card-status-${activeProject.id}`} className="shrink-0 flex items-center gap-1.5">
-                                                        {(() => {
-                                                            const phaseCfg = PROJECT_PHASES[activeProject.phase];
-                                                            const accessCfg = PROJECT_ACCESS[activeProject.access];
-                                                            return (
-                                                                <>
-                                                                    <span className={`rounded-full border px-2 py-0.5 text-[9px] font-medium ${phaseColorMap[phaseCfg.color]}`}>
-                                                                        {phaseCfg.icon} {lang === 'es' ? phaseCfg.es : phaseCfg.en}
-                                                                    </span>
-                                                                    <span className={`rounded-full border px-2 py-0.5 text-[9px] font-medium ${accessColorMap[accessCfg.color]}`}>
-                                                                        {accessCfg.icon} {lang === 'es' ? accessCfg.es : accessCfg.en}
-                                                                    </span>
-                                                                </>
-                                                            );
-                                                        })()}
+													<ProjectStatusBadge project={activeProject} lang={lang} density="modal" />
                                                     </motion.div>
                                                 </div>
                                                 <motion.p layoutId={`card-subtitle-${activeProject.id}`} className="text-accent/80 uppercase tracking-[0.16em] text-[10px] mb-2">
@@ -397,7 +411,7 @@ const Projects = () => {
                                                         onClick={() => navigate('/demo/sgc')}
                                                         className="inline-flex min-h-10 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold text-emerald-400 transition-all hover:scale-105 hover:bg-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 sm:flex-none"
                                                     >
-                                                        {lang === 'es' ? '🚀 Dashboard' : '🚀 Dashboard'}
+														{lang === 'es' ? 'Abrir demo' : 'Open demo'}
                                                     </button>
                                                 ) : (
                                                     activeProject.links.primary && (
@@ -487,5 +501,33 @@ const Projects = () => {
 		</div>
 	);
 };
+
+export const FeaturedProjects = () => {
+	const { lang } = useLocale();
+	const content = siteContent.projects.featured;
+	const intro = (
+		<div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+			<div className="max-w-3xl">
+				<p className="section-eyebrow">{resolveCopy(content.eyebrow, lang)}</p>
+				<h2 className="section-title">{resolveCopy(content.title, lang)}</h2>
+				<p className="section-copy mt-3">{resolveCopy(content.description, lang)}</p>
+			</div>
+			<Button asChild variant="outline" size="sm" className="w-fit rounded-full">
+				<Link to="/proyectos">{resolveCopy(content.viewAll, lang)}</Link>
+			</Button>
+		</div>
+	);
+
+	return (
+		<ProjectCollection
+			projectIds={FEATURED_PROJECT_IDS}
+			showContext={false}
+			featured
+			intro={intro}
+		/>
+	);
+};
+
+const Projects = () => <ProjectCollection />;
 
 export default Projects;

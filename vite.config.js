@@ -51,6 +51,7 @@ export default defineConfig({
 		environment: 'jsdom',
 		setupFiles: './src/setupTests.js',
 		css: true,
+		exclude: ['tests/visual/**/*.spec.js', '**/test-results/**', '**/node_modules/**', '**/dist/**'],
 	},
 	define: {
 		'import.meta.env.VITE_APP_VERSION': JSON.stringify(appVersion),

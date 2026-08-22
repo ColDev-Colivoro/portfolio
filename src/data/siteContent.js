@@ -1,20 +1,24 @@
 export const siteContent = {
-	seoTitle: {
-		es: 'José Camilo Colivoro Uribe | Portfolio',
-		en: 'Jose Camilo Colivoro Uribe | Portfolio',
-	},
 	nav: {
 		brand: 'José Camilo Colivoro Uribe',
 		role: { es: 'Analista Programador', en: 'Programmer Analyst' },
 		eyebrow: { es: 'Portfolio personal', en: 'Personal portfolio' },
 		languageLabel: { es: 'Idioma', en: 'Language' },
 		resume: { es: 'Descargar CV', en: 'Download resume' },
-		links: [
-			{ id: 'home', type: 'route', path: '/', label: { es: 'Inicio', en: 'Home' } },
-			{ id: 'projects', type: 'route', path: '/proyectos', label: { es: 'Proyectos', en: 'Projects' } },
-			{ id: 'about', type: 'route', path: '/about', label: { es: 'Perfil', en: 'Profile' } },
-			{ id: 'contact', type: 'route', path: '/contact', label: { es: 'Contacto', en: 'Contact' } },
-		],
+	},
+	homeOffer: {
+		eyebrow: {
+			es: 'ColDev · Ingeniería digital con IA',
+			en: 'ColDev · AI-powered digital engineering',
+		},
+		title: {
+			es: 'Ideas y procesos convertidos en sistemas digitales',
+			en: 'Ideas and processes turned into digital systems',
+		},
+		description: {
+			es: 'Diseño y construyo productos, herramientas y automatizaciones a medida para convertir necesidades reales en software claro, útil y mantenible.',
+			en: 'I design and build custom products, tools, and automations that turn real needs into clear, useful, maintainable software.',
+		},
 	},
 	hero: {
 		eyebrow: {
@@ -189,6 +193,18 @@ export const siteContent = {
 		openCase: { es: 'Abrir caso', en: 'Open case' },
 		openDemo: { es: 'Ver demo', en: 'Open demo' },
 		openRepo: { es: 'Ver código', en: 'View code' },
+		featured: {
+			eyebrow: { es: 'ColDev en acción', en: 'ColDev in action' },
+			title: {
+				es: 'Sistemas seleccionados para ver ColDev en acción',
+				en: 'Systems selected to show ColDev in action',
+			},
+			description: {
+				es: 'Tres casos que conectan producto, operación y software: un gestor operacional, una demo analítica y un ecosistema de ventas.',
+				en: 'Three cases connecting product, operations, and software: an operational manager, an analytics demo, and a sales ecosystem.',
+			},
+			viewAll: { es: 'Ver todos los proyectos', en: 'View all projects' },
+		},
 	},
 	certifications: {
 		eyebrow: { es: 'Certificados', en: 'Certificates' },
@@ -197,6 +213,7 @@ export const siteContent = {
 			es: 'Credenciales formales que acompañan la práctica en desarrollo, infraestructura y construcción de aplicaciones.',
 			en: 'Formal credentials that support practical work in development, infrastructure, and application building.',
 		},
+		whatsappCta: { es: 'Escribir por WhatsApp', en: 'Message on WhatsApp' },
 		viewCta: { es: 'Ver certificado', en: 'View certificate' },
 	},
 	contact: {
@@ -208,6 +225,7 @@ export const siteContent = {
 		},
 		formTitle: { es: 'Solicitud de contacto', en: 'Contact request' },
 		linkedInCta: { es: 'Ver LinkedIn', en: 'View LinkedIn' },
+		whatsappCta: { es: 'Escribir por WhatsApp', en: 'Message on WhatsApp' },
 		linkedinLabel: {
 			es: 'Trayectoria pública y contacto profesional',
 			en: 'Public trajectory and professional contact',
@@ -223,8 +241,8 @@ export const siteContent = {
 		formLabels: {
 			name: { es: 'Nombre', en: 'Name' },
 			email: { es: 'Email', en: 'Email' },
-			subject: { es: 'Asunto', en: 'Subject' },
-			message: { es: 'Mensaje', en: 'Message' },
+			subject: { es: 'Idea u objetivo', en: 'Idea or goal' },
+			message: { es: 'Contexto', en: 'Context' },
 			submit: { es: 'Enviar solicitud', en: 'Send request' },
 			sending: { es: 'Enviando...', en: 'Sending...' },
 		},

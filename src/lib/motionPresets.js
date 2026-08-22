@@ -12,22 +12,6 @@ export const motionTokens = {
 	heroDelayChildren: 0.06,
 };
 
-export const routeIndexMap = {
-	'/': 0,
-	'/proyectos': 1,
-	'/about': 2,
-	'/contact': 3,
-	'/demo/sgc': 4,
-};
-
-export const getRouteTone = (pathname) => {
-	if (pathname === '/') return 'home';
-	if (pathname === '/proyectos') return 'projects';
-	if (pathname === '/about') return 'about';
-	if (pathname === '/contact') return 'contact';
-	return 'home';
-};
-
 export const routeLateralVariants = {
 	enter: (direction = 1) => ({
 		x: direction * motionTokens.routeDistanceX,

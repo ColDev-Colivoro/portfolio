@@ -25,7 +25,19 @@ describe('Projects', () => {
 		const sgcCard = screen.getByText('Dashboard SGC').closest('article');
 		expect(sgcCard).not.toBeNull();
 
-		expect(within(sgcCard).getByRole('button', { name: /Abrir plataforma/i })).toBeInTheDocument();
+		expect(within(sgcCard).getByText('Demo / Prototipo')).toBeInTheDocument();
+		expect(within(sgcCard).getByRole('button', { name: /Abrir demo/i })).toBeInTheDocument();
+	});
+
+	it('renderiza iconos accesibles sin imprimir sus nombres internos en el modal', async () => {
+		const user = userEvent.setup();
+		renderWithProviders(<Projects />);
+
+		await user.click(screen.getByText('Dashboard SGC').closest('article'));
+		const dialog = screen.getByRole('dialog');
+		expect(dialog).toHaveTextContent('Demo / Prototipo');
+		expect(dialog).not.toHaveTextContent('BadgeCheck');
+		expect(dialog).not.toHaveTextContent('Lock');
 	});
 
 	it('expone un enlace directo y accesible a NutriscoConnect desde la tarjeta', () => {

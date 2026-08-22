@@ -28,6 +28,7 @@ const Hero = () => {
 	const { lang } = useLocale();
 	const navigate = useNavigate();
 	const hero = siteContent.hero;
+	const offer = siteContent.homeOffer;
 	const [activeLogoIndex, setActiveLogoIndex] = useState(0);
 
 	useEffect(() => {
@@ -62,27 +63,27 @@ const Hero = () => {
 			>
 				<div className="max-w-3xl">
 					<motion.p variants={heroRevealItem} className="section-eyebrow">
-						{resolveCopy(hero.eyebrow, lang)}
+						{resolveCopy(offer.eyebrow, lang)}
 					</motion.p>
 
 					<motion.h1
 						variants={heroRevealItem}
 						className="hero-title mt-5 font-semibold leading-[0.88] tracking-[-0.06em] text-foreground"
 					>
-						{resolveCopy(hero.title, lang)}
+						{resolveCopy(offer.title, lang)}
 					</motion.h1>
 
-					<motion.p variants={heroRevealItemSoft} className="mt-5 hidden text-sm uppercase tracking-[0.34em] text-accent md:block md:text-base">
-						{resolveCopy(hero.role, lang)}
+					<motion.p variants={heroRevealItemSoft} className="mt-7 max-w-2xl text-balance text-lg leading-relaxed md:text-xl">
+						{resolveCopy(offer.description, lang)}
 					</motion.p>
 
-					<motion.p variants={heroRevealItemSoft} className="mt-7 max-w-2xl text-balance text-lg leading-relaxed text-foreground/88 md:text-xl">
-						{resolveCopy(hero.description, lang)}
-					</motion.p>
-
-					<motion.p variants={heroRevealItemSoft} className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
-						{resolveCopy(hero.supportingLine, lang)}
-					</motion.p>
+					<motion.div variants={heroRevealItemSoft} data-content-role="founder-bridge" className="mt-7 max-w-2xl pl-5">
+						<p className="text-xs uppercase tracking-[0.24em]">{resolveCopy(hero.eyebrow, lang)}</p>
+						<p className="mt-2 text-base font-semibold">{resolveCopy(hero.title, lang)}</p>
+						<p className="mt-5 hidden text-sm uppercase tracking-[0.34em] text-accent md:block md:text-base">{resolveCopy(hero.role, lang)}</p>
+						<p className="mt-4 text-base leading-relaxed text-foreground/88">{resolveCopy(hero.description, lang)}</p>
+						<p className="mt-3 text-base leading-relaxed text-muted-foreground">{resolveCopy(hero.supportingLine, lang)}</p>
+					</motion.div>
 
 					<motion.div variants={heroRevealItemSoft} className="mt-9 flex flex-wrap gap-3">
 						<Button

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import App from '@/App';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
@@ -35,5 +35,13 @@ describe('App', () => {
 		expect(screen.getAllByText('Vista Ejecutiva').length).toBeGreaterThan(0);
 		expect(screen.queryByText('Jose Camilo Colivoro Uribe')).not.toBeInTheDocument();
 		expect(container.querySelector('.route-atmo-primary')).not.toBeInTheDocument();
+	});
+
+	it('resuelve metadata bilingue desde la ruta canonica', async () => {
+		window.localStorage.setItem('colivoro-locale', 'en');
+		renderWithProviders(<App />, { route: '/about' });
+
+		await waitFor(() => expect(document.title).toBe('Profile | Jose Camilo Colivoro Uribe'));
+		window.localStorage.removeItem('colivoro-locale');
 	});
 });

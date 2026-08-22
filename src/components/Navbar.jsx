@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LayoutGroup, motion } from 'framer-motion';
 import { Download, Globe2, Menu, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { portfolioNavigationRoutes } from '@/config/portfolioRoutes';
 import { useLocale } from '@/context/LocaleContext';
 import { resumeLinks, siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
@@ -17,7 +18,7 @@ const Navbar = () => {
 	const headerRef = useRef(null);
 	const mobilePanelId = 'mobile-nav-panel';
 
-	const navLinks = useMemo(() => siteContent.nav.links, []);
+	const navLinks = portfolioNavigationRoutes;
 
 	useEffect(() => {
 		const onScroll = () => setScrolled(window.scrollY > 10);

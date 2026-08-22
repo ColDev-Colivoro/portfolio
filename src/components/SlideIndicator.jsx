@@ -2,10 +2,17 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { getAdjacentPortfolioRoute } from '@/config/portfolioRoutes';
+import { useLocale } from '@/context/LocaleContext';
+import { resolveCopy } from '@/lib/i18n';
 
 const SlideIndicator = () => {
 	const [isVisible, setIsVisible] = useState(false);
 	const location = useLocation();
+	const { lang } = useLocale();
+	const adjacentRoute = getAdjacentPortfolioRoute(location.pathname, 1)
+		?? getAdjacentPortfolioRoute(location.pathname, -1);
+	const indicatorCopy = lang === 'en' ? 'Swipe' : 'Desliza';
 
 	useEffect(() => {
 		// Only check/show on mobile and if not already seen
@@ -26,14 +33,15 @@ const SlideIndicator = () => {
 			setIsVisible(false);
 			localStorage.setItem('coldev_hasSeenSlideIndicator', 'true');
 		};
+		const handleKeyDown = (event) => {
+			if (['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'Space'].includes(event.code)) {
+				handleInteraction();
+			}
+		};
 
 		// Dismiss on wheel, keyboard arrows, touch, or click anywhere
 		window.addEventListener('wheel', handleInteraction, { once: true });
-		window.addEventListener('keydown', (e) => {
-			if (['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'Space'].includes(e.code)) {
-				handleInteraction();
-			}
-		});
+		window.addEventListener('keydown', handleKeyDown);
 		window.addEventListener('touchstart', handleInteraction, { once: true });
 		window.addEventListener('mousedown', handleInteraction, { once: true });
 
@@ -41,15 +49,20 @@ const SlideIndicator = () => {
 		return () => {
 			handleInteraction();
 			window.removeEventListener('wheel', handleInteraction);
+			window.removeEventListener('keydown', handleKeyDown);
 			window.removeEventListener('touchstart', handleInteraction);
 			window.removeEventListener('mousedown', handleInteraction);
 		};
 	}, [isVisible, location.pathname]);
 
+	if (!adjacentRoute) return null;
+
 	return (
 		<AnimatePresence>
 			{isVisible && (
 				<motion.div
+					aria-label={`${indicatorCopy}: ${resolveCopy(adjacentRoute.label, lang)}`}
+					data-route-target={adjacentRoute.path}
 					initial={{ opacity: 0, x: -20 }}
 					animate={{ opacity: 1, x: 0 }}
 					exit={{ opacity: 0, scale: 0.8, filter: 'blur(4px)' }}
@@ -61,7 +74,7 @@ const SlideIndicator = () => {
 						transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
 						className="flex items-center gap-2 rounded-full border border-white/10 bg-background/40 px-4 py-2 text-white shadow-xl backdrop-blur-md"
 					>
-						<span className="text-sm font-medium tracking-wide opacity-80 uppercase">Desliza</span>
+						<span className="text-sm font-medium tracking-wide opacity-80 uppercase">{indicatorCopy}</span>
 						<ChevronRight className="h-5 w-5 opacity-90" />
 					</motion.div>
 				</motion.div>

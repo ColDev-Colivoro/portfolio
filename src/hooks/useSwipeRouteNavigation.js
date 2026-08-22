@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-const ROUTE_ORDER = ['/', '/proyectos', '/about', '/contact'];
+import { portfolioNavigationPaths } from '@/config/portfolioRoutes';
 
 const DEFAULT_OPTIONS = {
 	edgeExclusionPx: 24,
@@ -81,13 +80,13 @@ export const useSwipeRouteNavigation = (containerRef, options = DEFAULT_OPTIONS)
 			if (absX < settings.swipeThresholdPx) return;
 			if (horizontalRatio < settings.minHorizontalRatio) return;
 
-			const currentIndex = ROUTE_ORDER.indexOf(location.pathname);
+			const currentIndex = portfolioNavigationPaths.indexOf(location.pathname);
 			if (currentIndex === -1) return;
 
 			const nextIndex = deltaX < 0 ? currentIndex + 1 : currentIndex - 1;
-			if (nextIndex < 0 || nextIndex >= ROUTE_ORDER.length) return;
+			if (nextIndex < 0 || nextIndex >= portfolioNavigationPaths.length) return;
 
-			navigate(ROUTE_ORDER[nextIndex]);
+			navigate(portfolioNavigationPaths[nextIndex]);
 		};
 
 		element.addEventListener('touchstart', handleTouchStart, { passive: true });

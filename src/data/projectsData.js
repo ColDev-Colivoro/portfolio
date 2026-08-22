@@ -1,6 +1,13 @@
 
 // Importa los iconos Lucide en el archivo donde se usen estos objetos, no aquí directamente.
 // Aquí solo se referencian por nombre para facilitar el mapeo en el componente visual.
+const productionPhase = {
+	es: 'En Producción',
+	en: 'In Production',
+	color: 'emerald',
+	icon: 'BadgeCheck',
+};
+
 export const PROJECT_PHASES = {
 	building: {
 		es: 'En Construcción',
@@ -14,11 +21,11 @@ export const PROJECT_PHASES = {
 		color: 'sky',
 		icon: 'FlaskConical',
 	},
-	production: {
-		es: 'En Producción',
-		en: 'In Production',
-		color: 'emerald',
-		icon: 'BadgeCheck',
+	production: productionPhase,
+	prototype: {
+		...productionPhase,
+		es: 'Demo / Prototipo',
+		en: 'Demo / Prototype',
 	},
 };
 
@@ -279,7 +286,7 @@ export const projectsCatalog = [
 			en: 'Complete Frontend Development (React 19 + Vite + TypeScript), external API integration (Open-Meteo), Windy map embedding, alert system, and native browser geolocation.',
 		},
 		stack: ['React 19', 'TypeScript', 'Vite', 'Open-Meteo API', 'Windy Embed'],
-		phase: 'production',
+		phase: 'prototype',
 		access: 'open',
 		links: {
 			primary: '',
@@ -449,7 +456,7 @@ export const projectsCatalog = [
 			en: 'Asynchronous JavaScript Data Transformation (reduce/map/filter), Vector Modeling in Recharts (D3.js), and CSS Grid Dashboard Interface.',
 		},
 		stack: ['React', 'Vite', 'Tailwind CSS', 'Recharts', 'Django'],
-		phase: 'production',
+		phase: 'prototype',
 		access: 'private',
 		links: {
 			primary: '/demo/sgc',

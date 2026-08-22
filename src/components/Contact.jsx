@@ -6,6 +6,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useLocale } from '@/context/LocaleContext';
 import { siteContent } from '@/data/siteContent';
 import { resolveCopy } from '@/lib/i18n';
+import { buildWhatsAppUrl } from '@/lib/whatsapp';
 import { getSectionRevealTransition, sectionRevealInitial, sectionRevealInView } from '@/lib/motionPresets';
 
 const Contact = () => {
@@ -15,6 +16,10 @@ const Contact = () => {
 	const labels = content.formLabels;
 	const formspreeEndpoint =
 		import.meta.env.VITE_FORMSPREE_ENDPOINT?.trim() || 'https://formspree.io/f/myznnnde';
+	const whatsappUrl = buildWhatsAppUrl({
+		number: import.meta.env.VITE_WHATSAPP_NUMBER,
+		message: import.meta.env.VITE_WHATSAPP_MESSAGE,
+	});
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
@@ -90,6 +95,7 @@ const Contact = () => {
 				<div className="mb-6 max-w-3xl">
 					<p className="section-eyebrow">{resolveCopy(content.eyebrow, lang)}</p>
 					<h2 className="section-title text-2xl md:text-3xl">{resolveCopy(content.title, lang)}</h2>
+					<p className="section-copy mt-3">{resolveCopy(content.description, lang)}</p>
 				</div>
 
 				<div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] items-start">
@@ -130,6 +136,14 @@ const Contact = () => {
 								{resolveCopy(content.linkedInCta, lang)}
 								<ArrowUpRight className="h-4 w-4" />
 							</a>
+							{whatsappUrl ? (
+								<Button asChild variant="outline" size="sm" className="mt-4 w-full rounded-full">
+									<a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+										{resolveCopy(content.whatsappCta, lang)}
+										<ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+									</a>
+								</Button>
+							) : null}
 						</div>
 					</motion.div>
 

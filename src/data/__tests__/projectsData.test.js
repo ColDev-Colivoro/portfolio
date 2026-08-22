@@ -1,13 +1,32 @@
 import { describe, expect, it } from 'vitest';
-import { portfolioProjects, projectsCatalog } from '@/data/projectsData';
+import { PROJECT_PHASES, portfolioProjects, projectsCatalog } from '@/data/projectsData';
 
 describe('projectsData', () => {
 	it('expone un catálogo único con proyectos clave para la vista curada', () => {
-		expect(projectsCatalog.length).toBeGreaterThan(1);
+		expect(projectsCatalog).toHaveLength(6);
 		const ids = projectsCatalog.map((project) => project.id);
-		expect(ids).toContain('nutriscoc');
-		expect(ids).toContain('coldevpos');
-		expect(ids).toContain('voyscout');
+		expect(new Set(ids).size).toBe(6);
+		expect(ids).toEqual([
+			'coldevpos',
+			'nutriscoc',
+			'coldevradarsur',
+			'mar2control',
+			'voyscout',
+			'coldevpay',
+		]);
+		for (const project of projectsCatalog) {
+			expect(project.title.es).toBeTruthy();
+			expect(project.title.en).toBeTruthy();
+			expect(project.problem.es).toBeTruthy();
+			expect(project.problem.en).toBeTruthy();
+			expect(project.impact.es).toBeTruthy();
+			expect(project.impact.en).toBeTruthy();
+			expect(project.role.es).toBeTruthy();
+			expect(project.role.en).toBeTruthy();
+			expect(project.stack.length).toBeGreaterThan(0);
+			expect(project.media.cover).toMatch(/^\/images\/.+\.(svg|png|webp)$/);
+			expect(project.caseStudy).toBeTruthy();
+		}
 	});
 
   it('mantiene visibles solo proyectos marcados como públicos', () => {
@@ -19,6 +38,13 @@ describe('projectsData', () => {
 		const voyScout = projectsCatalog.find((project) => project.id === 'voyscout');
 		expect(voyScout?.links?.primary).toBe('/demo/sgc');
 		expect(voyScout?.links?.demo).toBe('/demo/sgc');
+		expect(voyScout?.phase).toBe('prototype');
+		expect(PROJECT_PHASES.prototype).toMatchObject({
+			es: 'Demo / Prototipo',
+			en: 'Demo / Prototype',
+			color: PROJECT_PHASES.production.color,
+			icon: PROJECT_PHASES.production.icon,
+		});
 	});
 
 	it('describe NutriscoConnect como gestor operacional y reunión digitalizada de desempeño', () => {

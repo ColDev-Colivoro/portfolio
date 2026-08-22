@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { portfolioNavigationPaths } from '@/config/portfolioRoutes';
 
-const ROUTE_ORDER = ['/', '/proyectos', '/about', '/contact'];
 const NAVIGATION_LOCK_MS = 620;
 
 const isEditableTarget = (target) => {
@@ -33,15 +33,15 @@ export const useKeyboardRouteNavigation = () => {
 			const now = Date.now();
 			if (now < lockUntilRef.current) return;
 
-			const currentIndex = ROUTE_ORDER.indexOf(location.pathname);
+			const currentIndex = portfolioNavigationPaths.indexOf(location.pathname);
 			if (currentIndex === -1) return;
 
 			const nextIndex = event.key === 'ArrowRight' ? currentIndex + 1 : currentIndex - 1;
-			if (nextIndex < 0 || nextIndex >= ROUTE_ORDER.length) return;
+			if (nextIndex < 0 || nextIndex >= portfolioNavigationPaths.length) return;
 
 			event.preventDefault();
 			lockUntilRef.current = now + NAVIGATION_LOCK_MS;
-			navigate(ROUTE_ORDER[nextIndex]);
+			navigate(portfolioNavigationPaths[nextIndex]);
 		};
 
 		window.addEventListener('keydown', onKeyDown);

@@ -14,18 +14,32 @@ import ContactPage from '@/pages/ContactPage';
 import SGCPlatformPage from '@/pages/SGCPlatformPage';
 import SlideIndicator from '@/components/SlideIndicator';
 import { useLocale } from '@/context/LocaleContext';
-import { siteContent } from '@/data/siteContent';
+import {
+	getPortfolioRoute,
+	getPortfolioRouteTone,
+	portfolioRouteIndexMap,
+	portfolioRoutes,
+} from '@/config/portfolioRoutes';
 import { resolveCopy } from '@/lib/i18n';
-import { getRouteTone, routeIndexMap, routeLateralVariants, routeTransition } from '@/lib/motionPresets';
+import { routeLateralVariants, routeTransition } from '@/lib/motionPresets';
 import { useSwipeRouteNavigation } from '@/hooks/useSwipeRouteNavigation';
 import { useKeyboardRouteNavigation } from '@/hooks/useKeyboardRouteNavigation';
+
+const routeComponents = {
+	home: HomePage,
+	about: AboutPage,
+	projects: ProjectsPage,
+	contact: ContactPage,
+	sgcPlatform: SGCPlatformPage,
+};
 
 const App = () => {
 	const location = useLocation();
 	const { lang } = useLocale();
  	const [isOverlayReady, setIsOverlayReady] = useState(false);
 
-	const currentIndex = routeIndexMap[location.pathname] ?? 0;
+	const currentRoute = getPortfolioRoute(location.pathname);
+	const currentIndex = portfolioRouteIndexMap[location.pathname] ?? 0;
 	const prevIndex = useRef(currentIndex);
 	const isInitialLoad = useRef(true);
 	const routeContainerRef = useRef(null);
@@ -64,12 +78,12 @@ const App = () => {
 
 	const direction = currentIndex > prevIndex.current ? 1 : -1;
 
-	const routeTone = getRouteTone(location.pathname);
-	const isSgcPlatformRoute = location.pathname.startsWith('/demo/sgc');
+	const routeTone = getPortfolioRouteTone(location.pathname);
+	const isSgcPlatformRoute = currentRoute?.shell === 'standalone';
 
 	useEffect(() => {
-		document.title = resolveCopy(siteContent.seoTitle, lang);
-	}, [lang]);
+		document.title = resolveCopy(currentRoute?.metadata.title ?? portfolioRoutes[0].metadata.title, lang);
+	}, [currentRoute, lang]);
 
 	return (
 		<div
@@ -133,11 +147,10 @@ const App = () => {
 							className="h-full w-full"
 						>
 							<Routes location={location}>
-								<Route path="/" element={<HomePage />} />
-								<Route path="/about" element={<AboutPage />} />
-								<Route path="/proyectos" element={<ProjectsPage />} />
-								<Route path="/contact" element={<ContactPage />} />
-								<Route path="/demo/sgc" element={<SGCPlatformPage />} />
+								{portfolioRoutes.map((route) => {
+									const RouteComponent = routeComponents[route.component];
+									return <Route key={route.id} path={route.path} element={<RouteComponent />} />;
+								})}
 							</Routes>
 						</motion.div>
 					</AnimatePresence>

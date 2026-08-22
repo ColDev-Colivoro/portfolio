@@ -13,3 +13,7 @@ dist
 
 # Local references (not part of portfolio repo)
 gentleman_programming/
+
+# Local browser-test diagnostics (approved baselines remain versioned)
+playwright-report/
+test-results/

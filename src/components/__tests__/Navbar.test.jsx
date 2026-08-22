@@ -9,7 +9,7 @@ describe('Navbar', () => {
 
     expect(screen.getByText('José Camilo Colivoro Uribe')).toBeInTheDocument();
     expect(screen.getByText('Analista Programador')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Inicio' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'ColDev' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Proyectos' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'ES' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'EN' })).toBeInTheDocument();
